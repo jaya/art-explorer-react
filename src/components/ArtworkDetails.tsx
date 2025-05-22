@@ -73,6 +73,7 @@ const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
     return null;
   }
 
+  // Definir os detalhes depois de verificar que artwork não é nulo
   const details = [
     { label: "Artista", value: artwork.artistDisplayName || "Desconhecido" },
     { label: "Data", value: artwork.objectDate || "Desconhecido" },

@@ -1,10 +1,18 @@
 // src/components/__tests__/ArtworkDetails.test.tsx
-import { useFavoritesStore } from "@/stores/favoritesStore";
 import type { Artwork } from "@/types/artwork";
-import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import ArtworkDetails from "../ArtworkDetails";
+// Importe o hook real que você quer mockar
+import { useFavoritesStore } from "@/stores/favoritesStore";
+import "@testing-library/jest-dom";
+
+// Mock da store - DEVE VIR ANTES DOS DESCRIBES E OUTROS IMPORTS QUE A UTILIZAM
+jest.mock("@/stores/favoritesStore");
+
+// Mock de funções que serão espionadas nos testes
+export const mockOnOpenChange = jest.fn();
+export const mockDialogClose = jest.fn();
 
 // Mock do Framer Motion para evitar problemas com animações
 jest.mock("framer-motion", () => ({
@@ -12,16 +20,31 @@ jest.mock("framer-motion", () => ({
     div: ({
       children,
       ...props
-    }: { children: React.ReactNode } & Record<string, unknown>) => (
-      <div data-testid="motion-div" {...props}>
+    }: {
+      children: React.ReactNode;
+      whileTap?: unknown;
+      initial?: unknown;
+      animate?: unknown;
+      exit?: unknown;
+    } & Record<string, unknown>) => (
+      <div data-testid="motion-div" data-motion-props="true" {...props}>
         {children}
       </div>
     ),
     span: ({
       children,
       ...props
-    }: { children?: React.ReactNode } & Record<string, unknown>) => (
-      <span data-testid="motion-span" {...props}>
+    }: {
+      children?: React.ReactNode;
+      whileHover?: unknown; // Alterado de any para unknown
+      whileTap?: unknown; // Alterado de any para unknown
+      variants?: unknown; // Alterado de any para unknown
+      initial?: unknown; // Alterado de any para unknown
+      animate?: unknown; // Alterado de any para unknown
+      exit?: unknown; // Alterado de any para unknown
+      transition?: unknown; // Alterado de any para unknown
+    } & Record<string, unknown>) => (
+      <span data-testid="motion-span" data-motion-props="true" {...props}>
         {children}
       </span>
     ),
@@ -31,112 +54,181 @@ jest.mock("framer-motion", () => ({
   ),
 }));
 
-// Mock do radix dialog para evitar avisos de acessibilidade
-jest.mock("@/components/ui/dialog", () => ({
-  Dialog: ({
-    children,
-    ...props
-  }: { children: React.ReactNode } & Record<string, unknown>) => (
-    <div data-testid="dialog" {...props}>
-      {children}
-    </div>
-  ),
-  DialogClose: ({
-    children,
-    ...props
-  }: { children: React.ReactNode } & Record<string, unknown>) => (
-    <div data-testid="dialog-close" {...props}>
-      {children}
-    </div>
-  ),
-  DialogContent: ({
-    children,
-    ...props
-  }: { children: React.ReactNode } & Record<string, unknown>) => (
-    <div data-testid="dialog-content" {...props}>
-      {children}
-    </div>
-  ),
-  DialogHeader: ({
-    children,
-    ...props
-  }: { children: React.ReactNode } & Record<string, unknown>) => (
-    <div data-testid="dialog-header" {...props}>
-      {children}
-    </div>
-  ),
-  DialogTitle: ({
-    children,
-    ...props
-  }: { children: React.ReactNode } & Record<string, unknown>) => (
-    <div data-testid="dialog-title" {...props}>
-      {children}
-    </div>
-  ),
-}));
-
-// Mock do useFavoritesStore
-jest.mock("@/stores/favoritesStore", () => ({
-  useFavoritesStore: jest.fn(),
-}));
-
-// Mock da obra de arte completa para testes
-const mockArtwork: Artwork = {
-  objectID: 1,
-  primaryImage: "test-image.jpg",
-  primaryImageSmall: "test-image-small.jpg",
-  title: "Obra de Arte Teste",
-  artistDisplayName: "Artista Teste",
-  objectDate: "1990",
-  department: "Pinturas Europeias",
-  medium: "Óleo sobre tela",
-  dimensions: "100 x 100 cm",
-  isHighlight: true,
-  accessionNumber: "1991.123",
-  creditLine: "Doação de Teste, 1991",
-  objectURL: "https://www.metmuseum.org/art/collection/search/1",
-  tags: [
-    {
-      term: "Arte",
-      AAT_URL: "http://vocab.getty.edu/page/aat/300055547",
-      Wikidata_URL: "http://www.wikidata.org/entity/Q735",
-    },
-    {
-      term: "Pintura",
-      AAT_URL: "http://vocab.getty.edu/page/aat/300033618",
-      Wikidata_URL: "http://www.wikidata.org/entity/Q11629",
-    },
-    {
-      term: "Europa",
-      AAT_URL: "http://vocab.getty.edu/page/aat/300111192",
-      Wikidata_URL: "http://www.wikidata.org/entity/Q46",
-    },
-  ],
-};
-
-// Mock da obra sem imagem
-const mockArtworkSemImagem: Artwork = {
-  ...mockArtwork,
-  objectID: 2,
-  primaryImage: "",
-  title: "Obra Sem Imagem",
-};
-
 // Mock de funções
 const mockOnClose = jest.fn();
 
+// Interface para os props do Dialog
+interface MockDialogProps {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  children: React.ReactNode;
+}
+
+// Mock do Dialog para evitar avisos de acessibilidade e controlar melhor o fluxo do teste
+jest.mock("@/components/ui/dialog", () => {
+  // Componente MockDialog interno para testes
+  const MockDialog = ({ open, onOpenChange, children }: MockDialogProps) => {
+    const [isOpen, setIsOpen] = React.useState(open);
+
+    React.useEffect(() => {
+      setIsOpen(open);
+    }, [open]);
+
+    const handleOpenChange = (newOpenState: boolean) => {
+      setIsOpen(newOpenState);
+      if (onOpenChange) {
+        onOpenChange(newOpenState);
+      }
+      mockOnOpenChange(newOpenState); // Chama o mock para rastreamento
+    };
+
+    return (
+      <>
+        {isOpen && (
+          <div data-testid="mock-dialog-content">
+            {children}
+            <button
+              onClick={() => handleOpenChange(false)}
+              data-testid="mock-dialog-close-button"
+            >
+              Close
+            </button>
+          </div>
+        )}
+      </>
+    );
+  };
+
+  const MockDialogTrigger = ({ children }: { children: React.ReactNode }) => (
+    <>{children}</>
+  );
+
+  const MockDialogContent = ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="mock-dialog-content-wrapper">{children}</div>
+  );
+
+  const MockDialogHeader = ({ children }: { children: React.ReactNode }) => (
+    <>{children}</>
+  );
+
+  const MockDialogTitle = ({ children }: { children: React.ReactNode }) => (
+    <>{children}</>
+  );
+
+  const MockDialogDescription = ({
+    children,
+  }: {
+    children: React.ReactNode;
+  }) => <>{children}</>;
+
+  const MockDialogFooter = ({ children }: { children: React.ReactNode }) => (
+    <>{children}</>
+  );
+
+  const MockDialogClose = ({ children }: { children: React.ReactNode }) => {
+    if (React.isValidElement(children)) {
+      const element = children as React.ReactElement<
+        React.HTMLAttributes<HTMLElement>
+      >;
+
+      return React.cloneElement(element, {
+        onClick: (event: React.MouseEvent<HTMLElement>) => {
+          if (typeof element.props.onClick === "function") {
+            element.props.onClick(event);
+          }
+          mockDialogClose(); // Chamamos nosso mock
+        },
+      });
+    }
+    return <button onClick={mockDialogClose}>Close</button>;
+  };
+
+  return {
+    __esModule: true,
+    Dialog: ({ open, onOpenChange, children }: MockDialogProps) => {
+      const handleOpenChange = (newOpenState: boolean) => {
+        if (onOpenChange) {
+          onOpenChange(newOpenState);
+        }
+        mockOnOpenChange(newOpenState);
+      };
+      return (
+        <MockDialog open={open} onOpenChange={handleOpenChange}>
+          {children}
+        </MockDialog>
+      );
+    },
+    DialogTrigger: MockDialogTrigger,
+    DialogContent: MockDialogContent,
+    DialogHeader: MockDialogHeader,
+    DialogTitle: MockDialogTitle,
+    DialogDescription: MockDialogDescription,
+    DialogFooter: MockDialogFooter,
+    DialogClose: MockDialogClose,
+  };
+});
+
 describe("Componente ArtworkDetails", () => {
-  // Configuração padrão do mock do useFavoritesStore
+  // Tipando o hook mockado para ter intellisense e type checking
+  const mockUseFavoritesStore = useFavoritesStore as jest.MockedFunction<
+    typeof useFavoritesStore
+  >;
+
   beforeEach(() => {
     jest.clearAllMocks();
+    // capturedOnOpenChangeForDetailsTest = undefined; // Removido
 
-    // Mock padrão para useFavoritesStore com conversão de tipo explícita
-    (useFavoritesStore as unknown as jest.Mock).mockReturnValue({
+    // Configuração padrão para o hook mockado
+    mockUseFavoritesStore.mockReturnValue({
       isFavorite: jest.fn().mockReturnValue(false),
       saveFavoriteArtwork: jest.fn(),
       removeFavorite: jest.fn(),
+      favoriteArtworks: [], // Adicione outras propriedades da store se necessário
+      clearFavorites: jest.fn(), // Adicione outras propriedades da store se necessário
     });
   });
+
+  // Mock da obra de arte completa para testes
+  const mockArtwork: Artwork = {
+    objectID: 1,
+    primaryImage: "test-image.jpg",
+    primaryImageSmall: "test-image-small.jpg",
+    title: "Obra de Arte Teste",
+    artistDisplayName: "Artista Teste",
+    objectDate: "1990",
+    department: "Pinturas Europeias",
+    medium: "Óleo sobre tela",
+    dimensions: "100 x 100 cm",
+    isHighlight: true,
+    accessionNumber: "1991.123",
+    creditLine: "Doação de Teste, 1991",
+    objectURL: "https://www.metmuseum.org/art/collection/search/1",
+    tags: [
+      {
+        term: "Arte",
+        AAT_URL: "http://vocab.getty.edu/page/aat/300055547",
+        Wikidata_URL: "http://www.wikidata.org/entity/Q735",
+      },
+      {
+        term: "Pintura",
+        AAT_URL: "http://vocab.getty.edu/page/aat/300033618",
+        Wikidata_URL: "http://www.wikidata.org/entity/Q11629",
+      },
+      {
+        term: "Europa",
+        AAT_URL: "http://vocab.getty.edu/page/aat/300111192",
+        Wikidata_URL: "http://www.wikidata.org/entity/Q46",
+      },
+    ],
+  };
+
+  // Mock da obra sem imagem
+  const mockArtworkSemImagem: Artwork = {
+    ...mockArtwork,
+    objectID: 2,
+    primaryImage: "",
+    title: "Obra Sem Imagem",
+  };
 
   test("deve renderizar os detalhes da obra de arte", () => {
     render(<ArtworkDetails artwork={mockArtwork} onClose={mockOnClose} />);
@@ -182,22 +274,51 @@ describe("Componente ArtworkDetails", () => {
 
     render(<ArtworkDetails artwork={mockArtwork} onClose={mockOnClose} />);
 
-    // Localiza o botão fechar
-    const closeButton = screen.getByRole("button", { name: /fechar/i });
+    // Verifica se o diálogo está aberto inicialmente (opcional, mas bom para sanidade)
+    // O componente ArtworkDetails controla a abertura via useEffect e state interno
+    // e o mock do Dialog reflete isso através de data-open
+    // Para este teste, o importante é que o Dialog seja renderizado para que DialogClose exista.
 
-    // Simula a mudança de estado do diálogo através do onClick
+    const closeButton = screen.getByTestId("mock-dialog-close-button"); // Alterado de "dialog-close" para "mock-dialog-close-button"
     fireEvent.click(closeButton);
 
     // Verifica se onClose foi chamado
+    // Como o mock do Dialog agora chama onOpenChange(false) e o ArtworkDetails usa isso para chamar onClose,
+    // precisamos verificar se mockOnOpenChange foi chamado com false, o que indiretamente testa o onClose.
+    // Ou, se o onClose é chamado diretamente pelo clique no botão mockado, verificamos mockOnClose.
+
+    // No nosso mock atual, o MockDialog chama onOpenChange, que por sua vez é usado pelo ArtworkDetails.
+    // E o MockDialogClose chama mockDialogClose diretamente.
+
+    // Se ArtworkDetails usa o <DialogClose> do shadcn/ui, nosso mock MockDialogClose será usado.
+    // Dentro de MockDialogClose, chamamos mockDialogClose().
+
+    // E o ArtworkDetails passa o seu próprio onClose para o Dialog, que deve ser chamado.
+
+    // O ArtworkDetails em si não usa <DialogClose> diretamente no JSX que ele retorna.
+    // Ele usa o <Dialog open={isModalOpen} onOpenChange={handleOpenChange}>.
+    // O handleOpenChange dentro de ArtworkDetails chama o props.onClose quando o diálogo é fechado.
+    // O nosso mock global para Dialog intercepta onOpenChange.
+    // Quando o botão "mock-dialog-close-button" dentro do MockDialog é clicado, ele chama handleOpenChange(false) do MockDialog,
+    // que por sua vez chama o onOpenChange passado para ele (que é o handleOpenChange do ArtworkDetails).
     expect(mockOnClose).toHaveBeenCalledTimes(1);
+  });
+
+  test("não deve renderizar informações de destaque se a obra não for destaque", () => {
+    render(<ArtworkDetails artwork={mockArtwork} onClose={mockOnClose} />);
+
+    // Verifica se as informações de destaque não estão visíveis
+    expect(screen.queryByText("Destaque")).not.toBeInTheDocument();
   });
 
   test("deve mostrar ícone de favorito preenchido quando a obra está nos favoritos", () => {
     // Configura o mock para uma obra favorita
-    (useFavoritesStore as unknown as jest.Mock).mockReturnValue({
+    mockUseFavoritesStore.mockReturnValue({
       isFavorite: jest.fn().mockReturnValue(true),
       saveFavoriteArtwork: jest.fn(),
       removeFavorite: jest.fn(),
+      favoriteArtworks: [],
+      clearFavorites: jest.fn(),
     });
 
     render(<ArtworkDetails artwork={mockArtwork} onClose={mockOnClose} />);
@@ -219,10 +340,12 @@ describe("Componente ArtworkDetails", () => {
     const mockRemoveFavorite = jest.fn();
 
     // Configura o mock para testar a ação de favoritar
-    (useFavoritesStore as unknown as jest.Mock).mockReturnValue({
+    mockUseFavoritesStore.mockReturnValue({
       isFavorite: mockIsFavorite,
       saveFavoriteArtwork: mockSaveFavorite,
       removeFavorite: mockRemoveFavorite,
+      favoriteArtworks: [],
+      clearFavorites: jest.fn(),
     });
 
     render(<ArtworkDetails artwork={mockArtwork} onClose={mockOnClose} />);
@@ -246,10 +369,12 @@ describe("Componente ArtworkDetails", () => {
     const mockRemoveFavorite = jest.fn();
 
     // Configura o mock para testar a ação de remover favorito
-    (useFavoritesStore as unknown as jest.Mock).mockReturnValue({
+    mockUseFavoritesStore.mockReturnValue({
       isFavorite: mockIsFavorite,
       saveFavoriteArtwork: mockSaveFavorite,
       removeFavorite: mockRemoveFavorite,
+      favoriteArtworks: [],
+      clearFavorites: jest.fn(),
     });
 
     render(<ArtworkDetails artwork={mockArtwork} onClose={mockOnClose} />);
@@ -269,10 +394,12 @@ describe("Componente ArtworkDetails", () => {
 
   test("não deve renderizar nada se artwork for null ou não tiver objectID", () => {
     // Mockando o store para evitar erros
-    (useFavoritesStore as unknown as jest.Mock).mockReturnValue({
+    mockUseFavoritesStore.mockReturnValue({
       isFavorite: jest.fn().mockReturnValue(false),
       saveFavoriteArtwork: jest.fn(),
       removeFavorite: jest.fn(),
+      favoriteArtworks: [],
+      clearFavorites: jest.fn(),
     });
 
     // Caso 1: artwork é null

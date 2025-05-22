@@ -11,6 +11,7 @@ interface ArtworkCardProps {
   isFavorite: boolean;
   onToggleFavorite: () => void;
   onImageCorrupted: (artworkId: number) => void;
+  renderWithoutImage?: boolean; // Propriedade opcional para renderizar mesmo sem imagem
 }
 
 const ArtworkCard: React.FC<ArtworkCardProps> = ({
@@ -19,20 +20,30 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
   isFavorite,
   onToggleFavorite,
   onImageCorrupted,
+  renderWithoutImage = false,
 }) => {
   const [imageError, setImageError] = useState(false);
 
-  if (!artwork.primaryImage || imageError) {
+  // Se não tiver imagem (ou houver erro) e não estiver configurado para renderizar sem imagem, retorna null
+  if ((!artwork.primaryImage || imageError) && !renderWithoutImage) {
     return null;
   }
 
   const handleImageError = () => {
     setImageError(true);
-    onImageCorrupted(artwork.objectID);
-    console.warn(
-      `Erro ao carregar imagem para: ${artwork.title} (ID: ${artwork.objectID})`,
-      artwork.primaryImage
-    );
+
+    // Garantir que onImageCorrupted exista antes de chamar
+    if (typeof onImageCorrupted === "function") {
+      onImageCorrupted(artwork.objectID);
+    }
+
+    // Usando um ambiente de produção não exibimos o console.warn
+    if (process.env.NODE_ENV !== "test") {
+      console.warn(
+        `Erro ao carregar imagem para: ${artwork.title} (ID: ${artwork.objectID})`,
+        artwork.primaryImage
+      );
+    }
   };
 
   return (
@@ -49,7 +60,7 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
       }}
       whileTap={{ scale: 0.98 }}
     >
-      <Card className="overflow-hidden h-full flex flex-col pt-0">
+      <Card className="overflow-hidden h-full flex flex-col pt-0 shadow-md hover:shadow-xl dark:border dark:border-gray-700">
         {" "}
         {/* Adicionado pt-0 */}
         {/* Container da Imagem e Overlays */}
@@ -57,14 +68,23 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
         <div className="relative overflow-hidden group h-60 rounded-t-xl">
           {" "}
           {/* Alterado para rounded-t-xl */}
-          <motion.img
-            src={artwork.primaryImage}
-            alt={artwork.title}
-            // Alterado para rounded-t-xl para a imagem também
-            className="w-full h-full object-cover transition-transform duration-300 rounded-t-xl" /* Alterado para rounded-t-xl */
-            whileHover={{ scale: 1.15 }}
-            onError={handleImageError}
-          />
+          {artwork.primaryImage && !imageError ? (
+            <motion.img
+              src={artwork.primaryImage}
+              alt={artwork.title}
+              // Alterado para rounded-t-xl para a imagem também
+              className="w-full h-full object-cover transition-transform duration-300 rounded-t-xl" /* Alterado para rounded-t-xl */
+              whileHover={{ scale: 1.15 }}
+              onError={handleImageError}
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center bg-muted rounded-t-xl">
+              <Icon
+                name="imageOff"
+                className="h-12 w-12 text-muted-foreground"
+              />
+            </div>
+          )}
           {/* Department Tag */}
           <div className="absolute top-2 left-2">
             <div className="bg-black/60 text-white text-xs px-2 py-1 rounded backdrop-blur-sm capitalize">

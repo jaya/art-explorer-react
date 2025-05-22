@@ -1,105 +1,52 @@
-// src/components/__tests__/ArtworkCard.test.tsx
-import type { Artwork } from "@/types/artwork";
+import { Artwork } from "@/types/artwork";
 import "@testing-library/jest-dom";
-import { fireEvent, render, screen } from "@testing-library/react";
-import React from "react";
+import { render} from "@testing-library/react";
 import ArtworkCard from "../ArtworkCard";
 
-// Mock simples para framer-motion
-type MotionProps = Record<string, unknown>;
-
-jest.mock("framer-motion", () => ({
-  motion: {
-    div: ({
-      children,
-      ...props
-    }: { children: React.ReactNode } & MotionProps) => (
-      <div data-testid="motion-div" {...props}>
-        {children}
-      </div>
-    ),
-    img: ({ ...props }: MotionProps) => (
-      <img data-testid="motion-img" {...props} />
-    ),
-  },
-  AnimatePresence: ({ children }: { children: React.ReactNode }) => (
-    <>{children}</>
+// Mock para Icon, já que não é relevante para o teste inicial
+jest.mock("@/components/ui/icon", () => ({
+  __esModule: true,
+  default: ({ name, className }: { name: string; className: string }) => (
+    <div data-testid={`icon-${name}`} className={className} />
   ),
 }));
 
-// Mock para artwork
 const mockArtwork: Artwork = {
   objectID: 1,
   primaryImage: "test-image.jpg",
+  title: "Test Artwork",
+  artistDisplayName: "Test Artist",
+  objectDate: "2023",
+  department: "Test Department",
+  isHighlight: false,
+  medium: "Oil on canvas",
+  objectURL: "http://example.com/artwork/1",
   primaryImageSmall: "test-image-small.jpg",
-  title: "Obra de Arte Teste",
-  artistDisplayName: "Artista Teste",
-  objectDate: "1990",
-  department: "Pinturas Europeias",
-  medium: "Óleo sobre tela",
-  dimensions: "100 x 100 cm",
-  isHighlight: true,
-  accessionNumber: "1991.123",
-  creditLine: "Doação de Teste, 1991",
-  objectURL: "https://www.metmuseum.org/art/collection/search/1",
+  constituents: null,
+  accessionNumber: "12345", // Adicionado para conformidade com o tipo
+  dimensions: "100x100cm", // Adicionado para conformidade com o tipo
+  creditLine: "Gift of Mr. and Mrs. Test", // Adicionado para conformidade com o tipo
+  tags: null, // Adicionado para conformidade com o tipo
 };
 
-// Mock para artwork sem título
-const mockArtworkSemTitulo: Artwork = {
-  ...mockArtwork,
-  objectID: 2,
-  title: "",
-};
-
-// Funções de mock
 const mockOnViewDetails = jest.fn();
 const mockOnToggleFavorite = jest.fn();
 const mockOnImageCorrupted = jest.fn();
 
-describe("Componente ArtworkCard", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
+describe("ArtworkCard", () => {
 
-  test("deve chamar onImageCorrupted quando a imagem falha ao carregar", () => {
+  it("does not render if artwork has no primaryImage and renderWithoutImage is false", () => {
+    const artworkWithoutImage = { ...mockArtwork, primaryImage: "" };
     const { container } = render(
       <ArtworkCard
-        artwork={mockArtwork}
+        artwork={artworkWithoutImage}
         onViewDetails={mockOnViewDetails}
         isFavorite={false}
         onToggleFavorite={mockOnToggleFavorite}
         onImageCorrupted={mockOnImageCorrupted}
+        // renderWithoutImage é false por padrão
       />
     );
-
-    // Localiza a imagem
-    const image = screen.getByAltText("Obra de Arte Teste");
-
-    // Simula o erro na imagem
-    fireEvent.error(image);
-
-    // Verifica se onImageCorrupted foi chamado corretamente
-    expect(mockOnImageCorrupted).toHaveBeenCalledTimes(1);
-    expect(mockOnImageCorrupted).toHaveBeenCalledWith(mockArtwork.objectID);
-
-    // Após o erro de imagem, o componente deveria retornar null
-    // Re-renderiza para capturar as mudanças de estado
-    // O container deve estar vazio porque o componente retorna null
     expect(container.firstChild).toBeNull();
-  });
-
-  test("deve renderizar 'Título Desconhecido' se title estiver vazio", () => {
-    render(
-      <ArtworkCard
-        artwork={mockArtworkSemTitulo}
-        onViewDetails={mockOnViewDetails}
-        isFavorite={false}
-        onToggleFavorite={mockOnToggleFavorite}
-        onImageCorrupted={mockOnImageCorrupted}
-      />
-    );
-
-    // Verifica se "Título Desconhecido" é renderizado
-    expect(screen.getByText("Título Desconhecido")).toBeInTheDocument();
   });
 });

@@ -123,7 +123,7 @@ export const Header: React.FC<HeaderProps> = ({ onSearch = () => {} }) => {
         {/* Seção Direita: Busca e Toggle de Tema (apenas desktop) */}
         <div className="hidden md:flex items-center gap-4">
           <div className="relative w-72" ref={commandRef}>
-            <Command className="rounded-lg">
+            <Command className="rounded-lg border border-border bg-card dark:bg-transparent dark:border-input">
               <div className="relative flex items-center">
                 <Icon
                   name="search"
@@ -144,12 +144,12 @@ export const Header: React.FC<HeaderProps> = ({ onSearch = () => {} }) => {
                     }
                   }}
                   placeholder="Buscar obras, artistas..."
-                  className="pl-10 h-10"
+                  className="pl-10 h-10 bg-transparent dark:bg-transparent focus:ring-0 focus:border-transparent border-transparent focus:outline-none"
                 />
               </div>
               {/* Renderizar CommandList apenas se showSuggestions for true (que agora implica query.length > 0) */}
               {showSuggestions && (
-                <CommandList className="absolute z-10 w-full bg-card rounded-lg max-h-60 overflow-y-auto p-1">
+                <CommandList className="absolute z-10 w-full bg-card rounded-lg max-h-60 overflow-y-auto p-1 mt-1 border border-border shadow-md">
                   {filteredSuggestions.length > 0 &&
                     filteredSuggestions.map((suggestion) => (
                       <CommandItem

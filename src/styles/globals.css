@@ -14,7 +14,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 276 100% 8%; /* Alterado para corresponder ao fundo do modo escuro */
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96.1%;
@@ -38,7 +38,7 @@
 
   .dark {
     /* Incorporando a paleta Dracula no tema do shadcn */
-    --background: 231 15% 18%; /* dracula-background para o fundo da página */
+    --background: 276 100% 8%; /* Cor #100028 para o fundo da página */
     --foreground: 60 30% 96%; /* dracula-foreground */
 
     --card: 231 15% 31%; /* Um tom ainda mais claro que o background para o card (antes 27%) */
@@ -50,13 +50,13 @@
     --primary: 326 100% 74%; /* dracula-pink */
     --primary-foreground: 60 30% 96%; /* dracula-foreground */
 
-    --secondary: 265 89% 78%; /* dracula-purple */
+    --secondary: 276 100% 8%; /* Cor #100028 */
     --secondary-foreground: 60 30% 96%; /* dracula-foreground */
 
     --muted: 231 15% 27%; /* dracula-currentLine */
     --muted-foreground: 231 15% 65%; /* custom muted text */
 
-    --accent: 265 89% 78%; /* dracula-purple */
+    --accent: 276 100% 8%; /* Cor #100028 */
     --accent-foreground: 60 30% 96%; /* dracula-foreground */
 
     --destructive: 347 87% 69%; /* dracula-red */
