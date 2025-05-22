@@ -18,7 +18,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
-import TypewriterSuggestion from "@/components/ui/TypewriterSuggestion"; // Adicionar import
+import TypewriterSuggestion from "@/components/ui/TypewriterSuggestion"; 
 import { cn } from "@/lib/utils";
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -47,7 +47,7 @@ export const Header: React.FC<HeaderProps> = ({ onSearch = () => {} }) => {
   const commandRef = useRef<HTMLDivElement>(null);
 
   const filteredSuggestions =
-    query.length > 0 // Filtra apenas se query não estiver vazio
+    query.length > 0
       ? suggestions.filter((s) =>
           s.toLowerCase().startsWith(query.toLowerCase())
         )
@@ -56,7 +56,7 @@ export const Header: React.FC<HeaderProps> = ({ onSearch = () => {} }) => {
   const handleSuggestionSelect = (suggestion: string) => {
     setQuery(suggestion);
     onSearch(suggestion);
-    setShowSuggestions(false); // Fechar ao selecionar
+    setShowSuggestions(false);
   };
 
   useEffect(() => {
@@ -65,22 +65,21 @@ export const Header: React.FC<HeaderProps> = ({ onSearch = () => {} }) => {
         commandRef.current &&
         !commandRef.current.contains(event.target as Node)
       ) {
-        setShowSuggestions(false); // Fechar ao clicar fora
+        setShowSuggestions(false); 
       }
     }
-    // Adicionar listener apenas se as sugestões estiverem visíveis
+
     if (showSuggestions) {
       document.addEventListener("mousedown", handleClickOutside);
     }
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [showSuggestions, commandRef]); // Depender de showSuggestions
+  }, [showSuggestions, commandRef]);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between relative">
-        {/* Seção Esquerda: Logo */}
         <div className="flex items-center">
           <Link
             to="/"
@@ -91,7 +90,6 @@ export const Header: React.FC<HeaderProps> = ({ onSearch = () => {} }) => {
           </Link>
         </div>
 
-        {/* Seção Centro: Navegação (apenas desktop, posicionada absolutamente) */}
         <nav className="hidden md:flex items-center justify-center gap-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
           {" "}
           <Link to="/">
@@ -120,7 +118,6 @@ export const Header: React.FC<HeaderProps> = ({ onSearch = () => {} }) => {
           </Link>
         </nav>
 
-        {/* Seção Direita: Busca e Toggle de Tema (apenas desktop) */}
         <div className="hidden md:flex items-center gap-4">
           <div className="relative w-72" ref={commandRef}>
             <Command className="rounded-lg border border-border bg-card dark:bg-transparent dark:border-input">
@@ -134,11 +131,9 @@ export const Header: React.FC<HeaderProps> = ({ onSearch = () => {} }) => {
                   onValueChange={(currentValue) => {
                     setQuery(currentValue);
                     onSearch(currentValue);
-                    // Mostrar sugestões apenas se houver texto
                     setShowSuggestions(currentValue.length > 0);
                   }}
                   onFocus={() => {
-                    // Ao focar, mostrar sugestões apenas se já houver texto
                     if (query.length > 0) {
                       setShowSuggestions(true);
                     }
@@ -147,7 +142,7 @@ export const Header: React.FC<HeaderProps> = ({ onSearch = () => {} }) => {
                   className="pl-10 h-10 bg-transparent dark:bg-transparent focus:ring-0 focus:border-transparent border-transparent focus:outline-none"
                 />
               </div>
-              {/* Renderizar CommandList apenas se showSuggestions for true (que agora implica query.length > 0) */}
+
               {showSuggestions && (
                 <CommandList className="absolute z-10 w-full bg-card rounded-lg max-h-60 overflow-y-auto p-1 mt-1 border border-border shadow-md">
                   {filteredSuggestions.length > 0 &&
@@ -168,12 +163,10 @@ export const Header: React.FC<HeaderProps> = ({ onSearch = () => {} }) => {
           <ThemeToggle />
         </div>
 
-        {/* Menu para mobile (mantém a lógica anterior, mas fora das seções desktop) */}
         <div className="flex md:hidden items-center gap-2">
           <div className="flex-1 mr-2">
             <DropdownMenu
               onOpenChange={(open) => {
-                // Se o menu estiver fechando e não houver query, garantir que as sugestões não apareçam na próxima abertura
                 if (!open && query.length === 0) {
                   setShowSuggestions(false);
                 }
@@ -193,13 +186,11 @@ export const Header: React.FC<HeaderProps> = ({ onSearch = () => {} }) => {
                     onValueChange={(currentValue) => {
                       setQuery(currentValue);
                       onSearch(currentValue);
-                      // No mobile, o CommandList é sempre parte do Dropdown aberto,
-                      // então não precisamos de setShowSuggestions aqui para controlar a lista em si,
-                      // mas a query ainda controla o conteúdo.
+
                     }}
                     className="h-10"
                   />
-                  {/* Mostrar CommandList/Empty apenas se houver query no mobile */}
+                  
                   {query.length > 0 && (
                     <CommandList className="p-1">
                       {filteredSuggestions.length > 0 &&

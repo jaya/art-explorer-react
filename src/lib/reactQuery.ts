@@ -2,7 +2,6 @@ import { QueryClient } from "@tanstack/react-query";
 import { persistQueryClient } from "@tanstack/react-query-persist-client";
 import { createIDBPersister } from "./idbPersister.ts";
 
-// Cria uma instância do cliente do React Query com configurações padrão
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -14,13 +13,12 @@ export const queryClient = new QueryClient({
   },
 });
 
-// Cria o persister para IndexedDB
+// IndexedDB
 const persister = createIDBPersister("artExplorerCache");
 
-// Configura a persistência do cliente
+// persistência do cliente
 persistQueryClient({
   queryClient,
   persister,
   maxAge: 1000 * 60 * 60 * 24 * 7, // Persistir por 7 dias
-  // buster: 'v1', // Opcional: string para invalidar o cache se a estrutura de dados mudar
 });

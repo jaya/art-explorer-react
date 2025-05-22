@@ -34,13 +34,12 @@ const HomePage: React.FC = () => {
     <div className="min-h-screen bg-background">
       <Header onSearch={handleSearch} />
       <main className="container mx-auto px-4 py-8">
-        {/* Filtro de departamentos */}
+
         <DepartmentFilter
           selectedDepartment={selectedDepartment}
           onSelectDepartment={setSelectedDepartment}
         />
 
-        {/* Indicador de carregamento animado principal */}
         {isLoading && artworksToRender.length === 0 && (
           <Loading
             icon="palette"
@@ -50,11 +49,10 @@ const HomePage: React.FC = () => {
           />
         )}
 
-        {/* Mensagem para quando não há resultados */}
         {!isLoading &&
           !isFetchingNextPage &&
           artworksToRender.length === 0 &&
-          !hasNextPage && ( // Usar hasNextPage do hook
+          !hasNextPage && (
             <EmptyState
               icon="imageOff"
               title={`Nenhuma obra encontrada para "${searchTerm}".`}
@@ -62,7 +60,6 @@ const HomePage: React.FC = () => {
             />
           )}
 
-        {/* Grid de cards de obras de arte */}
         {artworksToRender.length > 0 && (
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
@@ -83,7 +80,6 @@ const HomePage: React.FC = () => {
           </motion.div>
         )}
 
-        {/* Botão "Carregar mais" */}
         {showLoadMoreButton && (
           <div className="mt-8 text-center">
             <Button onClick={handleLoadMore} className="px-6 py-2 gap-2">
@@ -93,15 +89,11 @@ const HomePage: React.FC = () => {
           </div>
         )}
 
-        {/* Indicador de carregamento para "Carregar mais" */}
         {isFetchingNextPage && (
           <Loading text="Carregando mais obras..." className="mt-8" />
         )}
       </main>
 
-      {/* Footer local removido para usar o global de App.tsx */}
-
-      {/* Modal de detalhes da obra */}
       {selectedArtwork && (
         <ArtworkDetails
           artwork={selectedArtwork}

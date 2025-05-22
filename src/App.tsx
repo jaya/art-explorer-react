@@ -9,19 +9,15 @@ function App() {
   return (
     <ThemeProvider>
       <div className="flex min-h-screen flex-col">
-        {" "}
-        {/* Wrapper Flex */}
         <BrowserRouter>
           <main className="flex-grow">
-            {" "}
-            {/* Conteúdo principal cresce para preencher o espaço */}
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/favoritos" element={<FavoritesPage />} />
             </Routes>
           </main>
           <Toaster />
-          <Footer /> {/* Adiciona o Footer aqui */}
+          <Footer />
         </BrowserRouter>
       </div>
     </ThemeProvider>

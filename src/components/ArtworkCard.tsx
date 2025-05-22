@@ -11,7 +11,7 @@ interface ArtworkCardProps {
   isFavorite: boolean;
   onToggleFavorite: () => void;
   onImageCorrupted: (artworkId: number) => void;
-  renderWithoutImage?: boolean; // Propriedade opcional para renderizar mesmo sem imagem
+  renderWithoutImage?: boolean;
 }
 
 const ArtworkCard: React.FC<ArtworkCardProps> = ({
@@ -24,7 +24,6 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
 }) => {
   const [imageError, setImageError] = useState(false);
 
-  // Se não tiver imagem (ou houver erro) e não estiver configurado para renderizar sem imagem, retorna null
   if ((!artwork.primaryImage || imageError) && !renderWithoutImage) {
     return null;
   }
@@ -32,12 +31,10 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
   const handleImageError = () => {
     setImageError(true);
 
-    // Garantir que onImageCorrupted exista antes de chamar
     if (typeof onImageCorrupted === "function") {
       onImageCorrupted(artwork.objectID);
     }
 
-    // Usando um ambiente de produção não exibimos o console.warn
     if (process.env.NODE_ENV !== "test") {
       console.warn(
         `Erro ao carregar imagem para: ${artwork.title} (ID: ${artwork.objectID})`,
@@ -48,7 +45,6 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
 
   return (
     <motion.div
-      // layout // Removido para evitar conflito com o layout da grade pai
       initial={{ opacity: 0, scale: 0.9, y: 30 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.9, y: 30 }}
@@ -62,18 +58,13 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
     >
       <Card className="overflow-hidden h-full flex flex-col pt-0 shadow-md hover:shadow-xl dark:border dark:border-gray-700">
         {" "}
-        {/* Adicionado pt-0 */}
-        {/* Container da Imagem e Overlays */}
-        {/* Alterado para rounded-t-xl para alinhar com o arredondamento do Card (rounded-xl) */}
         <div className="relative overflow-hidden group h-60 rounded-t-xl">
           {" "}
-          {/* Alterado para rounded-t-xl */}
           {artwork.primaryImage && !imageError ? (
             <motion.img
               src={artwork.primaryImage}
               alt={artwork.title}
-              // Alterado para rounded-t-xl para a imagem também
-              className="w-full h-full object-cover transition-transform duration-300 rounded-t-xl" /* Alterado para rounded-t-xl */
+              className="w-full h-full object-cover transition-transform duration-300 rounded-t-xl"
               whileHover={{ scale: 1.15 }}
               onError={handleImageError}
             />
@@ -85,13 +76,11 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
               />
             </div>
           )}
-          {/* Department Tag */}
           <div className="absolute top-2 left-2">
             <div className="bg-black/60 text-white text-xs px-2 py-1 rounded backdrop-blur-sm capitalize">
               {artwork.department || "Desconhecido"}
             </div>
           </div>
-          {/* Overlay com título e artista */}
           <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 via-black/50 to-transparent">
             <h3 className="text-lg font-semibold line-clamp-2 text-white">
               {artwork.title || "Título Desconhecido"}
@@ -103,8 +92,6 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
             )}
           </div>
         </div>
-        {/* Conteúdo abaixo da imagem */}
-        {/* O p-4 aqui cria um espaço entre a imagem e este conteúdo, o que é esperado. */}
         <CardContent className="p-4 pb-2 flex-grow" data-testid="card-content">
           <div className="flex items-center text-xs text-muted-foreground gap-1 mt-1">
             <Icon name="calendar" className="h-3 w-3 flex-shrink-0" />

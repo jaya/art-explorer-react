@@ -5,7 +5,6 @@ import type { Artwork } from "@/types/artwork";
 import { act, renderHook } from "@testing-library/react";
 import { useFavoritesGalleryLogic } from "../useFavoritesGalleryLogic";
 
-// Mock da store de favoritos
 jest.mock("@/stores/favoritesStore", () => ({
   useFavoritesStore: jest.fn(),
 }));
@@ -94,7 +93,7 @@ describe("useFavoritesGalleryLogic", () => {
   });
 
   test("deve chamar removeFavorite da store ao remover um favorito", () => {
-    internalFavoritesMap.set(mockArtwork.objectID, mockArtwork); // Adiciona um item para ser removido
+    internalFavoritesMap.set(mockArtwork.objectID, mockArtwork); 
 
     const { result } = renderHook(() => useFavoritesGalleryLogic());
     act(() => {
@@ -106,14 +105,10 @@ describe("useFavoritesGalleryLogic", () => {
   });
 
   test("deve retornar isFavorite corretamente", () => {
-    // Simula que mockArtwork está nos favoritos
     internalFavoritesMap.set(mockArtwork.objectID, mockArtwork);
 
-    // Verifica diretamente através da função mockada
     expect(isFavoriteMock(mockArtwork.objectID)).toBe(true);
-    expect(isFavoriteMock(999)).toBe(false); // ID não favorito
-
-    // Verifica se a função da store foi chamada
+    expect(isFavoriteMock(999)).toBe(false);
     expect(isFavoriteMock).toHaveBeenCalledWith(mockArtwork.objectID);
     expect(isFavoriteMock).toHaveBeenCalledWith(999);
   });

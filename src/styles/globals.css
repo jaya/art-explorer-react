@@ -5,16 +5,16 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%; /* Branco para o fundo da página */
+    --background: 0 0% 100%; 
     --foreground: 222.2 84% 4.9%;
 
-    --card: 0 0% 92%; /* Cinza ainda mais perceptível para o fundo do card (antes 95%) */
+    --card: 0 0% 92%; 
     --card-foreground: 222.2 84% 4.9%;
 
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 276 100% 8%; /* Alterado para corresponder ao fundo do modo escuro */
+    --primary: 276 100% 8%; 
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96.1%;
@@ -37,34 +37,33 @@
   }
 
   .dark {
-    /* Incorporando a paleta Dracula no tema do shadcn */
-    --background: 276 100% 8%; /* Cor #100028 para o fundo da página */
-    --foreground: 60 30% 96%; /* dracula-foreground */
+    --background: 276 100% 8%; 
+    --foreground: 60 30% 96%; 
 
-    --card: 231 15% 31%; /* Um tom ainda mais claro que o background para o card (antes 27%) */
-    --card-foreground: 60 30% 96%; /* dracula-foreground */
+    --card: 231 15% 31%; 
+    --card-foreground: 60 30% 96%; 
 
-    --popover: 231 15% 27%; /* dracula-currentLine */
-    --popover-foreground: 60 30% 96%; /* dracula-foreground */
+    --popover: 231 15% 27%; 
+    --popover-foreground: 60 30% 96%; 
 
-    --primary: 326 100% 74%; /* dracula-pink */
-    --primary-foreground: 60 30% 96%; /* dracula-foreground */
+    --primary: 326 100% 74%; 
+    --primary-foreground: 60 30% 96%; 
 
-    --secondary: 276 100% 8%; /* Cor #100028 */
-    --secondary-foreground: 60 30% 96%; /* dracula-foreground */
+    --secondary: 276 100% 8%; 
+    --secondary-foreground: 60 30% 96%; 
 
-    --muted: 231 15% 27%; /* dracula-currentLine */
-    --muted-foreground: 231 15% 65%; /* custom muted text */
+    --muted: 231 15% 27%; 
+    --muted-foreground: 231 15% 65%; 
 
-    --accent: 276 100% 8%; /* Cor #100028 */
-    --accent-foreground: 60 30% 96%; /* dracula-foreground */
+    --accent: 276 100% 8%; 
+    --accent-foreground: 60 30% 96%; 
 
-    --destructive: 347 87% 69%; /* dracula-red */
-    --destructive-foreground: 60 30% 96%; /* dracula-foreground */
+    --destructive: 347 87% 69%; 
+    --destructive-foreground: 60 30% 96%; 
 
-    --border: 231 15% 27%; /* dracula-currentLine */
-    --input: 231 15% 27%; /* dracula-currentLine */
-    --ring: 326 100% 74%; /* dracula-pink */
+    --border: 231 15% 27%; 
+    --input: 231 15% 27%; 
+    --ring: 326 100% 74%; 
   }
 }
 

@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">61.43% </span>
+                <span class="strong">63.57% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>94/153</span>
+                <span class='fraction'>89/140</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">61.43% </span>
+                <span class="strong">63.57% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>94/153</span>
+                <span class='fraction'>89/140</span>
             </div>
         
             
@@ -203,20 +203,7 @@
 <a name='L138'></a><a href='#L138'>138</a>
 <a name='L139'></a><a href='#L139'>139</a>
 <a name='L140'></a><a href='#L140'>140</a>
-<a name='L141'></a><a href='#L141'>141</a>
-<a name='L142'></a><a href='#L142'>142</a>
-<a name='L143'></a><a href='#L143'>143</a>
-<a name='L144'></a><a href='#L144'>144</a>
-<a name='L145'></a><a href='#L145'>145</a>
-<a name='L146'></a><a href='#L146'>146</a>
-<a name='L147'></a><a href='#L147'>147</a>
-<a name='L148'></a><a href='#L148'>148</a>
-<a name='L149'></a><a href='#L149'>149</a>
-<a name='L150'></a><a href='#L150'>150</a>
-<a name='L151'></a><a href='#L151'>151</a>
-<a name='L152'></a><a href='#L152'>152</a>
-<a name='L153'></a><a href='#L153'>153</a>
-<a name='L154'></a><a href='#L154'>154</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L141'></a><a href='#L141'>141</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -245,14 +232,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -294,7 +273,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -313,13 +291,9 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -382,7 +356,7 @@ interface ArtworkCardProps {
   isFavorite: boolean;
   onToggleFavorite: () =&gt; void;
   onImageCorrupted: (artworkId: number) =&gt; void;
-  renderWithoutImage?: boolean; // Propriedade opcional para renderizar mesmo sem imagem
+  renderWithoutImage?: boolean;
 }
 &nbsp;
 const ArtworkCard: React.FC&lt;ArtworkCardProps&gt; = ({
@@ -395,7 +369,6 @@ const ArtworkCard: React.FC&lt;ArtworkCardProps&gt; = ({
 }) =&gt; {
   const [imageError, setImageError] = useState(false);
 &nbsp;
-  // Se não tiver imagem (ou houver erro) e não estiver configurado para renderizar sem imagem, retorna null
   if ((!artwork.primaryImage<span class="branch-0 cbranch-no" title="branch not covered" > || imageError)</span> &amp;&amp; !renderWithoutImage) {
     return null;
   }
@@ -403,12 +376,10 @@ const ArtworkCard: React.FC&lt;ArtworkCardProps&gt; = ({
 <span class="cstat-no" title="statement not covered" >  const handleImageError = <span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
 <span class="cstat-no" title="statement not covered" >    setImageError(true);</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    // Garantir que onImageCorrupted exista antes de chamar</span>
 <span class="cstat-no" title="statement not covered" >    if (typeof onImageCorrupted === "function") {</span>
 <span class="cstat-no" title="statement not covered" >      onImageCorrupted(artwork.objectID);</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    // Usando um ambiente de produção não exibimos o console.warn</span>
 <span class="cstat-no" title="statement not covered" >    if (process.env.NODE_ENV !== "test") {</span>
 <span class="cstat-no" title="statement not covered" >      console.warn(</span>
 <span class="cstat-no" title="statement not covered" >        `Erro ao carregar imagem para: ${artwork.title} (ID: ${artwork.objectID})`,</span>
@@ -419,7 +390,6 @@ const ArtworkCard: React.FC&lt;ArtworkCardProps&gt; = ({
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >  return (</span>
 <span class="cstat-no" title="statement not covered" >    &lt;motion.div</span>
-<span class="cstat-no" title="statement not covered" >      // layout // Removido para evitar conflito com o layout da grade pai</span>
 <span class="cstat-no" title="statement not covered" >      initial={{ opacity: 0, scale: 0.9, y: 30 }}</span>
 <span class="cstat-no" title="statement not covered" >      animate={{ opacity: 1, scale: 1, y: 0 }}</span>
 <span class="cstat-no" title="statement not covered" >      exit={{ opacity: 0, scale: 0.9, y: 30 }}</span>
@@ -433,18 +403,13 @@ const ArtworkCard: React.FC&lt;ArtworkCardProps&gt; = ({
 <span class="cstat-no" title="statement not covered" >    &gt;</span>
 <span class="cstat-no" title="statement not covered" >      &lt;Card className="overflow-hidden h-full flex flex-col pt-0 shadow-md hover:shadow-xl dark:border dark:border-gray-700"&gt;</span>
 <span class="cstat-no" title="statement not covered" >        {" "}</span>
-<span class="cstat-no" title="statement not covered" >        {/* Adicionado pt-0 */}</span>
-<span class="cstat-no" title="statement not covered" >        {/* Container da Imagem e Overlays */}</span>
-<span class="cstat-no" title="statement not covered" >        {/* Alterado para rounded-t-xl para alinhar com o arredondamento do Card (rounded-xl) */}</span>
 <span class="cstat-no" title="statement not covered" >        &lt;div className="relative overflow-hidden group h-60 rounded-t-xl"&gt;</span>
 <span class="cstat-no" title="statement not covered" >          {" "}</span>
-<span class="cstat-no" title="statement not covered" >          {/* Alterado para rounded-t-xl */}</span>
           {artwork.primaryImage &amp;&amp; !imageError <span class="branch-0 cbranch-no" title="branch not covered" >? (</span>
 <span class="cstat-no" title="statement not covered" >            &lt;motion.img</span>
 <span class="cstat-no" title="statement not covered" >              src={artwork.primaryImage}</span>
 <span class="cstat-no" title="statement not covered" >              alt={artwork.title}</span>
-<span class="cstat-no" title="statement not covered" >              // Alterado para rounded-t-xl para a imagem também</span>
-<span class="cstat-no" title="statement not covered" >              className="w-full h-full object-cover transition-transform duration-300 rounded-t-xl" /* Alterado para rounded-t-xl */</span>
+<span class="cstat-no" title="statement not covered" >              className="w-full h-full object-cover transition-transform duration-300 rounded-t-xl"</span>
 <span class="cstat-no" title="statement not covered" >              whileHover={{ scale: 1.15 }}</span>
 <span class="cstat-no" title="statement not covered" >              onError={handleImageError}</span>
 <span class="cstat-no" title="statement not covered" >            /&gt;</span>
@@ -456,13 +421,11 @@ const ArtworkCard: React.FC&lt;ArtworkCardProps&gt; = ({
 <span class="cstat-no" title="statement not covered" >              /&gt;</span>
 <span class="cstat-no" title="statement not covered" >            &lt;/div&gt;</span>
           )}
-          {/* Department Tag */}
           &lt;div className="absolute top-2 left-2"&gt;
             &lt;div className="bg-black/60 text-white text-xs px-2 py-1 rounded backdrop-blur-sm capitalize"&gt;
               {artwork.department<span class="branch-0 cbranch-no" title="branch not covered" > || "Desconhecido"}</span>
             &lt;/div&gt;
           &lt;/div&gt;
-          {/* Overlay com título e artista */}
           &lt;div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 via-black/50 to-transparent"&gt;
             &lt;h3 className="text-lg font-semibold line-clamp-2 text-white"&gt;
               {artwork.title<span class="branch-0 cbranch-no" title="branch not covered" > || "Título Desconhecido"}</span>
@@ -474,8 +437,6 @@ const ArtworkCard: React.FC&lt;ArtworkCardProps&gt; = ({
             )}
           &lt;/div&gt;
         &lt;/div&gt;
-        {/* Conteúdo abaixo da imagem */}
-        {/* O p-4 aqui cria um espaço entre a imagem e este conteúdo, o que é esperado. */}
         &lt;CardContent className="p-4 pb-2 flex-grow" data-testid="card-content"&gt;
           &lt;div className="flex items-center text-xs text-muted-foreground gap-1 mt-1"&gt;
             &lt;Icon name="calendar" className="h-3 w-3 flex-shrink-0" /&gt;
@@ -529,7 +490,7 @@ export default ArtworkCard;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-22T18:54:21.145Z
+                at 2025-05-22T19:53:54.742Z
             </div>
         <script src="../prettify.js"></script>
         <script>

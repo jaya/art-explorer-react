@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.72% </span>
+                <span class="strong">76.92% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>37/47</span>
+                <span class='fraction'>30/39</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.72% </span>
+                <span class="strong">76.92% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>37/47</span>
+                <span class='fraction'>30/39</span>
             </div>
         
             
@@ -102,16 +102,7 @@
 <a name='L37'></a><a href='#L37'>37</a>
 <a name='L38'></a><a href='#L38'>38</a>
 <a name='L39'></a><a href='#L39'>39</a>
-<a name='L40'></a><a href='#L40'>40</a>
-<a name='L41'></a><a href='#L41'>41</a>
-<a name='L42'></a><a href='#L42'>42</a>
-<a name='L43'></a><a href='#L43'>43</a>
-<a name='L44'></a><a href='#L44'>44</a>
-<a name='L45'></a><a href='#L45'>45</a>
-<a name='L46'></a><a href='#L46'>46</a>
-<a name='L47'></a><a href='#L47'>47</a>
-<a name='L48'></a><a href='#L48'>48</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L40'></a><a href='#L40'>40</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -124,15 +115,10 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
@@ -148,8 +134,6 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -164,24 +148,18 @@ import type { SearchResponse } from "@/types/artwork";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 &nbsp;
-// Função base da API
 export const searchArtworks = async (
   query: string
 ): Promise&lt;SearchResponse&gt; =&gt; {
   if (!query) {
-    // Adiciona verificação para query vazia
-    // Retorna uma resposta vazia válida se a query for vazia,
-    // ou pode lançar um erro se uma query for sempre esperada.
-    // console.warn("Search query is empty. Returning empty results.");
     return { total: 0, objectIDs: [] };
   }
   try {
     const response = await axios.get&lt;SearchResponse&gt;(
-      `${API_BASE_URL}/search?q=${encodeURIComponent(query)}&amp;hasImages=true` // Usa encodeURIComponent
+      `${API_BASE_URL}/search?q=${encodeURIComponent(query)}&amp;hasImages=true`
     );
-    // A API de busca retorna um objeto com total e objectIDs (pode ser null)
-    // Mesmo que a busca não encontre nada, ela retorna total: 0 e objectIDs: null, o que não é um erro.
-    return response.data<span class="branch-0 cbranch-no" title="branch not covered" > || { total: 0, objectIDs: [] };</span> // Garante que objectIDs nunca seja null
+&nbsp;
+    return response.data<span class="branch-0 cbranch-no" title="branch not covered" > || { total: 0, objectIDs: [] };</span>
   } catch (error) {
     if (axios.isAxiosError(error)) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
 <span class="cstat-no" title="statement not covered" >      throw createSearchOperationFailedError(query, error);</span>
@@ -194,14 +172,12 @@ export const searchArtworks = async (
   }
 };
 &nbsp;
-// Hook para buscar obras por termo de pesquisa (retorna apenas IDs)
 export const useSearchArtworks = <span class="fstat-no" title="function not covered" >(query: string, enabled = true) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >  return useQuery&lt;SearchResponse, Error, number[] | null&gt;({</span>
-<span class="cstat-no" title="statement not covered" >    // Especifica o tipo de erro e o tipo selecionado</span>
 <span class="cstat-no" title="statement not covered" >    queryKey: ["artworks", "search", query],</span>
 <span class="cstat-no" title="statement not covered" >    queryFn: () =&gt; searchArtworks(query),</span>
 <span class="cstat-no" title="statement not covered" >    enabled: !!query &amp;&amp; enabled,</span>
-<span class="cstat-no" title="statement not covered" >    select: (data) =&gt; data.objectIDs || [], // Garante que objectIDs seja um array</span>
+<span class="cstat-no" title="statement not covered" >    select: (data) =&gt; data.objectIDs || [], </span>
 <span class="cstat-no" title="statement not covered" >  });</span>
 <span class="cstat-no" title="statement not covered" >};</span>
 &nbsp;</pre></td></tr></table></pre>
@@ -211,7 +187,7 @@ export const useSearchArtworks = <span class="fstat-no" title="function not cove
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-22T18:54:21.145Z
+                at 2025-05-22T19:53:54.742Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

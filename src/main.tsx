@@ -6,14 +6,10 @@ import App from "./App.tsx";
 import { queryClient } from "./lib/reactQuery";
 import { initializeTheme } from "./stores/themeStore";
 
-// Inicializa o tema baseado na preferência salva
 try {
   initializeTheme();
 } catch (error) {
   console.error("Failed to initialize theme:", error);
-  // Mesmo que initializeTheme falhe (ex: localStorage inacessível no SSR ou em um ambiente restrito),
-  // o store Zustand tentará aplicar o tema padrão (baseado em prefers-color-scheme)
-  // quando for usado pela primeira vez. O importante é não deixar essa falha quebrar o app.
 }
 
 const rootElement = document.getElementById("root");

@@ -6,7 +6,6 @@ import type { Artwork } from "@/types/artwork";
 import { act, renderHook } from "@testing-library/react";
 import { useArtworkGalleryLogic } from "../useArtworkGalleryLogic";
 
-// Mock das dependências externas
 jest.mock("@/services/artworks", () => ({
   useInfiniteArtworks: jest.fn(),
 }));
@@ -15,11 +14,9 @@ jest.mock("@/stores/favoritesStore", () => ({
   useFavoritesStore: jest.fn(),
 }));
 
-// Adiciona o controle de timers do Jest
 jest.useFakeTimers();
 
 describe("useArtworkGalleryLogic", () => {
-  // Mock de dados e retornos
   const mockArtwork: Artwork = {
     objectID: 1,
     title: "Test Artwork",
@@ -30,12 +27,10 @@ describe("useArtworkGalleryLogic", () => {
     objectDate: "2023",
     dimensions: "100 x 100 cm",
     creditLine: "Test Museum",
-    objectURL: "https://test.com/artwork/1", // Adicionando objectURL de volta
+    objectURL: "https://test.com/artwork/1",
     primaryImageSmall: "test-image-small.jpg",
     isHighlight: false,
     accessionNumber: "12345",
-    // As seguintes propriedades são opcionais e podem ser adicionadas se necessário para testes específicos
-    // constituents: null,
   };
 
   const mockArtworkPage = {
@@ -43,10 +38,9 @@ describe("useArtworkGalleryLogic", () => {
     nextPageCursor: 2,
   };
 
-  // Configuração base para o mock de useInfiniteArtworks
   const baseMockUseInfiniteArtworks = {
     fetchNextPage: jest.fn(),
-    hasNextPage: false, // Desabilita a paginação automática para simplificar os testes
+    hasNextPage: false,
     isFetchingNextPage: false,
     isPending: false,
     error: null,
@@ -63,7 +57,7 @@ describe("useArtworkGalleryLogic", () => {
     jest.clearAllMocks();
     (useInfiniteArtworks as jest.Mock).mockReturnValue({
       ...baseMockUseInfiniteArtworks,
-      data: { pages: [mockArtworkPage], pageParams: [null] }, // Fornece dados iniciais
+      data: { pages: [mockArtworkPage], pageParams: [null] },
     });
     (useFavoritesStore as unknown as jest.Mock).mockReturnValue(
       mockUseFavoritesStore
@@ -71,11 +65,10 @@ describe("useArtworkGalleryLogic", () => {
   });
 
   test("deve inicializar com valores padrão", () => {
-    // Sobrescreve o mock para este teste específico para garantir que hasNextPage seja true
     (useInfiniteArtworks as jest.Mock).mockReturnValue({
       ...baseMockUseInfiniteArtworks,
       data: { pages: [mockArtworkPage], pageParams: [null] },
-      hasNextPage: true, // Garante que o botão de carregar mais seja exibido
+      hasNextPage: true,
       isPending: false,
     });
     const { result } = renderHook(() => useArtworkGalleryLogic());
@@ -89,10 +82,6 @@ describe("useArtworkGalleryLogic", () => {
   });
 
   test("deve permitir busca por artworks e atualizar searchTerm após debounce", () => {
-    // O mock do beforeEach lida com as chamadas.
-    // useInfiniteArtworks será chamado com DEFAULT_SEARCH_TERM inicialmente,
-    // depois novamente com DEFAULT_SEARCH_TERM após setCurrentSearchInput,
-    // e finalmente com newSearchTerm após o debounce e setSearchTerm.
 
     const { result } = renderHook(() => useArtworkGalleryLogic());
     const newSearchTerm = "Van Gogh";
@@ -106,24 +95,18 @@ describe("useArtworkGalleryLogic", () => {
     });
 
     expect(result.current.searchTerm).toBe(newSearchTerm);
-    // Verifica se a última chamada a useInfiniteArtworks foi com o novo termo de busca.
     expect(useInfiniteArtworks).toHaveBeenLastCalledWith(newSearchTerm, null);
-    // A verificação de toHaveBeenCalledTimes(2) foi removida por ser muito sensível
-    // ao número de re-renderizações internas do hook.
   });
 
   test("deve selecionar e fechar detalhes de uma obra de arte", () => {
-    // O mock do beforeEach já fornece os dados iniciais e estado não pendente
     const { result } = renderHook(() => useArtworkGalleryLogic());
 
-    // Seleciona uma obra
     act(() => {
       result.current.handleArtworkClick(mockArtwork);
     });
 
     expect(result.current.selectedArtwork).toEqual(mockArtwork);
 
-    // Fecha os detalhes
     act(() => {
       result.current.handleCloseDetails();
     });

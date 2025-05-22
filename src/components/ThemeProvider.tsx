@@ -1,5 +1,3 @@
-"use client";
-
 import { useThemeStore } from "@/stores/themeStore";
 import { useEffect } from "react";
 
@@ -11,7 +9,6 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   const { isDarkMode } = useThemeStore();
 
   useEffect(() => {
-    // Apply dark mode class to root html element
     if (typeof window !== "undefined") {
       const root = window.document.documentElement;
 

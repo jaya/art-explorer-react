@@ -4,7 +4,6 @@ import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
 import DepartmentFilter from "../DepartmentFilter";
 
-// Mock para o componente DropdownMenu do Radix UI
 jest.mock("@/components/ui/dropdown-menu", () => ({
   DropdownMenu: ({ children, ...props }: { children: React.ReactNode }) => (
     <div data-testid="dropdown-menu" {...props}>
@@ -69,7 +68,6 @@ jest.mock("@/components/ui/dropdown-menu", () => ({
   ),
 }));
 
-// Mock para o componente Icon
 jest.mock("@/components/ui/icon", () => ({
   __esModule: true,
   default: ({ name, className }: { name: string; className: string }) => (
@@ -79,7 +77,6 @@ jest.mock("@/components/ui/icon", () => ({
   ),
 }));
 
-// Mock para o componente Button
 jest.mock("@/components/ui/button", () => ({
   Button: ({
     children,
@@ -123,19 +120,14 @@ describe("Componente DepartmentFilter", () => {
       />
     );
 
-    // Verifica se o botão do trigger contém "Todos os departamentos"
-    // Usando uma query mais específica para evitar duplicidade
     const triggerElement = screen.getByTestId("dropdown-trigger");
     expect(triggerElement.textContent).toContain("Todos os departamentos");
 
-    // Verifica se o ícone de edifício está presente no trigger
-    // Usando getAllByTestId e verificando se pelo menos um existe
     const buildingIcons = screen.getAllByTestId("icon-building");
     expect(buildingIcons.length).toBeGreaterThan(0);
   });
 
   test("deve exibir o nome correto do departamento quando um ID é selecionado", () => {
-    // Selecionar o departamento "European Paintings" com ID 11
     const departmentId = "11";
     const departmentName = "European Paintings";
 
@@ -146,7 +138,6 @@ describe("Componente DepartmentFilter", () => {
       />
     );
 
-    // Verifica se o botão contém o nome do departamento selecionado
     const triggerElement = screen.getByTestId("dropdown-trigger");
     expect(triggerElement.textContent).toContain(departmentName);
   });
@@ -159,15 +150,12 @@ describe("Componente DepartmentFilter", () => {
       />
     );
 
-    // Verifica o conteúdo do dropdown
     const dropdownContent = screen.getByTestId("dropdown-content");
 
-    // Verifica se todos os departamentos estão presentes no menu
     departments.forEach((department) => {
       expect(dropdownContent.textContent).toContain(department.name);
     });
 
-    // Verifica se "Todos os departamentos" também está presente
     expect(dropdownContent.textContent).toContain("Todos os departamentos");
   });
 
@@ -179,23 +167,18 @@ describe("Componente DepartmentFilter", () => {
       />
     );
 
-    // Encontra os itens de dropdown e clica no departamento "Modern Art"
     const departmentItems = screen.getAllByTestId("dropdown-item");
 
-    // Filtra o item que contém o texto "Modern Art"
     const modernArtItem = departmentItems.find((item) =>
       item.textContent?.includes("Modern Art")
     );
 
-    // Clica no item
     fireEvent.click(modernArtItem!);
 
-    // Verifica se a função de callback foi chamada com o ID correto
     expect(mockOnSelectDepartment).toHaveBeenCalledWith("21");
   });
 
   test("deve destacar o departamento selecionado no menu", () => {
-    // Seleciona o departamento "Asian Art" com ID 6
     const departmentId = "6";
 
     render(
@@ -205,22 +188,18 @@ describe("Componente DepartmentFilter", () => {
       />
     );
 
-    // Obtém todos os itens de dropdown
     const dropdownItems = screen.getAllByTestId("dropdown-item");
 
-    // O item correspondente a "Asian Art" deve ter o atributo data-selected="true"
     const selectedItem = dropdownItems.find((item) =>
       item.textContent?.includes("Asian Art")
     );
 
     expect(selectedItem).toHaveAttribute("data-selected", "true");
 
-    // Os outros itens não devem estar selecionados
     const nonSelectedItems = dropdownItems.filter(
       (item) => !item.textContent?.includes("Asian Art")
     );
 
-    // Verifica que pelo menos alguns não estão selecionados
     expect(
       nonSelectedItems.some(
         (item) => item.getAttribute("data-selected") === "false"

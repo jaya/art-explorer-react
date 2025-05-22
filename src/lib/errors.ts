@@ -2,7 +2,6 @@
 export interface CustomError extends Error {
   statusCode?: number;
   originalError?: unknown;
-  // O campo 'name' da instância de Error será usado para identificar o tipo de erro.
 }
 
 /**
@@ -21,13 +20,12 @@ function createError(
   originalError?: unknown
 ): CustomError {
   const error = new Error(message) as CustomError;
-  error.name = name; // Usamos 'name' para identificar o tipo de erro funcionalmente
+  error.name = name;
   error.statusCode = statusCode;
   error.originalError = originalError;
   return error;
 }
 
-// --- Funções Fábrica para Erros Específicos ---
 
 export function createApiError(
   message: string,
@@ -71,36 +69,23 @@ export function createMultipleArtworksFetchError(
   );
 }
 
-// --- Funções de Verificação de Tipo (Type Guards) ---
-
-/**
- * Verifica se um erro é uma instância de ArtworkNotFoundError.
- */
 export function isArtworkNotFoundError(error: unknown): error is CustomError {
   return error instanceof Error && error.name === "ArtworkNotFoundError";
 }
 
-/**
- * Verifica se um erro é uma instância de SearchOperationFailedError.
- */
 export function isSearchOperationFailedError(
   error: unknown
 ): error is CustomError {
   return error instanceof Error && error.name === "SearchOperationFailedError";
 }
 
-/**
- * Verifica se um erro é uma instância de MultipleArtworksFetchError.
- */
+
 export function isMultipleArtworksFetchError(
   error: unknown
 ): error is CustomError {
   return error instanceof Error && error.name === "MultipleArtworksFetchError";
 }
 
-/**
- * Verifica se um erro é um erro genérico da API ou um de seus subtipos conhecidos.
- */
 export function isApiError(error: unknown): error is CustomError {
   if (!(error instanceof Error)) {
     return false;

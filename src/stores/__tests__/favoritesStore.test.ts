@@ -20,18 +20,15 @@ const mockArtwork: Artwork = {
 
 describe("useFavoritesStore", () => {
   beforeEach(() => {
-    // Limpa os favoritos antes de cada teste
     useFavoritesStore.getState().clearFavorites();
   });
 
   it("adiciona e remove favoritos corretamente", () => {
-    // Adiciona
     act(() => {
       useFavoritesStore.getState().saveFavoriteArtwork(mockArtwork);
     });
     expect(useFavoritesStore.getState().favoriteArtworks).toHaveLength(1);
 
-    // Remove
     act(() => {
       useFavoritesStore.getState().removeFavorite(mockArtwork.objectID);
     });

@@ -3,7 +3,6 @@ import "@testing-library/jest-dom";
 import { render} from "@testing-library/react";
 import ArtworkCard from "../ArtworkCard";
 
-// Mock para Icon, já que não é relevante para o teste inicial
 jest.mock("@/components/ui/icon", () => ({
   __esModule: true,
   default: ({ name, className }: { name: string; className: string }) => (
@@ -23,10 +22,10 @@ const mockArtwork: Artwork = {
   objectURL: "http://example.com/artwork/1",
   primaryImageSmall: "test-image-small.jpg",
   constituents: null,
-  accessionNumber: "12345", // Adicionado para conformidade com o tipo
-  dimensions: "100x100cm", // Adicionado para conformidade com o tipo
-  creditLine: "Gift of Mr. and Mrs. Test", // Adicionado para conformidade com o tipo
-  tags: null, // Adicionado para conformidade com o tipo
+  accessionNumber: "12345", 
+  dimensions: "100x100cm",
+  creditLine: "Gift of Mr. and Mrs. Test",
+  tags: null,
 };
 
 const mockOnViewDetails = jest.fn();
@@ -44,7 +43,6 @@ describe("ArtworkCard", () => {
         isFavorite={false}
         onToggleFavorite={mockOnToggleFavorite}
         onImageCorrupted={mockOnImageCorrupted}
-        // renderWithoutImage é false por padrão
       />
     );
     expect(container.firstChild).toBeNull();

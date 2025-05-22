@@ -20,7 +20,7 @@ const DepartmentFilter: React.FC<DepartmentFilterProps> = ({
   selectedDepartment,
   onSelectDepartment,
 }) => {
-  // Encontra o nome do departamento pelo id (se for número)
+
   const getDisplayName = () => {
     if (!selectedDepartment) return "Todos os departamentos";
 

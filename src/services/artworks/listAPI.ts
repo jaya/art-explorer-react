@@ -8,11 +8,10 @@ import {
   isArtworkNotFoundError,
 } from "@/lib/errors";
 import type { Artwork } from "@/types/artwork";
-import { useInfiniteQuery, type QueryKey } from "@tanstack/react-query"; // Importa QueryKey
+import { useInfiniteQuery, type QueryKey } from "@tanstack/react-query";
 import { getArtworkDetails } from "./detailsAPI";
 import { searchArtworks } from "./searchAPI";
 
-// Função para buscar vários detalhes de obras de arte em paralelo
 export const getMultipleArtworkDetails = async (
   objectIDs: number[]
 ): Promise<Artwork[]> => {
@@ -51,7 +50,7 @@ export const getMultipleArtworkDetails = async (
   ) {
     throw createMultipleArtworksFetchError(
       `Failed to fetch details for all ${objectIDs.length} artworks.`,
-      errorsEncountered // Passa os erros encontrados
+      errorsEncountered
     );
   }
 
@@ -63,7 +62,6 @@ interface InfiniteArtworksData {
   nextPageCursor?: number;
 }
 
-// Hook para buscar múltiplas obras com paginação infinita
 export const useInfiniteArtworks = (
   query: string,
   departmentId?: string | null
@@ -75,19 +73,18 @@ export const useInfiniteArtworks = (
     QueryKey, // TQueryKey: Tipo da chave da query. `QueryKey` é `readonly unknown[]`
     number // TPageParam: Tipo do parâmetro da página
   >({
-    queryKey: ["artworks", "infinite", query, departmentId], // Este é o QueryKey
+    queryKey: ["artworks", "infinite", query, departmentId],
     queryFn: async ({ pageParam = 0 }) => {
-      // pageParam é explicitamente number aqui por causa de initialPageParam e getNextPageParam
       const currentStartIndex: number = pageParam;
 
-      const searchQuery = query || DEFAULT_SEARCH_TERM; // Usa constante
+      const searchQuery = query || DEFAULT_SEARCH_TERM; 
 
       const searchResult = await searchArtworks(searchQuery);
       const allObjectIDs = searchResult.objectIDs || [];
 
       const pageIds = allObjectIDs.slice(
         currentStartIndex,
-        currentStartIndex + ITEMS_PER_PAGE // Usa constante correta
+        currentStartIndex + ITEMS_PER_PAGE
       );
       const artworksData = await getMultipleArtworkDetails(pageIds);
 
@@ -105,6 +102,6 @@ export const useInfiniteArtworks = (
     getNextPageParam: (lastPage) => {
       return lastPage.nextPageCursor;
     },
-    enabled: !!(query || DEFAULT_SEARCH_TERM), // Garante que haja uma query
+    enabled: !!(query || DEFAULT_SEARCH_TERM),
   });
 };

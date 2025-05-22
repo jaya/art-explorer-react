@@ -13,7 +13,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "esModuleInterop": true, // Adicionado para resolver o aviso do ts-jest
+    "esModuleInterop": true, 
 
     /* Linting */
     "strict": true,
@@ -21,7 +21,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    /* Paths para facilitar importações */
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]

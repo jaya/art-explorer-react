@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>65/65</span>
+                <span class='fraction'>45/45</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>65/65</span>
+                <span class='fraction'>45/45</span>
             </div>
         
             
@@ -108,28 +108,7 @@
 <a name='L43'></a><a href='#L43'>43</a>
 <a name='L44'></a><a href='#L44'>44</a>
 <a name='L45'></a><a href='#L45'>45</a>
-<a name='L46'></a><a href='#L46'>46</a>
-<a name='L47'></a><a href='#L47'>47</a>
-<a name='L48'></a><a href='#L48'>48</a>
-<a name='L49'></a><a href='#L49'>49</a>
-<a name='L50'></a><a href='#L50'>50</a>
-<a name='L51'></a><a href='#L51'>51</a>
-<a name='L52'></a><a href='#L52'>52</a>
-<a name='L53'></a><a href='#L53'>53</a>
-<a name='L54'></a><a href='#L54'>54</a>
-<a name='L55'></a><a href='#L55'>55</a>
-<a name='L56'></a><a href='#L56'>56</a>
-<a name='L57'></a><a href='#L57'>57</a>
-<a name='L58'></a><a href='#L58'>58</a>
-<a name='L59'></a><a href='#L59'>59</a>
-<a name='L60'></a><a href='#L60'>60</a>
-<a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L46'></a><a href='#L46'>46</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -147,8 +126,6 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -157,8 +134,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -172,21 +147,6 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -205,17 +165,13 @@ interface FavoritesState {
   clearFavorites: () =&gt; void;
 }
 &nbsp;
-// Store que persiste os favoritos no localStorage
 export const useFavoritesStore = create&lt;FavoritesState&gt;()(
   persist(
     (set, get) =&gt; ({
       favoriteArtworks: [],
 &nbsp;
-      // Adiciona a obra completa aos favoritos
-      // Esta função agora é a única maneira de adicionar um favorito.
       saveFavoriteArtwork: (artwork: Artwork) =&gt; {
         const { favoriteArtworks } = get();
-        // Só adiciona se já não existir para evitar duplicatas
         if (
           !favoriteArtworks.some((art) =&gt; art.objectID === artwork.objectID)
         ) {
@@ -225,7 +181,6 @@ export const useFavoritesStore = create&lt;FavoritesState&gt;()(
         }
       },
 &nbsp;
-      // Remove um ID dos favoritos (e consequentemente a obra)
       removeFavorite: (id: number) =&gt;
         set((state) =&gt; ({
           favoriteArtworks: state.favoriteArtworks.filter(
@@ -233,28 +188,13 @@ export const useFavoritesStore = create&lt;FavoritesState&gt;()(
           ),
         })),
 &nbsp;
-      // Verifica se um ID está nos favoritos olhando os IDs das obras salvas
       isFavorite: <span class="fstat-no" title="function not covered" >(id: number) =&gt;</span>
         get().favoriteArtworks.some((art) =&gt; art.objectID === id),
 &nbsp;
-      // Limpa todos os favoritos
       clearFavorites: () =&gt; set({ favoriteArtworks: [] }),
     }),
     {
-      name: "art-favorites-storage", // nome do item no localStorage
-      // Opcional: migração se a estrutura do estado persistido mudou significativamente
-      // migrate: (persistedState: unknown, version: number) =&gt; {
-      //   if (version &lt; YOUR_NEW_VERSION) {
-      //     // Lógica de migração aqui
-      //     // Ex: se o persistedState antigo tinha `favorites` (array de IDs)
-      //     // e você precisa converter para a nova estrutura apenas com `favoriteArtworks`.
-      //     // Isso é mais complexo e depende de como você quer tratar dados antigos.
-      //     // Por agora, vamos assumir que uma limpeza do cache do usuário seria aceitável
-      //     // ou que a estrutura não mudou drasticamente a ponto de quebrar.
-      //   }
-      //   return persistedState as FavoritesState;
-      // },
-      // version: YOUR_NEW_VERSION, // Incrementar se fizer migração
+      name: "art-favorites-storage",
     }
   )
 );
@@ -265,7 +205,7 @@ export const useFavoritesStore = create&lt;FavoritesState&gt;()(
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-22T18:54:21.145Z
+                at 2025-05-22T19:53:54.742Z
             </div>
         <script src="../prettify.js"></script>
         <script>

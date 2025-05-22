@@ -25,7 +25,6 @@ const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   const { isFavorite, saveFavoriteArtwork, removeFavorite } =
     useFavoritesStore();
 
-  // Segurança: verificar se artwork é null/undefined antes de acessar propriedades
   const favorite = artwork?.objectID ? isFavorite(artwork.objectID) : false;
   const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -65,7 +64,6 @@ const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
     }
   };
 
-  // Verificar se artwork existe antes de acessar suas propriedades
   if (!artwork || !artwork.objectID) {
     console.log(
       "ArtworkDetails: Prop artwork está nula, indefinida ou sem objectID. Não renderizando o diálogo."
@@ -73,7 +71,6 @@ const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
     return null;
   }
 
-  // Definir os detalhes depois de verificar que artwork não é nulo
   const details = [
     { label: "Artista", value: artwork.artistDisplayName || "Desconhecido" },
     { label: "Data", value: artwork.objectDate || "Desconhecido" },
@@ -84,7 +81,7 @@ const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   ];
 
   const modalVariants = {
-    hidden: { opacity: 0, scale: 0.8, y: 50 }, // Modificado: mais pronunciado
+    hidden: { opacity: 0, scale: 0.8, y: 50 },
     visible: {
       opacity: 1,
       scale: 1,
@@ -296,7 +293,7 @@ const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
 
             <motion.div
               className="space-y-3 text-sm flex-1 min-h-0"
-              variants={itemVariants} // Este variants é para o container dos detalhes como um todo
+              variants={itemVariants} 
               initial="hidden"
               animate="visible"
             >
@@ -304,8 +301,7 @@ const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
                 <motion.div
                   key={detail.label}
                   className="grid grid-cols-3 gap-2 items-start"
-                  variants={itemVariants} // Aplicando itemVariants para cada linha de detalhe
-                  // initial e animate são herdados do pai se contentVariants tiver staggerChildren
+                  variants={itemVariants} 
                 >
                   <span className="font-semibold text-muted-foreground col-span-1">
                     {detail.label}:
@@ -317,7 +313,7 @@ const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
 
             {artwork.tags && artwork.tags.length > 0 && (
               <motion.div
-                className="pt-4 border-t border-border" // Removido mt-auto. Mantido pt-4 e border-t para separação.
+                className="pt-4 border-t border-border" 
                 variants={itemVariants}
                 initial="hidden"
                 animate="visible"
@@ -330,8 +326,7 @@ const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
                     <motion.span
                       key={tag.term}
                       className="px-2 py-1 bg-muted text-muted-foreground rounded-md text-xs"
-                      variants={itemVariants} // Animação para cada tag
-                      // initial e animate são herdados
+                      variants={itemVariants} 
                     >
                       {tag.term}
                     </motion.span>

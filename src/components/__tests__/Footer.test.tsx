@@ -8,7 +8,6 @@ describe("Componente Footer", () => {
     render(<Footer />);
 
     const currentYear = new Date().getFullYear();
-    // Buscando apenas pelo elemento p que contém o copyright
     const copyrightText = screen.getByText((content) =>
       content.includes(`© ${currentYear}`)
     );
@@ -21,7 +20,6 @@ describe("Componente Footer", () => {
   test("deve renderizar a mensagem de desenvolvido por com emoji", () => {
     render(<Footer />);
 
-    // Busca pelo paragráfo específico usando testid para evitar ambiguidades
     const paragraphWithEmoji = screen.getByText(
       (content) =>
         content.includes("Desenvolvido com") &&
@@ -29,7 +27,6 @@ describe("Componente Footer", () => {
     );
     expect(paragraphWithEmoji).toBeInTheDocument();
 
-    // Verifica o emoji separadamente
     const heartEmoji = screen.getByRole("img", { name: "coração" });
     expect(heartEmoji).toBeInTheDocument();
     expect(heartEmoji.textContent).toBe("❤️");

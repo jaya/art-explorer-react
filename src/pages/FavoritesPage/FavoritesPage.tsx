@@ -14,7 +14,7 @@ const FavoritesPage: React.FC = () => {
     searchTerm,
     selectedArtwork,
     filteredFavorites,
-    favoriteArtworks, // Usado para a condição de EmptyState inicial
+    favoriteArtworks,
     handleSearch,
     handleRemoveFavorite,
     handleViewDetails,
@@ -64,10 +64,10 @@ const FavoritesPage: React.FC = () => {
                   key={artwork.objectID}
                   artwork={artwork}
                   onViewDetails={handleViewDetails}
-                  isFavorite={true} // Na página de favoritos, todos os cards exibidos são favoritos
+                  isFavorite={true}
                   onToggleFavorite={() =>
                     handleRemoveFavorite(artwork.objectID)
-                  } // Ajustado para passar ID
+                  } 
                   onImageCorrupted={handleImageCorrupted}
                 />
               ))}
@@ -76,7 +76,6 @@ const FavoritesPage: React.FC = () => {
         )}
       </main>
 
-      {/* Modal de detalhes da obra */}
       {selectedArtwork && (
         <>
           {console.log("Renderizando modal para:", selectedArtwork.objectID)}

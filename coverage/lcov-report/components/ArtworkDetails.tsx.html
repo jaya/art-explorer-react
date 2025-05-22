@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>349/349</span>
+                <span class='fraction'>344/344</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>349/349</span>
+                <span class='fraction'>344/344</span>
             </div>
         
             
@@ -407,12 +407,7 @@
 <a name='L342'></a><a href='#L342'>342</a>
 <a name='L343'></a><a href='#L343'>343</a>
 <a name='L344'></a><a href='#L344'>344</a>
-<a name='L345'></a><a href='#L345'>345</a>
-<a name='L346'></a><a href='#L346'>346</a>
-<a name='L347'></a><a href='#L347'>347</a>
-<a name='L348'></a><a href='#L348'>348</a>
-<a name='L349'></a><a href='#L349'>349</a>
-<a name='L350'></a><a href='#L350'>350</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L345'></a><a href='#L345'>345</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -432,7 +427,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-yes">19x</span>
@@ -480,13 +474,11 @@
 <span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-yes">19x</span>
-<span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-yes">19x</span>
@@ -725,7 +717,6 @@
 <span class="cline-any cline-yes">102x</span>
 <span class="cline-any cline-yes">102x</span>
 <span class="cline-any cline-yes">102x</span>
-<span class="cline-any cline-yes">102x</span>
 <span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-yes">19x</span>
@@ -741,7 +732,6 @@
 <span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-yes">51x</span>
 <span class="cline-any cline-yes">51x</span>
 <span class="cline-any cline-yes">51x</span>
 <span class="cline-any cline-yes">51x</span>
@@ -788,7 +778,6 @@ const ArtworkDetails: React.FC&lt;ArtworkDetailsProps&gt; = ({
   const { isFavorite, saveFavoriteArtwork, removeFavorite } =
     useFavoritesStore();
 &nbsp;
-  // Segurança: verificar se artwork é null/undefined antes de acessar propriedades
   const favorite = artwork?.objectID ? isFavorite(artwork.objectID) : false;
   const [imageLoaded, setImageLoaded] = useState(false);
 &nbsp;
@@ -828,7 +817,6 @@ const ArtworkDetails: React.FC&lt;ArtworkDetailsProps&gt; = ({
     }
   };
 &nbsp;
-  // Verificar se artwork existe antes de acessar suas propriedades
   if (!artwork || !artwork.objectID) {
     console.log(
       "ArtworkDetails: Prop artwork está nula, indefinida ou sem objectID. Não renderizando o diálogo."
@@ -836,7 +824,6 @@ const ArtworkDetails: React.FC&lt;ArtworkDetailsProps&gt; = ({
     return null;
   }
 &nbsp;
-  // Definir os detalhes depois de verificar que artwork não é nulo
   const details = [
     { label: "Artista", value: artwork.artistDisplayName<span class="branch-0 cbranch-no" title="branch not covered" > || "Desconhecido" </span>},
     { label: "Data", value: artwork.objectDate<span class="branch-0 cbranch-no" title="branch not covered" > || "Desconhecido" </span>},
@@ -847,7 +834,7 @@ const ArtworkDetails: React.FC&lt;ArtworkDetailsProps&gt; = ({
   ];
 &nbsp;
   const modalVariants = {
-    hidden: { opacity: 0, scale: 0.8, y: 50 }, // Modificado: mais pronunciado
+    hidden: { opacity: 0, scale: 0.8, y: 50 },
     visible: {
       opacity: 1,
       scale: 1,
@@ -1059,7 +1046,7 @@ const ArtworkDetails: React.FC&lt;ArtworkDetailsProps&gt; = ({
 &nbsp;
             &lt;motion.div
               className="space-y-3 text-sm flex-1 min-h-0"
-              variants={itemVariants} // Este variants é para o container dos detalhes como um todo
+              variants={itemVariants} 
               initial="hidden"
               animate="visible"
             &gt;
@@ -1067,8 +1054,7 @@ const ArtworkDetails: React.FC&lt;ArtworkDetailsProps&gt; = ({
                 &lt;motion.div
                   key={detail.label}
                   className="grid grid-cols-3 gap-2 items-start"
-                  variants={itemVariants} // Aplicando itemVariants para cada linha de detalhe
-                  // initial e animate são herdados do pai se contentVariants tiver staggerChildren
+                  variants={itemVariants} 
                 &gt;
                   &lt;span className="font-semibold text-muted-foreground col-span-1"&gt;
                     {detail.label}:
@@ -1080,7 +1066,7 @@ const ArtworkDetails: React.FC&lt;ArtworkDetailsProps&gt; = ({
 &nbsp;
             {artwork.tags &amp;&amp; artwork.tags.length &gt; 0 &amp;&amp; (
               &lt;motion.div
-                className="pt-4 border-t border-border" // Removido mt-auto. Mantido pt-4 e border-t para separação.
+                className="pt-4 border-t border-border" 
                 variants={itemVariants}
                 initial="hidden"
                 animate="visible"
@@ -1093,8 +1079,7 @@ const ArtworkDetails: React.FC&lt;ArtworkDetailsProps&gt; = ({
                     &lt;motion.span
                       key={tag.term}
                       className="px-2 py-1 bg-muted text-muted-foreground rounded-md text-xs"
-                      variants={itemVariants} // Animação para cada tag
-                      // initial e animate são herdados
+                      variants={itemVariants} 
                     &gt;
                       {tag.term}
                     &lt;/motion.span&gt;
@@ -1117,7 +1102,7 @@ export default ArtworkDetails;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-22T18:54:21.145Z
+                at 2025-05-22T19:53:54.742Z
             </div>
         <script src="../prettify.js"></script>
         <script>

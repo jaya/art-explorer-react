@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">49.53% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>55/110</span>
+                <span class='fraction'>53/107</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">49.53% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>55/110</span>
+                <span class='fraction'>53/107</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -170,11 +170,7 @@
 <a name='L105'></a><a href='#L105'>105</a>
 <a name='L106'></a><a href='#L106'>106</a>
 <a name='L107'></a><a href='#L107'>107</a>
-<a name='L108'></a><a href='#L108'>108</a>
-<a name='L109'></a><a href='#L109'>109</a>
-<a name='L110'></a><a href='#L110'>110</a>
-<a name='L111'></a><a href='#L111'>111</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L108'></a><a href='#L108'>108</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -239,8 +235,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -293,11 +287,10 @@ import {
   isArtworkNotFoundError,
 } from "@/lib/errors";
 import type { Artwork } from "@/types/artwork";
-import { useInfiniteQuery, type QueryKey } from "@tanstack/react-query"; // Importa QueryKey
+import { useInfiniteQuery, type QueryKey } from "@tanstack/react-query";
 import { getArtworkDetails } from "./detailsAPI";
 import { searchArtworks } from "./searchAPI";
 &nbsp;
-// Função para buscar vários detalhes de obras de arte em paralelo
 export const getMultipleArtworkDetails = async (
   objectIDs: number[]
 ): Promise&lt;Artwork[]&gt; =&gt; {
@@ -336,7 +329,7 @@ export const getMultipleArtworkDetails = async (
   ) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
 <span class="cstat-no" title="statement not covered" >    throw createMultipleArtworksFetchError(</span>
 <span class="cstat-no" title="statement not covered" >      `Failed to fetch details for all ${objectIDs.length} artworks.`,</span>
-<span class="cstat-no" title="statement not covered" >      errorsEncountered // Passa os erros encontrados</span>
+<span class="cstat-no" title="statement not covered" >      errorsEncountered</span>
 <span class="cstat-no" title="statement not covered" >    );</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
@@ -348,7 +341,6 @@ interface InfiniteArtworksData {
   nextPageCursor?: number;
 }
 &nbsp;
-// Hook para buscar múltiplas obras com paginação infinita
 export const useInfiniteArtworks = <span class="fstat-no" title="function not covered" >(</span>
 <span class="cstat-no" title="statement not covered" >  query: string,</span>
 <span class="cstat-no" title="statement not covered" >  departmentId?: string | null</span>
@@ -360,19 +352,18 @@ export const useInfiniteArtworks = <span class="fstat-no" title="function not co
 <span class="cstat-no" title="statement not covered" >    QueryKey, // TQueryKey: Tipo da chave da query. `QueryKey` é `readonly unknown[]`</span>
 <span class="cstat-no" title="statement not covered" >    number // TPageParam: Tipo do parâmetro da página</span>
 <span class="cstat-no" title="statement not covered" >  &gt;({</span>
-<span class="cstat-no" title="statement not covered" >    queryKey: ["artworks", "infinite", query, departmentId], // Este é o QueryKey</span>
+<span class="cstat-no" title="statement not covered" >    queryKey: ["artworks", "infinite", query, departmentId],</span>
 <span class="cstat-no" title="statement not covered" >    queryFn: async ({ pageParam = 0 }) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      // pageParam é explicitamente number aqui por causa de initialPageParam e getNextPageParam</span>
 <span class="cstat-no" title="statement not covered" >      const currentStartIndex: number = pageParam;</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >      const searchQuery = query || DEFAULT_SEARCH_TERM; // Usa constante</span>
+<span class="cstat-no" title="statement not covered" >      const searchQuery = query || DEFAULT_SEARCH_TERM; </span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >      const searchResult = await searchArtworks(searchQuery);</span>
 <span class="cstat-no" title="statement not covered" >      const allObjectIDs = searchResult.objectIDs || [];</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >      const pageIds = allObjectIDs.slice(</span>
 <span class="cstat-no" title="statement not covered" >        currentStartIndex,</span>
-<span class="cstat-no" title="statement not covered" >        currentStartIndex + ITEMS_PER_PAGE // Usa constante correta</span>
+<span class="cstat-no" title="statement not covered" >        currentStartIndex + ITEMS_PER_PAGE</span>
 <span class="cstat-no" title="statement not covered" >      );</span>
 <span class="cstat-no" title="statement not covered" >      const artworksData = await getMultipleArtworkDetails(pageIds);</span>
 <span class="cstat-no" title="statement not covered" ></span>
@@ -390,7 +381,7 @@ export const useInfiniteArtworks = <span class="fstat-no" title="function not co
 <span class="cstat-no" title="statement not covered" >    getNextPageParam: (lastPage) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >      return lastPage.nextPageCursor;</span>
 <span class="cstat-no" title="statement not covered" >    },</span>
-<span class="cstat-no" title="statement not covered" >    enabled: !!(query || DEFAULT_SEARCH_TERM), // Garante que haja uma query</span>
+<span class="cstat-no" title="statement not covered" >    enabled: !!(query || DEFAULT_SEARCH_TERM),</span>
 <span class="cstat-no" title="statement not covered" >  });</span>
 <span class="cstat-no" title="statement not covered" >};</span>
 &nbsp;</pre></td></tr></table></pre>
@@ -400,7 +391,7 @@ export const useInfiniteArtworks = <span class="fstat-no" title="function not co
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-22T18:54:21.145Z
+                at 2025-05-22T19:53:54.742Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

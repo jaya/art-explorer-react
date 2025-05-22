@@ -13,7 +13,7 @@ export function useFavoritesGalleryLogic() {
 
   const handleSearch = useCallback((query: string) => {
     setSearchTerm(query);
-    setCorruptedImageIds(new Set()); // Resetar ao mudar a busca
+    setCorruptedImageIds(new Set()); 
   }, []);
 
   const handleRemoveFavorite = useCallback(
@@ -59,7 +59,7 @@ export function useFavoritesGalleryLogic() {
     selectedArtwork,
     corruptedImageIds,
     filteredFavorites,
-    favoriteArtworks, // para verificar se há algum favorito antes de filtrar
+    favoriteArtworks,
     handleSearch,
     handleRemoveFavorite,
     handleViewDetails,

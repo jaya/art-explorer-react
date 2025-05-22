@@ -3,12 +3,10 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import { Header } from "../Header";
 
-// Mock do componente ThemeToggle
 jest.mock("@/components/ui/theme-toggle", () => ({
   ThemeToggle: () => <div data-testid="mock-theme-toggle">Theme Toggle</div>,
 }));
 
-// Mock do TypewriterSuggestion
 jest.mock("@/components/ui/TypewriterSuggestion", () => ({
   __esModule: true,
   default: ({ text }: { text: string }) => (
@@ -16,7 +14,6 @@ jest.mock("@/components/ui/TypewriterSuggestion", () => ({
   ),
 }));
 
-// Mock do componente Icon
 jest.mock("@/components/ui/icon", () => ({
   __esModule: true,
   default: ({ name, className }: { name: string; className?: string }) => (
@@ -26,7 +23,6 @@ jest.mock("@/components/ui/icon", () => ({
   ),
 }));
 
-// Mock para react-router-dom
 jest.mock("react-router-dom", () => ({
   Link: ({ children, to }: { children: React.ReactNode; to: string }) => (
     <a href={to} data-testid={`link-${to}`}>
@@ -36,7 +32,6 @@ jest.mock("react-router-dom", () => ({
   useLocation: () => ({ pathname: "/" }),
 }));
 
-// Mock dos componentes UI
 jest.mock("@/components/ui/command", () => ({
   Command: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="command">{children}</div>
@@ -52,7 +47,6 @@ jest.mock("@/components/ui/command", () => ({
   ),
 }));
 
-// Mock do componente Button
 jest.mock("@/components/ui/button", () => ({
   Button: ({
     children,
@@ -78,28 +72,21 @@ describe("Header", () => {
   test("deve renderizar corretamente todos os elementos do Header", () => {
     render(<Header onSearch={mockOnSearch} />);
 
-    // Logo e título
     expect(screen.getByTestId("icon-palette")).toBeInTheDocument();
     expect(screen.getByText("Art Explorer")).toBeInTheDocument();
 
-    // Links de navegação
-    // Verifica o primeiro link para a home, que deve ser o do logo/título.
     const homeLinks = screen.getAllByTestId("link-/");
     expect(homeLinks[0]).toBeInTheDocument();
     expect(screen.getByTestId("link-/favoritos")).toBeInTheDocument();
 
-    // Input de busca
     expect(
       screen.getByPlaceholderText("Buscar obras, artistas...")
     ).toBeInTheDocument();
 
-    // ThemeToggle - Verifica se ambos os toggles (desktop e mobile) estão presentes
     const themeToggles = screen.getAllByTestId("mock-theme-toggle");
     expect(themeToggles.length).toBe(2);
     themeToggles.forEach((toggle) => expect(toggle).toBeInTheDocument());
 
-    // Elementos mobile (ícones)
-    // Verifica se ambos os ícones de busca (desktop e mobile) estão presentes
     const searchIcons = screen.getAllByTestId("icon-search");
     expect(searchIcons.length).toBe(2);
     searchIcons.forEach((icon) => expect(icon).toBeInTheDocument());

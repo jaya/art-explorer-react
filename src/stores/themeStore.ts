@@ -6,7 +6,6 @@ interface ThemeState {
   toggleTheme: () => void;
 }
 
-// Verifica se a preferência do sistema é para tema escuro
 const getDefaultTheme = () => {
   if (typeof window !== "undefined") {
     return window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -22,7 +21,6 @@ export const useThemeStore = create<ThemeState>()(
         set((state) => {
           const newIsDarkMode = !state.isDarkMode;
 
-          // Aplica a classe 'dark' no HTML para o tema escuro
           if (typeof window !== "undefined") {
             document.documentElement.classList.toggle("dark", newIsDarkMode);
           }
@@ -31,12 +29,11 @@ export const useThemeStore = create<ThemeState>()(
         }),
     }),
     {
-      name: "art-explorer-theme", // nome do item no localStorage
+      name: "art-explorer-theme",
     }
   )
 );
 
-// Função para inicializar o tema quando o app carrega
 export const initializeTheme = () => {
   const { isDarkMode } = useThemeStore.getState();
 

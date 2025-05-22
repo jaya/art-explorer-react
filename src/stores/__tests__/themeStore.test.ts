@@ -2,7 +2,6 @@ import { useThemeStore } from "../themeStore";
 
 describe("useThemeStore", () => {
   beforeEach(() => {
-    // Garante que o estado está limpo antes de cada teste
     useThemeStore.setState({ isDarkMode: false });
   });
 
