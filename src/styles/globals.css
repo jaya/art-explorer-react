@@ -1,0 +1,79 @@
+/* filepath: /Users/chrmartins/projetos/art-explorer-react/src/styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Incorporando a paleta Dracula no tema do shadcn */
+    --background: 231 15% 18%; /* dracula-background */
+    --foreground: 60 30% 96%; /* dracula-foreground */
+
+    --card: 231 15% 18%; /* dracula-background */
+    --card-foreground: 60 30% 96%; /* dracula-foreground */
+
+    --popover: 231 15% 27%; /* dracula-currentLine */
+    --popover-foreground: 60 30% 96%; /* dracula-foreground */
+
+    --primary: 326 100% 74%; /* dracula-pink */
+    --primary-foreground: 60 30% 96%; /* dracula-foreground */
+
+    --secondary: 265 89% 78%; /* dracula-purple */
+    --secondary-foreground: 60 30% 96%; /* dracula-foreground */
+
+    --muted: 231 15% 27%; /* dracula-currentLine */
+    --muted-foreground: 231 15% 65%; /* custom muted text */
+
+    --accent: 265 89% 78%; /* dracula-purple */
+    --accent-foreground: 60 30% 96%; /* dracula-foreground */
+
+    --destructive: 347 87% 69%; /* dracula-red */
+    --destructive-foreground: 60 30% 96%; /* dracula-foreground */
+
+    --border: 231 15% 27%; /* dracula-currentLine */
+    --input: 231 15% 27%; /* dracula-currentLine */
+    --ring: 326 100% 74%; /* dracula-pink */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-[hsl(var(--border))];
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
