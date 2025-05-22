@@ -22,11 +22,16 @@ const config: Config = {
   collectCoverageFrom: [
     "src/**/*.{ts,tsx}",
     "!src/**/*.d.ts", // Não coletar de arquivos de definição de tipo
-    "!src/main.tsx", // Geralmente não se testa o ponto de entrada principal
+    "!src/main.tsx", // Não testar o ponto de entrada principal
     "!src/vite-env.d.ts",
-    // Adicione outros arquivos/pastas para ignorar se necessário
-    "!src/components/ui/**/*", // Exemplo: ignorar componentes de UI não customizados
-    "!src/lib/utils.ts", // Exemplo: se for utilitário de shadcn
+    "!src/constants/**", // Ignora toda a pasta de constantes
+    "!src/lib/**", // Ignora toda a pasta de utilitários/biblioteca
+    "!src/types/**", // Ignora toda a pasta de tipos
+    "!src/components/ui/**", // Ignora toda a pasta de UI genérica
+    "!src/index.ts", // Ignora o arquivo de index principal
+    "!src/App.tsx", // Ignora o componente App principal
+    "!src/services/artworks/index.ts", // Ignora o index dos serviços de artworks
+    // Adicione outros arquivos/pastas que desejar ignorar
   ],
   coverageDirectory: "coverage",
   coverageReporters: ["text", "lcov", "clover"],

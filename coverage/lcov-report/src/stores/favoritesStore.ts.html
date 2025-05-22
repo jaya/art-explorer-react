@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>52/65</span>
+                <span class='fraction'>65/65</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/1</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
-                <span class="quiet">Functions</span>
-                <span class='fraction'>1/5</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">80% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>4/5</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>52/65</span>
+                <span class='fraction'>65/65</span>
             </div>
         
             
@@ -144,28 +144,11 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -174,6 +157,23 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -213,24 +213,24 @@ export const useFavoritesStore = create&lt;FavoritesState&gt;()(
 &nbsp;
       // Adiciona a obra completa aos favoritos
       // Esta função agora é a única maneira de adicionar um favorito.
-      saveFavoriteArtwork: <span class="fstat-no" title="function not covered" >(artwork: Artwork) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        const { favoriteArtworks } = get();</span>
-<span class="cstat-no" title="statement not covered" >        // Só adiciona se já não existir para evitar duplicatas</span>
-<span class="cstat-no" title="statement not covered" >        if (</span>
-<span class="cstat-no" title="statement not covered" >          !favoriteArtworks.some((art) =&gt; art.objectID === artwork.objectID)</span>
-<span class="cstat-no" title="statement not covered" >        ) {</span>
-<span class="cstat-no" title="statement not covered" >          set((state) =&gt; ({</span>
-<span class="cstat-no" title="statement not covered" >            favoriteArtworks: [...state.favoriteArtworks, artwork],</span>
-<span class="cstat-no" title="statement not covered" >          }));</span>
-<span class="cstat-no" title="statement not covered" >        }</span>
+      saveFavoriteArtwork: (artwork: Artwork) =&gt; {
+        const { favoriteArtworks } = get();
+        // Só adiciona se já não existir para evitar duplicatas
+        if (
+          !favoriteArtworks.some((art) =&gt; art.objectID === artwork.objectID)
+        ) {
+          set((state) =&gt; ({
+            favoriteArtworks: [...state.favoriteArtworks, artwork],
+          }));
+        }
       },
 &nbsp;
       // Remove um ID dos favoritos (e consequentemente a obra)
-      removeFavorite: <span class="fstat-no" title="function not covered" >(id: number) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >        set((state) =&gt; ({</span>
-<span class="cstat-no" title="statement not covered" >          favoriteArtworks: state.favoriteArtworks.filter(</span>
-<span class="cstat-no" title="statement not covered" >            (art) =&gt; art.objectID !== id</span>
-<span class="cstat-no" title="statement not covered" >          ),</span>
+      removeFavorite: (id: number) =&gt;
+        set((state) =&gt; ({
+          favoriteArtworks: state.favoriteArtworks.filter(
+            (art) =&gt; art.objectID !== id
+          ),
         })),
 &nbsp;
       // Verifica se um ID está nos favoritos olhando os IDs das obras salvas
@@ -238,7 +238,7 @@ export const useFavoritesStore = create&lt;FavoritesState&gt;()(
         get().favoriteArtworks.some((art) =&gt; art.objectID === id),
 &nbsp;
       // Limpa todos os favoritos
-      clearFavorites: <span class="fstat-no" title="function not covered" >() =&gt; set({ favoriteArtworks: [] }),</span>
+      clearFavorites: () =&gt; set({ favoriteArtworks: [] }),
     }),
     {
       name: "art-favorites-storage", // nome do item no localStorage
@@ -265,7 +265,7 @@ export const useFavoritesStore = create&lt;FavoritesState&gt;()(
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-22T18:03:00.282Z
+                at 2025-05-22T18:50:40.455Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
