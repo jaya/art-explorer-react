@@ -5,10 +5,10 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 0 0% 100%; /* Branco para o fundo da página */
     --foreground: 222.2 84% 4.9%;
 
-    --card: 0 0% 100%;
+    --card: 0 0% 92%; /* Cinza ainda mais perceptível para o fundo do card (antes 95%) */
     --card-foreground: 222.2 84% 4.9%;
 
     --popover: 0 0% 100%;
@@ -38,10 +38,10 @@
 
   .dark {
     /* Incorporando a paleta Dracula no tema do shadcn */
-    --background: 231 15% 18%; /* dracula-background */
+    --background: 231 15% 18%; /* dracula-background para o fundo da página */
     --foreground: 60 30% 96%; /* dracula-foreground */
 
-    --card: 231 15% 18%; /* dracula-background */
+    --card: 231 15% 31%; /* Um tom ainda mais claro que o background para o card (antes 27%) */
     --card-foreground: 60 30% 96%; /* dracula-foreground */
 
     --popover: 231 15% 27%; /* dracula-currentLine */

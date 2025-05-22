@@ -4,59 +4,23 @@ import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import EmptyState from "@/components/ui/empty-state";
 import Icon from "@/components/ui/icon";
-import { useFavoritesStore } from "@/stores/favoritesStore";
-import type { Artwork } from "@/types/artwork";
+import { useFavoritesGalleryLogic } from "@/hooks/useFavoritesGalleryLogic";
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 const FavoritesPage: React.FC = () => {
-  const { favoriteArtworks, removeFavorite } = useFavoritesStore();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
-  const [corruptedImageIds, setCorruptedImageIds] = useState<Set<number>>(
-    new Set()
-  );
-
-  // Filtrar favoritos com base na busca
-  const favoritesSearched = searchTerm
-    ? favoriteArtworks.filter(
-        (artwork) =>
-          artwork.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          artwork.artistDisplayName
-            ?.toLowerCase()
-            .includes(searchTerm.toLowerCase()) ||
-          artwork.department?.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    : favoriteArtworks;
-
-  // Filtrar favoritos para incluir apenas aqueles com primaryImage e não corrompidos
-  const filteredFavorites = favoritesSearched
-    .filter((artwork) => artwork.primaryImage)
-    .filter((artwork) => !corruptedImageIds.has(artwork.objectID));
-
-  const handleSearch = (query: string) => {
-    setSearchTerm(query);
-    setCorruptedImageIds(new Set()); // Resetar ao mudar a busca
-  };
-
-  const handleRemoveFavorite = (artwork: Artwork) => {
-    removeFavorite(artwork.objectID);
-  };
-
-  const handleViewDetails = (artwork: Artwork) => {
-    console.log("Abrindo detalhes para:", artwork);
-    setSelectedArtwork(artwork);
-  };
-
-  const handleCloseDetails = () => {
-    console.log("Fechando detalhes");
-    setSelectedArtwork(null);
-  };
-
-  const handleImageCorrupted = (artworkId: number) => {
-    setCorruptedImageIds((prevIds) => new Set(prevIds).add(artworkId));
-  };
+  const {
+    searchTerm,
+    selectedArtwork,
+    filteredFavorites,
+    favoriteArtworks, // Usado para a condição de EmptyState inicial
+    handleSearch,
+    handleRemoveFavorite,
+    handleViewDetails,
+    handleCloseDetails,
+    handleImageCorrupted,
+  } = useFavoritesGalleryLogic();
 
   return (
     <div className="min-h-screen bg-background">
@@ -100,28 +64,17 @@ const FavoritesPage: React.FC = () => {
                   key={artwork.objectID}
                   artwork={artwork}
                   onViewDetails={handleViewDetails}
-                  isFavorite={true}
-                  onToggleFavorite={() => handleRemoveFavorite(artwork)}
-                  onImageCorrupted={handleImageCorrupted} // Adicionar prop
+                  isFavorite={true} // Na página de favoritos, todos os cards exibidos são favoritos
+                  onToggleFavorite={() =>
+                    handleRemoveFavorite(artwork.objectID)
+                  } // Ajustado para passar ID
+                  onImageCorrupted={handleImageCorrupted}
                 />
               ))}
             </motion.div>
           </AnimatePresence>
         )}
       </main>
-
-      <footer className="py-6 border-t">
-        <div className="container flex flex-col items-center justify-center gap-2">
-          <div className="flex items-center gap-2">
-            <Icon name="palette" className="h-5 w-5 text-primary" />
-            <span className="font-semibold">Art Explorer</span>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} - Visualize obras de arte do
-            Metropolitan Museum
-          </p>
-        </div>
-      </footer>
 
       {/* Modal de detalhes da obra */}
       {selectedArtwork && (

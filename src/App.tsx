@@ -1,3 +1,4 @@
+import { Footer } from "@/components/Footer"; // Importa o Footer
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/sonner";
 import FavoritesPage from "@/pages/FavoritesPage/FavoritesPage";
@@ -7,13 +8,22 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 function App() {
   return (
     <ThemeProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/favoritos" element={<FavoritesPage />} />
-        </Routes>
-        <Toaster />
-      </BrowserRouter>
+      <div className="flex min-h-screen flex-col">
+        {" "}
+        {/* Wrapper Flex */}
+        <BrowserRouter>
+          <main className="flex-grow">
+            {" "}
+            {/* Conteúdo principal cresce para preencher o espaço */}
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/favoritos" element={<FavoritesPage />} />
+            </Routes>
+          </main>
+          <Toaster />
+          <Footer /> {/* Adiciona o Footer aqui */}
+        </BrowserRouter>
+      </div>
     </ThemeProvider>
   );
 }

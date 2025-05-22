@@ -3,9 +3,7 @@ import { persist } from "zustand/middleware";
 import { Artwork } from "../types/artwork";
 
 interface FavoritesState {
-  favorites: number[];
   favoriteArtworks: Artwork[];
-  addFavorite: (id: number) => void;
   removeFavorite: (id: number) => void;
   isFavorite: (id: number) => boolean;
   saveFavoriteArtwork: (artwork: Artwork) => void;
@@ -16,54 +14,52 @@ interface FavoritesState {
 export const useFavoritesStore = create<FavoritesState>()(
   persist(
     (set, get) => ({
-      favorites: [],
       favoriteArtworks: [],
 
-      // Adiciona um ID aos favoritos
-      addFavorite: (id: number) =>
-        set((state) => ({
-          favorites: [...state.favorites, id],
-        })),
-
-      // Remove um ID dos favoritos
-      removeFavorite: (id: number) =>
-        set((state) => ({
-          favorites: state.favorites.filter((favId) => favId !== id),
-          favoriteArtworks: state.favoriteArtworks.filter(
-            (art) => art.objectID !== id
-          ),
-        })),
-
-      // Verifica se um ID está nos favoritos
-      isFavorite: (id: number) => get().favorites.includes(id),
-
-      // Salva a obra completa quando o usuário favoritar
+      // Adiciona a obra completa aos favoritos
+      // Esta função agora é a única maneira de adicionar um favorito.
       saveFavoriteArtwork: (artwork: Artwork) => {
-        const { favorites, favoriteArtworks } = get();
-
-        // Se já existe este ID nos favoritos, mas não temos os dados completos
+        const { favoriteArtworks } = get();
+        // Só adiciona se já não existir para evitar duplicatas
         if (
-          favorites.includes(artwork.objectID) &&
           !favoriteArtworks.some((art) => art.objectID === artwork.objectID)
         ) {
           set((state) => ({
             favoriteArtworks: [...state.favoriteArtworks, artwork],
           }));
         }
-        // Se não existe ainda nos favoritos
-        else if (!favorites.includes(artwork.objectID)) {
-          set((state) => ({
-            favorites: [...state.favorites, artwork.objectID],
-            favoriteArtworks: [...state.favoriteArtworks, artwork],
-          }));
-        }
       },
 
+      // Remove um ID dos favoritos (e consequentemente a obra)
+      removeFavorite: (id: number) =>
+        set((state) => ({
+          favoriteArtworks: state.favoriteArtworks.filter(
+            (art) => art.objectID !== id
+          ),
+        })),
+
+      // Verifica se um ID está nos favoritos olhando os IDs das obras salvas
+      isFavorite: (id: number) =>
+        get().favoriteArtworks.some((art) => art.objectID === id),
+
       // Limpa todos os favoritos
-      clearFavorites: () => set({ favorites: [], favoriteArtworks: [] }),
+      clearFavorites: () => set({ favoriteArtworks: [] }),
     }),
     {
       name: "art-favorites-storage", // nome do item no localStorage
+      // Opcional: migração se a estrutura do estado persistido mudou significativamente
+      // migrate: (persistedState: unknown, version: number) => {
+      //   if (version < YOUR_NEW_VERSION) {
+      //     // Lógica de migração aqui
+      //     // Ex: se o persistedState antigo tinha `favorites` (array de IDs)
+      //     // e você precisa converter para a nova estrutura apenas com `favoriteArtworks`.
+      //     // Isso é mais complexo e depende de como você quer tratar dados antigos.
+      //     // Por agora, vamos assumir que uma limpeza do cache do usuário seria aceitável
+      //     // ou que a estrutura não mudou drasticamente a ponto de quebrar.
+      //   }
+      //   return persistedState as FavoritesState;
+      // },
+      // version: YOUR_NEW_VERSION, // Incrementar se fizer migração
     }
   )
 );
