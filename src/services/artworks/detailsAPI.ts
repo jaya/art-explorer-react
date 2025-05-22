@@ -43,9 +43,6 @@ export const useArtworkDetails = (objectID: number | null, enabled = true) => {
     queryKey: ["artwork", objectID],
     queryFn: async () => {
       if (objectID === null) {
-        // Lançar um erro específico ou retornar null/undefined se o hook deve lidar com isso.
-        // Por ora, vamos assumir que um ID nulo não deveria chamar queryFn devido ao 'enabled'.
-        // Se chegar aqui, é um estado inesperado.
         throw createApiError("objectID is null, cannot fetch artwork details.");
       }
       return getArtworkDetails(objectID);

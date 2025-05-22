@@ -13,6 +13,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "esModuleInterop": true, // Adicionado para resolver o aviso do ts-jest
 
     /* Linting */
     "strict": true,

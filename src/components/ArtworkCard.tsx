@@ -85,7 +85,7 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
         </div>
         {/* Conteúdo abaixo da imagem */}
         {/* O p-4 aqui cria um espaço entre a imagem e este conteúdo, o que é esperado. */}
-        <CardContent className="p-4 pb-2 flex-grow">
+        <CardContent className="p-4 pb-2 flex-grow" data-testid="card-content">
           <div className="flex items-center text-xs text-muted-foreground gap-1 mt-1">
             <Icon name="calendar" className="h-3 w-3 flex-shrink-0" />
             <span>{artwork.objectDate || "Data Desconhecida"}</span>

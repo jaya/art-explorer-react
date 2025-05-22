@@ -24,7 +24,9 @@ const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { isFavorite, saveFavoriteArtwork, removeFavorite } =
     useFavoritesStore();
-  const favorite = isFavorite(artwork.objectID);
+
+  // Segurança: verificar se artwork é null/undefined antes de acessar propriedades
+  const favorite = artwork?.objectID ? isFavorite(artwork.objectID) : false;
   const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
@@ -62,6 +64,14 @@ const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
       saveFavoriteArtwork(artwork);
     }
   };
+
+  // Verificar se artwork existe antes de acessar suas propriedades
+  if (!artwork || !artwork.objectID) {
+    console.log(
+      "ArtworkDetails: Prop artwork está nula, indefinida ou sem objectID. Não renderizando o diálogo."
+    );
+    return null;
+  }
 
   const details = [
     { label: "Artista", value: artwork.artistDisplayName || "Desconhecido" },
@@ -125,13 +135,6 @@ const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
     },
   };
 
-  if (!artwork || !artwork.objectID) {
-    console.log(
-      "ArtworkDetails: Prop artwork está nula, indefinida ou sem objectID. Não renderizando o diálogo."
-    );
-    return null;
-  }
-
   console.log(
     "ArtworkDetails: Renderizando. Artwork ID:",
     artwork.objectID,
@@ -141,7 +144,14 @@ const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={handleOpenChange}>
-      <DialogContent className="max-w-7xl p-0 gap-0 rounded-xl overflow-hidden border-none h-[90vh] max-h-[1100px]">
+      <DialogContent
+        className="max-w-7xl p-0 gap-0 rounded-xl overflow-hidden border-none h-[90vh] max-h-[1100px]"
+        aria-describedby="artwork-details-description"
+      >
+        <div id="artwork-details-description" className="sr-only">
+          Detalhes completos da obra de arte {artwork.title} por{" "}
+          {artwork.artistDisplayName || "Artista Desconhecido"}
+        </div>
         <motion.div
           initial="hidden"
           animate="visible"
@@ -257,6 +267,7 @@ const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
                           favorite ? "text-red-500" : "text-muted-foreground"
                         }`}
                         fill={favorite ? "currentColor" : "none"}
+                        data-testid="heart-icon"
                       />
                     </Button>
                   </motion.div>
@@ -265,11 +276,13 @@ const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
                     animate="visible"
                     variants={itemVariants}
                   >
-                    <DialogClose asChild onClick={onClose}>
+                    <DialogClose asChild>
                       <Button
                         variant="ghost"
                         size="icon"
                         className="h-8 w-8 rounded-full"
+                        onClick={onClose}
+                        aria-label="Fechar"
                       >
                         <Icon name="close" className="h-4 w-4" />
                         <span className="sr-only">Fechar</span>
