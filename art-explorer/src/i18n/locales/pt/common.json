@@ -1,0 +1,32 @@
+{
+  "appName": "Explorador de Arte",
+  "darkModeToggle": "Alternar modo escuro",
+  "tabs": {
+    "search": "Buscar",
+    "favorites": "Favoritos"
+  },
+  "home": {
+    "searchPlaceholder": "Digite sua busca",
+    "noResults": "Nenhum resultado encontrado",
+    "searchBy": "Buscar por",
+    "department": "Departamento",
+    "selectDepartment": "Selecione um departamento",
+    "artistOrCulture": "Artista ou Cultura",
+    "object": "Obra",
+    "loading": "Carregando...",
+    "loadingMore": "Carregando mais...",
+    "loadMore": "Carregar mais"
+  },
+  "modal": {
+    "artist": "Artista",
+    "date": "Data",
+    "classification": "Classificação",
+    "department": "Departamento",
+    "seeMore": "Ver mais detalhes",
+    "close": "Fechar"
+  },
+  "favorites": {
+    "title": "Favoritos",
+    "empty": "Nenhum favorito encontrado"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "appName": "Art Explorer",
+  "darkModeToggle": "Toggle dark mode",
+  "tabs": {
+    "search": "Search",
+    "favorites": "Favorites"
+  },
+  "home": {
+    "searchPlaceholder": "Type your search",
+    "noResults": "No results found",
+    "searchBy": "Search by",
+    "department": "Department",
+    "selectDepartment": "Select a department",
+    "artistOrCulture": "Artist or Culture",
+    "object": "Artwork",
+    "loading": "Loading...",
+    "loadingMore": "Loading more...",
+    "loadMore": "Show more"
+  },
+  "modal": {
+    "artist": "Artist",
+    "date": "Date",
+    "classification": "Classification",
+    "department": "Department",
+    "seeMore": "See more details",
+    "close": "Close"
+  },
+  "favorites": {
+    "title": "Favorites",
+    "empty": "No favorites found"
+  }
+}
