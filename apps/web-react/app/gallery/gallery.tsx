@@ -26,7 +26,7 @@ export const Gallery = ({ objectIds }: Props) => {
     status,
     error,
   } = useInfiniteQuery({
-    queryKey: [ARTWORKS_KEY_QUERY],
+    queryKey: [ARTWORKS_KEY_QUERY, objectIds],
     queryFn: async ({ pageParam = 0 }) => {
       const ids = objectIds.slice(pageParam, pageParam + PAGE_ITEMS_SIZE)
       const artworks = await Promise.all(

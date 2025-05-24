@@ -2,6 +2,7 @@ import type { Artwork } from '@/models/art'
 import { Expand, Heart } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useState } from 'react'
+import { FavoriteButton } from '~/components/buttons/favorite.button'
 import { Button } from '~/components/ui/button'
 import { Card, CardContent, CardFooter } from '~/components/ui/card'
 import {
@@ -39,11 +40,7 @@ export function ArtworkCard({ artwork }: Props) {
         </p>
       </CardContent>
       <CardFooter className="flex flex-row gap-2 justify-between">
-        <motion.div whileTap={{ scale: 0.8 }}>
-          <Button variant="ghost" className="cursor-pointer">
-            <Heart className="size-5" />
-          </Button>
-        </motion.div>
+        <FavoriteButton artworkId={artwork.objectID} />
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <motion.div whileTap={{ scale: 0.8 }}>

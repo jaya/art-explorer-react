@@ -1,43 +1,34 @@
-import { ChevronDown } from 'lucide-react'
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '~/components/ui/dropdown-menu'
-import {
-  Sidebar,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from '~/components/ui/sidebar'
+  BarChartIcon,
+  FolderHeartIcon,
+  FolderIcon,
+  LayoutDashboardIcon,
+  UsersIcon,
+} from 'lucide-react'
+import { Sidebar, SidebarContent } from '~/components/ui/sidebar'
+import { NavMain } from './nav-main'
+
+const data = {
+  navMain: [
+    {
+      title: 'Home',
+      url: '/',
+      icon: LayoutDashboardIcon,
+    },
+    {
+      title: 'Favorites',
+      url: '/favorites',
+      icon: FolderHeartIcon,
+    },
+  ],
+}
 
 export function AppSidebar() {
   return (
     <Sidebar variant="inset" collapsible="offcanvas">
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuButton>
-                  Select Workspace
-                  <ChevronDown className="ml-auto" />
-                </SidebarMenuButton>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-[--radix-popper-anchor-width]">
-                <DropdownMenuItem>
-                  <span>Acme Inc</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <span>Acme Corp.</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarHeader>
+      <SidebarContent>
+        <NavMain items={data.navMain} />
+      </SidebarContent>
     </Sidebar>
   )
 }
