@@ -8,6 +8,8 @@ import type { Artwork } from '@/models/art'
 import { ArtworkService } from '@/services/artworks'
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
 import { ArtworkCard } from 'app/components/artwork-card'
+import { LoaderCircle } from 'lucide-react'
+import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useRef } from 'react'
 
 type Props = {
@@ -77,16 +79,37 @@ export const Gallery = ({ objectIds }: Props) => {
   return (
     <div className="p-2 md:p-8">
       <div className="flex flex-wrap gap-4 justify-between items-stretch">
-        {data?.pages.flatMap(page =>
-          page.artworks.map(art => (
-            <ArtworkCard artwork={art} key={art.objectID} />
-          ))
-        )}
+        <AnimatePresence>
+          {data?.pages.flatMap(page =>
+            page.artworks.map((art, index) => (
+              <motion.div
+                key={art.objectID}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -50 }}
+                transition={{ duration: 0.8, delay: index * 0.1 }}
+              >
+                <ArtworkCard artwork={art} />
+              </motion.div>
+            ))
+          )}
+        </AnimatePresence>
       </div>
 
       <div ref={sentinelRef} style={{ height: 20 }} />
 
-      {isFetchingNextPage && <p>Loading more...</p>}
+      {isFetchingNextPage && (
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <p className="text-center w-full">
+            <LoaderCircle className="animate-spin size-10" />
+          </p>
+        </motion.p>
+      )}
       {!hasNextPage && <p>End gallery.</p>}
     </div>
   )

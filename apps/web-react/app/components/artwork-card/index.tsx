@@ -1,5 +1,5 @@
 import type { Artwork } from '@/models/art'
-import { Expand, Heart } from 'lucide-react'
+import { Expand } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useState } from 'react'
 import { FavoriteButton } from '~/components/buttons/favorite.button'
@@ -85,6 +85,9 @@ export function ArtworkCard({ artwork }: Props) {
                   >
                     See on official site
                   </a>
+                  <div className="flex w-full justify-end">
+                    <FavoriteButton artworkId={artwork.objectID} />
+                  </div>
                 </div>
               </div>
             </motion.div>
