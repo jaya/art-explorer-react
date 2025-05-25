@@ -39,15 +39,20 @@ export const Gallery = ({ objectIds }: Props) => {
           ])
           if (cached) return cached
 
-          const data = await ArtworkService.getById(id)
-          if (data.primaryImageSmall) {
-            queryClient.setQueryData<Artwork>([ARTWORKS_KEY_QUERY, id], data)
+          try {
+            const data = await ArtworkService.getById(id)
+            if (data?.primaryImageSmall) {
+              queryClient.setQueryData<Artwork>([ARTWORKS_KEY_QUERY, id], data)
+            }
+            return data
+          } catch (err) {
+            console.warn(`Failed to fetch artwork ID ${id}:`, err)
+            return null
           }
-          return data
         })
       )
       return {
-        artworks: artworks.filter(art => art.primaryImageSmall),
+        artworks: artworks.filter(art => art?.primaryImageSmall),
         nextIndex: pageParam + PAGE_ITEMS_SIZE,
       }
     },
@@ -83,13 +88,13 @@ export const Gallery = ({ objectIds }: Props) => {
           {data?.pages.flatMap(page =>
             page.artworks.map((art, index) => (
               <motion.div
-                key={art.objectID}
+                key={art?.objectID}
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -50 }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
               >
-                <ArtworkCard artwork={art} />
+                {art && <ArtworkCard artwork={art} />}
               </motion.div>
             ))
           )}
@@ -99,7 +104,7 @@ export const Gallery = ({ objectIds }: Props) => {
       <div ref={sentinelRef} style={{ height: 20 }} />
 
       {isFetchingNextPage && (
-        <motion.p
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -108,9 +113,14 @@ export const Gallery = ({ objectIds }: Props) => {
           <p className="text-center w-full">
             <LoaderCircle className="animate-spin size-10" />
           </p>
-        </motion.p>
+        </motion.div>
       )}
-      {!hasNextPage && <p>End gallery.</p>}
+      {!hasNextPage && data?.pages[0].artworks.length !== 0 && (
+        <p>No more artworks.</p>
+      )}
+      {!hasNextPage && data?.pages[0].artworks.length === 0 && (
+        <p>No artworks founds in this search.</p>
+      )}
     </div>
   )
 }

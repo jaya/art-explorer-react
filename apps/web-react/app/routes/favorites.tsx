@@ -14,9 +14,6 @@ export function meta(_: Route.MetaArgs) {
 export default function Favorites() {
   const { favorites } = useFavorites()
 
-  console.log('Favorites page')
-  console.log(favorites)
-
   return (
     <div suppressHydrationWarning>
       <h1 className="text-center w-full text-2xl">

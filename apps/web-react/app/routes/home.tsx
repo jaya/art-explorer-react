@@ -1,4 +1,5 @@
 import { ArtworkService } from '@/services/artworks'
+import { Header } from '~/components/header'
 import { Gallery } from '~/gallery/gallery'
 import type { Route } from './+types/home'
 
@@ -9,17 +10,21 @@ export function meta(_: Route.MetaArgs) {
   ]
 }
 
-export async function loader() {
-  const objectIds = await ArtworkService.getAll()
-  return objectIds.slice(0, 1000)
+export async function loader({ request }: Route.LoaderArgs) {
+  const url = new URL(request.url)
+  const search = url.searchParams.get('search')
+
+  if (search) {
+    return (await ArtworkService.getByArtistOrCulture(search)) || []
+  }
+
+  return (await ArtworkService.getAll()) || []
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
   return (
     <>
-      <h1 className="text-center w-full text-2xl">
-        Art Explorer - The Met Museum
-      </h1>
+      <Header title="Art Gallery - The Met Museum" />
       <Gallery objectIds={loaderData} />
     </>
   )

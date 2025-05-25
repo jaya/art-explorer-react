@@ -5,20 +5,17 @@ import {
   Scripts,
   ScrollRestoration,
   isRouteErrorResponse,
+  useNavigation,
 } from 'react-router'
 
 import { ReactQueryProvider } from '@/providers/react-query-providers'
 import { ThemeProvider } from '@/providers/theme-provider'
 import { AppSidebar } from '~/components/app-sidebar'
-import { ModeToggle } from '~/components/mode-toggle'
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from '~/components/ui/sidebar'
+import { SidebarInset, SidebarProvider } from '~/components/ui/sidebar'
 
 import type { Route } from './+types/root'
 import './app.css'
+import { LoaderCircle } from 'lucide-react'
 
 export const links: Route.LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -53,9 +50,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <SidebarProvider>
             <AppSidebar />
             <SidebarInset>
-              <main className="p-2">
-                <SidebarTrigger />
-                <ModeToggle />
+              <main>
                 <ReactQueryProvider>{children}</ReactQueryProvider>
               </main>
             </SidebarInset>
@@ -69,6 +64,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  const navigation = useNavigation()
+  const isNavigating = Boolean(navigation.location)
+
+  if (isNavigating) {
+    return (
+      <div className="min-w-full min-h-[80dvh] flex items-center justify-center">
+        <LoaderCircle className="animate-spin size-10" />
+      </div>
+    )
+  }
+
   return <Outlet />
 }
 

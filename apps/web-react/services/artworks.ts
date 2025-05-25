@@ -1,4 +1,5 @@
 import {
+  ARTS_BY_ARTIST_URL,
   ARTS_WITH_IMAGES_URL,
   ARTWORKS_URL,
 } from '@/constants/met-museum.constant'
@@ -27,7 +28,20 @@ async function getAll(): Promise<number[]> {
   }
 }
 
+async function getByArtistOrCulture(artistOrCulture: string) {
+  try {
+    const { data } = await API.get<{ objectIDs: number[] }>(
+      `${ARTS_BY_ARTIST_URL}${artistOrCulture}`
+    )
+    return data.objectIDs
+  } catch (error) {
+    console.error('Error to get objectIDs', error)
+    return []
+  }
+}
+
 export const ArtworkService = {
   getAll,
   getById,
+  getByArtistOrCulture,
 }
