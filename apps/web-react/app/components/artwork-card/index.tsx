@@ -22,10 +22,10 @@ export function ArtworkCard({ artwork }: Props) {
   const [open, setOpen] = useState(false)
 
   return (
-    <Card className="w-[300px] min-h-[400px] mx-auto flex flex-col justify-between">
-      <CardContent className="flex flex-col">
+    <Card className="w-[300px] min-h-[200px] mx-auto flex justify-between flex-col rounded-2xl shadow-md bg-muted hover:shadow-lg transition-shadow">
+      <CardContent className="flex flex-col p-4 gap-4">
         <motion.div whileHover={{ scale: 1.05 }}>
-          <div className="relative w-full h-[300px]">
+          <div className="relative w-full h-[220px]">
             <img
               src={artwork.primaryImageSmall}
               alt={artwork.title}
@@ -35,11 +35,11 @@ export function ArtworkCard({ artwork }: Props) {
             />
           </div>
         </motion.div>
-        <p className="text-xs font-semibold mt-4 text-center md:line-clamp-1">
+        <p className="text-sm md:text-base font-medium text-center line-clamp-1">
           {artwork.title}
         </p>
       </CardContent>
-      <CardFooter className="flex flex-row gap-2 justify-between">
+      <CardFooter className="flex flex-row items-center p-2">
         <FavoriteButton artworkId={artwork.objectID} />
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>

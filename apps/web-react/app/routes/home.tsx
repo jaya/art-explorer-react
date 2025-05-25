@@ -13,6 +13,13 @@ export function meta(_: Route.MetaArgs) {
 export async function loader({ request }: Route.LoaderArgs) {
   const url = new URL(request.url)
   const search = url.searchParams.get('search')
+  const department = url.searchParams.get('departmentId')
+
+  if (department) {
+    return (
+      (await ArtworkService.getArtworksByDepartment(Number(department))) || []
+    )
+  }
 
   if (search) {
     return (await ArtworkService.getByArtistOrCulture(search)) || []

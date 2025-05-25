@@ -1,6 +1,7 @@
 import { FolderHeartIcon, LayoutDashboardIcon } from 'lucide-react'
 import { useLocation } from 'react-router'
 import { SearchForm } from '~/components/search-form'
+import { Separator } from '~/components/ui/separator'
 import { Sidebar, SidebarContent, SidebarHeader } from '~/components/ui/sidebar'
 import { NavMain } from './nav-main'
 
@@ -24,14 +25,15 @@ export function AppSidebar() {
 
   return (
     <Sidebar variant="inset" collapsible="offcanvas">
-      {location.pathname === '/' && (
-        <SidebarHeader>
-          <SearchForm />
-        </SidebarHeader>
-      )}
-      <SidebarContent>
+      <SidebarHeader>
         <NavMain items={data.navMain} />
-      </SidebarContent>
+      </SidebarHeader>
+      {location.pathname === '/' && (
+        <SidebarContent>
+          <Separator />
+          <SearchForm />
+        </SidebarContent>
+      )}
     </Sidebar>
   )
 }

@@ -11,6 +11,7 @@ import { ArtworkCard } from 'app/components/artwork-card'
 import { LoaderCircle } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useRef } from 'react'
+import { Button } from '~/components/ui/button'
 
 type Props = {
   objectIds: number[]
@@ -101,7 +102,13 @@ export const Gallery = ({ objectIds }: Props) => {
         </AnimatePresence>
       </div>
 
-      <div ref={sentinelRef} style={{ height: 20 }} />
+      <div ref={sentinelRef} style={{ height: 20, paddingTop: 20 }}>
+        {hasNextPage && (
+          <Button onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
+            {isFetchingNextPage ? 'Loading...' : 'Load more'}
+          </Button>
+        )}
+      </div>
 
       {isFetchingNextPage && (
         <motion.div

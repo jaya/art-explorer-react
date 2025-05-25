@@ -47,14 +47,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
           enableSystem
           disableTransitionOnChange
         >
-          <SidebarProvider>
-            <AppSidebar />
-            <SidebarInset>
-              <main>
-                <ReactQueryProvider>{children}</ReactQueryProvider>
-              </main>
-            </SidebarInset>
-          </SidebarProvider>
+          <ReactQueryProvider>
+            <SidebarProvider>
+              <AppSidebar />
+              <SidebarInset>
+                <main>{children}</main>
+              </SidebarInset>
+            </SidebarProvider>
+          </ReactQueryProvider>
         </ThemeProvider>
         <ScrollRestoration />
         <Scripts />
