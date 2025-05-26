@@ -84,7 +84,7 @@ export const Gallery = ({ objectIds }: Props) => {
 
   return (
     <div className="p-2 md:p-8">
-      <div className="flex flex-wrap gap-4 justify-between items-stretch">
+      <div className="flex flex-wrap gap-4 items-stretch">
         <AnimatePresence>
           {data?.pages.flatMap(page =>
             page.artworks.map((art, index) => (
