@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@art-explorer/core": ["packages/core/src"]
+    }
+  }
+}
