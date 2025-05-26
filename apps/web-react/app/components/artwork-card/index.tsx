@@ -44,7 +44,11 @@ export function ArtworkCard({ artwork }: Props) {
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <motion.div whileTap={{ scale: 0.8 }}>
-              <Button variant="ghost" className="cursor-pointer">
+              <Button
+                variant="ghost"
+                className="cursor-pointer"
+                aria-label="expand dialog"
+              >
                 <Expand className="size-5" />
               </Button>
             </motion.div>
@@ -60,7 +64,7 @@ export function ArtworkCard({ artwork }: Props) {
               <DialogHeader>
                 <DialogTitle>{artwork.title}</DialogTitle>
                 <DialogDescription>
-                  {artwork.artistDisplayName} • {artwork.objectDate}
+                  {`${artwork.artistDisplayName} • ${artwork.objectDate}`}
                 </DialogDescription>
               </DialogHeader>
               <div className="flex flex-col gap-4">

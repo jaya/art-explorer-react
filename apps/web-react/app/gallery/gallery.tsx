@@ -7,10 +7,10 @@ import {
 import type { Artwork } from '@/models/art'
 import { ArtworkService } from '@/services/artworks'
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
-import { ArtworkCard } from 'app/components/artwork-card'
 import { LoaderCircle } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useRef } from 'react'
+import { ArtworkCard } from '~/components/artwork-card'
 import { Button } from '~/components/ui/button'
 
 type Props = {
