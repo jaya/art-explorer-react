@@ -1,0 +1,35 @@
+{
+  "name": "art-explorer-react",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Art Explorer - Desafio Front-end com React + The Met Museum API",
+  "author": "Adeonir Kohl <adeonir@gmail.com> (https://adeonir.dev/)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adeonir/art-explorer-react.git"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "preview": "next build && next start",
+    "lint": "biome check --write"
+  },
+  "dependencies": {
+    "@tailwindcss/postcss": "4.1.7",
+    "next": "15.3.2",
+    "postcss": "8.5.3",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "tailwindcss": "4.1.7"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.0.0-beta.5",
+    "@types/node": "22.15.21",
+    "@types/react": "19.1.5",
+    "clsx": "2.1.1",
+    "lefthook": "1.11.13",
+    "tailwind-merge": "3.3.0",
+    "typescript": "5.8.3"
+  }
+}
