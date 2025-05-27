@@ -1,0 +1,21 @@
+{
+  "name": "art-explorer-react",
+  "version": "1.0.0",
+  "description": "Challenge for a Jaya Enterprise",
+  "scripts": {
+    "build": "turbo build",
+    "check-types": "turbo check-types",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.11.0",
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "turbo": "^2.5.3",
+    "typescript": "^5.8.3"
+  }
+}

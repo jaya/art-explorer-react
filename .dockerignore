@@ -1,0 +1,30 @@
+# Evitar copiar dependências instaladas
+node_modules
+**/node_modules
+
+# Build outputs
+dist
+out
+**/dist
+**/out
+
+# Sistema de cache do turbo
+.turbo
+
+# Logs
+*.log
+
+# Ambiente
+.env
+.env.*
+
+# Test coverage
+coverage
+
+# IDEs
+.vscode
+.idea
+
+# Outras pastas geradas
+.next
+build
