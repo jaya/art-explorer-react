@@ -1,79 +1,45 @@
-import {
-  ARTS_BY_ARTIST_URL,
-  ARTS_BY_DEPARTMENT_URL,
-  ARTS_WITH_IMAGES_URL,
-  ARTWORKS_URL,
-  DEPARTMENTS_URL,
-} from '@/constants/met-museum.constant'
 import API from '@/http-client/API'
-import type { Artwork } from '@/models/art'
-import type { Department } from '@/models/department'
-
-async function getById(id: number) {
-  try {
-    const { data } = await API.get<Artwork>(`${ARTWORKS_URL}/${id}`)
-    return data
-  } catch (error) {
-    console.error(`Error to get artwork ${id}:`, error)
-    throw error
-  }
-}
-
-async function getAll(): Promise<number[]> {
-  try {
-    const { data } = await API.get<{ objectIDs: number[] }>(
-      `${ARTS_WITH_IMAGES_URL}`
-    )
-    return data.objectIDs
-  } catch (error) {
-    console.error('Error to get objectIDs', error)
-    return []
-  }
-}
-
-async function getByArtistOrCulture(artistOrCulture: string) {
-  try {
-    const { data } = await API.get<{ objectIDs: number[] }>(
-      `${ARTS_BY_ARTIST_URL}${artistOrCulture}`
-    )
-    return data.objectIDs
-  } catch (error) {
-    console.error('Error to get objectIDs', error)
-    return []
-  }
-}
-
-async function getDepartments(): Promise<Department[]> {
-  try {
-    const { data } = await API.get<{ departments: Department[] }>(
-      `${DEPARTMENTS_URL}`
-    )
-    return data.departments
-  } catch (error) {
-    console.error('Error to get objectIDs', error)
-    return []
-  }
-}
-
-async function getArtworksByDepartment(
-  departmentId: number,
-  search = 'portrait'
-) {
-  try {
-    const { data } = await API.get<{ objectIDs: number[] }>(
-      `${ARTS_BY_DEPARTMENT_URL}${departmentId}&q=${search}`
-    )
-    return data.objectIDs
-  } catch (error) {
-    console.error('Error to get objectIDs', error)
-    return []
-  }
-}
+import type { Artwork, ArtworkItem, Department } from '@art-explorer/core'
 
 export const ArtworkService = {
-  getAll,
-  getById,
-  getByArtistOrCulture,
-  getDepartments,
-  getArtworksByDepartment,
+  async getArtworks(query?: string, departmentId?: number, page = 1) {
+    try {
+      const params = new URLSearchParams()
+      if (query) params.append('query', query)
+      if (departmentId) params.append('departmentId', departmentId.toString())
+      params.append('page', String(page))
+
+      const { data } = await API.get<{
+        artworks: ArtworkItem[]
+        hasMore: boolean
+      }>(`/artworks?${params}`)
+      return data
+    } catch (error) {
+      console.error('Error to get objectIDs', error)
+      return {
+        artworks: [],
+        hasMore: false,
+      }
+    }
+  },
+  async getById(id: number): Promise<Artwork> {
+    try {
+      const { data } = await API.get<{ artwork: Artwork }>(`/artworks/${id}`)
+      return data.artwork
+    } catch (error) {
+      console.error(`Error to get artwork ${id}:`, error)
+      throw error
+    }
+  },
+  async getDepartments(): Promise<Department[]> {
+    try {
+      const { data } = await API.get<{ departments: Department[] }>(
+        '/departments'
+      )
+      return data.departments
+    } catch (error) {
+      console.error('Error to get objectIDs', error)
+      return []
+    }
+  },
 }

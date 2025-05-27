@@ -1,7 +1,7 @@
 import { ArtworkService } from '@/services/artworks'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import { Gallery } from './gallery'
+import { GalleryFavorites } from './gallery-favorites'
 
 jest.mock('@/services/artworks', () => ({
   ArtworkService: {
@@ -30,7 +30,7 @@ const renderWithQuery = (ui: React.ReactNode) => {
   )
 }
 
-describe('Gallery component', () => {
+describe('GalleryFavorites component', () => {
   const mockObjectIds = [1, 2, 3]
 
   beforeEach(() => {
@@ -38,7 +38,7 @@ describe('Gallery component', () => {
   })
 
   it('should show loading state initially', async () => {
-    renderWithQuery(<Gallery objectIds={mockObjectIds} />)
+    renderWithQuery(<GalleryFavorites objectIds={mockObjectIds} />)
     expect(screen.getByText(/loading gallery/i)).toBeInTheDocument()
   })
 
@@ -55,7 +55,7 @@ describe('Gallery component', () => {
 
     render(
       <QueryClientProvider client={queryClient}>
-        <Gallery objectIds={mockObjectIds} />
+        <GalleryFavorites objectIds={mockObjectIds} />
       </QueryClientProvider>
     )
 
@@ -75,7 +75,7 @@ describe('Gallery component', () => {
       })
     )
 
-    renderWithQuery(<Gallery objectIds={Array.from({ length: 18 })} />)
+    renderWithQuery(<GalleryFavorites objectIds={Array.from({ length: 18 })} />)
 
     await waitFor(() => {
       expect(screen.getByText(/load more/i)).toBeInTheDocument()
@@ -94,7 +94,7 @@ describe('Gallery component', () => {
       })
     )
 
-    renderWithQuery(<Gallery objectIds={Array.from({ length: 18 })} />)
+    renderWithQuery(<GalleryFavorites objectIds={Array.from({ length: 18 })} />)
 
     const loadMoreButton = await screen.findByText(/load more/i)
 
@@ -111,7 +111,7 @@ describe('Gallery component', () => {
       Promise.resolve(null)
     )
 
-    renderWithQuery(<Gallery objectIds={[999]} />)
+    renderWithQuery(<GalleryFavorites objectIds={[999]} />)
 
     await waitFor(() => {
       expect(

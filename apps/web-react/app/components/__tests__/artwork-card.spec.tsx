@@ -1,7 +1,7 @@
-import type { Artwork } from '@/models/art'
+import type { Artwork } from '@art-explorer/core'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { ArtworkCard } from '../artwork-card'
+import { ArtworkFavoriteCard } from '~/components/artwork-card/artwork-favorite.card'
 
 const mockArtwork = {
   objectID: 123,
@@ -22,9 +22,9 @@ jest.mock('~/components/buttons/favorite.button', () => ({
   ),
 }))
 
-describe('ArtworkCard', () => {
+describe('ArtworkFavoriteCard', () => {
   it('renders artwork image and title', () => {
-    render(<ArtworkCard artwork={mockArtwork} />)
+    render(<ArtworkFavoriteCard artwork={mockArtwork} />)
 
     const img = screen.getByAltText(mockArtwork.title)
     const title = screen.getByText(mockArtwork.title)
@@ -34,7 +34,7 @@ describe('ArtworkCard', () => {
   })
 
   it('renders FavoriteButton', () => {
-    render(<ArtworkCard artwork={mockArtwork} />)
+    render(<ArtworkFavoriteCard artwork={mockArtwork} />)
 
     const favoriteButton = screen.getByTestId(
       `favorite-button-${mockArtwork.objectID}`
@@ -44,7 +44,7 @@ describe('ArtworkCard', () => {
   })
 
   it('opens and closes dialog on button click', async () => {
-    render(<ArtworkCard artwork={mockArtwork} />)
+    render(<ArtworkFavoriteCard artwork={mockArtwork} />)
 
     const expandButton = screen.getByRole('button', { name: /expand dialog/i })
 
@@ -67,7 +67,7 @@ describe('ArtworkCard', () => {
 
   it('renders fallback image when primaryImage is missing', () => {
     const artworkWithoutPrimaryImage = { ...mockArtwork, primaryImage: '' }
-    render(<ArtworkCard artwork={artworkWithoutPrimaryImage} />)
+    render(<ArtworkFavoriteCard artwork={artworkWithoutPrimaryImage} />)
 
     const img = screen.getByAltText(artworkWithoutPrimaryImage.title)
 

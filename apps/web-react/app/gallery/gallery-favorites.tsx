@@ -4,20 +4,20 @@ import {
   ARTWORKS_KEY_QUERY,
   PAGE_ITEMS_SIZE,
 } from '@/constants/gallery.constant'
-import type { Artwork } from '@/models/art'
 import { ArtworkService } from '@/services/artworks'
+import type { Artwork } from '@art-explorer/core'
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
 import { LoaderCircle } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useRef } from 'react'
-import { ArtworkCard } from '~/components/artwork-card'
+import { ArtworkFavoriteCard } from '~/components/artwork-card/artwork-favorite.card'
 import { Button } from '~/components/ui/button'
 
 type Props = {
   objectIds: number[]
 }
 
-export const Gallery = ({ objectIds }: Props) => {
+export const GalleryFavorites = ({ objectIds }: Props) => {
   const sentinelRef = useRef<HTMLDivElement>(null)
   const queryClient = useQueryClient()
 
@@ -95,7 +95,7 @@ export const Gallery = ({ objectIds }: Props) => {
                 exit={{ opacity: 0, y: -50 }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
               >
-                {art && <ArtworkCard artwork={art} />}
+                {art && <ArtworkFavoriteCard artwork={art} />}
               </motion.div>
             ))
           )}

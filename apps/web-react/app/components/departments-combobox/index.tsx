@@ -3,7 +3,6 @@ import { ArtworkService } from '@/services/artworks'
 import { useQuery } from '@tanstack/react-query'
 import { Check, ChevronsUpDown } from 'lucide-react'
 import { useState } from 'react'
-import { useNavigate } from 'react-router'
 import { Button } from '~/components/ui/button'
 import {
   Command,
