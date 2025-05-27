@@ -60,6 +60,11 @@ export type Artwork = {
 
 export type ArtworkItem = Pick<Artwork, 'objectID' | 'primaryImage' | 'title'>
 
+export type SearchArtworksResponse = {
+  objectIDs: number[]
+  hasMore: boolean
+}
+
 export interface Constituent {
   constituentID: number
   role: string

@@ -1,4 +1,5 @@
 import artworkRoutes from '@/routes/artwork.js'
+import departmentRoutes from '@/routes/department.js'
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
@@ -20,6 +21,7 @@ app.get('/health', c => {
 })
 
 app.route('/artworks', artworkRoutes)
+app.route('/departments', departmentRoutes)
 
 serve(
   {

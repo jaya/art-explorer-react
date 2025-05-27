@@ -1,4 +1,5 @@
 import { MetService } from '@/services/met.service.js'
+import type { ArtworkItem } from '@art-explorer/core'
 import { zValidator } from '@hono/zod-validator'
 import { Hono } from 'hono'
 import { z } from 'zod'
@@ -25,13 +26,22 @@ artworkRoutes.get('/', zValidator('query', artworksQueriesSchema), async c => {
     return c.text('No artworks found', 404)
   }
 
-  const artworks = await Promise.all(
-    response.objectIDs.map(
-      async id =>
-        await MetService.getById(id).then(art => MetService.mapToListItem(art))
-    )
-  )
+  const artworks: ArtworkItem[] = []
+  const promises = []
 
+  for (const id of response.objectIDs) {
+    try {
+      promises.push(
+        MetService.getById(id).then(art => {
+          if (art) artworks.push(MetService.mapToListItem(art))
+        })
+      )
+    } catch (e) {
+      console.error(`Error to get artwork ${id}:`, e)
+    }
+  }
+
+  await Promise.all(promises)
   return c.json({
     artworks,
     hasMore: response.hasMore,

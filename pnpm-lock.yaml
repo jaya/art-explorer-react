@@ -51,6 +51,9 @@ importers:
 
   apps/web-react:
     dependencies:
+      '@art-explorer/core':
+        specifier: workspace:*
+        version: link:../../packages/core
       '@hookform/resolvers':
         specifier: ^5.0.1
         version: 5.0.1(react-hook-form@7.56.4(react@19.1.0))
