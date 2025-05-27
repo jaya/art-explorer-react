@@ -9,13 +9,12 @@ RUN apk add --no-cache gcompat
 WORKDIR /app
 
 # Copy package files
-COPY pnpm-lock.yaml package.json tsconfig.json ./
-COPY src ./src
+COPY ./package.json ./pnpm-lock.yaml ./pnpm-workspace.yaml turbo.json ./
+COPY ./apps/proxy-api ./apps/proxy-api
+COPY ./packages ./packages
 
 # Install dependencies and build
-RUN pnpm install --frozen-lockfile && \
-    pnpm run build && \
-    pnpm prune --production
+RUN pnpm install --frozen-lockfile && pnpm build --filter=proxy-api
 
 FROM base AS runner
 WORKDIR /app
@@ -24,11 +23,9 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 hono
 
 # Copy necessary files from builder
-COPY --from=builder --chown=hono:nodejs /app/node_modules /app/node_modules
-COPY --from=builder --chown=hono:nodejs /app/dist /app/dist
-COPY --from=builder --chown=hono:nodejs /app/package.json /app/package.json
+COPY --from=builder --chown=hono:nodejs ./app/ ./
 
 USER hono
 EXPOSE 3000
 
-CMD ["node", "/app/dist/index.js"]
+CMD ["node", "/app/apps/proxy-api/dist/index.js"]
