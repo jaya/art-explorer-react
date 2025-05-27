@@ -12,7 +12,7 @@ app.use(
   cors({
     origin:
       process.env.NODE_ENV === 'production'
-        ? 'https://art-explorer-react-web-react.vercel.app/'
+        ? (process.env.ORIGIN_URL ?? '')
         : 'http://localhost:5173',
   })
 )
@@ -26,7 +26,7 @@ app.route('/departments', departmentRoutes)
 serve(
   {
     fetch: app.fetch,
-    port: 3000,
+    port: process.env.PORT ? Number(process.env.PORT) : 3000,
   },
   info => {
     console.log(`Server is running on http://localhost:${info.port}`)

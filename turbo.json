@@ -5,7 +5,7 @@
     "build": {
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"],
-      "env": ["VITE_API_URL"]
+      "env": ["VITE_API_URL", "PORT", "NODE_ENV", "ORIGIN_URL"]
     },
     "check-types": {
       "dependsOn": ["^check-types"]
