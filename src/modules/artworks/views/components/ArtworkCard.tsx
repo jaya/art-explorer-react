@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 import type { Artwork } from '~/modules/artworks/types'
 import { cn } from '~/shared/utils/className'
@@ -12,7 +13,9 @@ export function ArtworkCard({ artwork }: ArtworkCardProps) {
   const hasArtist = artwork.artistDisplayName
 
   return (
-    <div className="flex flex-col rounded-lg border border-border">
+    <Link
+      className="flex flex-col rounded-lg border border-border"
+      href={`/details/${artwork.objectID}`}>
       <div className="relative h-56 w-full overflow-hidden rounded-t-lg">
         {imageUrl ? (
           <Image
@@ -35,6 +38,6 @@ export function ArtworkCard({ artwork }: ArtworkCardProps) {
         </h3>
         <p className="text-center text-lg text-muted-foreground">{artwork.artistDisplayName}</p>
       </div>
-    </div>
+    </Link>
   )
 }
