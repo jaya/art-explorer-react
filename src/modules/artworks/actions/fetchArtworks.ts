@@ -4,23 +4,23 @@ import { getArtwork } from '~/modules/artworks/actions/getArtwork'
 import type { Artwork } from '~/modules/artworks/types'
 import { API } from '~/shared/helpers/api'
 
-interface FetchPayload {
+export interface FetchArtworksPayload {
   page: number
 }
 
-interface FetchResponse {
+export interface FetchArtworksResponse {
   data: Artwork[]
   nextPage: number | null
 }
 
-interface ApiResponse {
+export interface ApiResponse {
   total: number
   objectIDs: string[]
 }
 
 const LIMIT = 15
 
-export async function fetchArtworks({ page }: FetchPayload): Promise<FetchResponse> {
+export async function fetchArtworks({ page }: FetchArtworksPayload) {
   const { data: artworksIds } = await API.get<ApiResponse>('/search', {
     params: {
       hasImages: true,
