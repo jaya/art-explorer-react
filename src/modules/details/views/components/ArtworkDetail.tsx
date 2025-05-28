@@ -3,7 +3,7 @@
 import Image from 'next/image'
 
 import type { Artwork } from '~/modules/artworks/types'
-import { DetailsCard } from '~/modules/details/view/components/DetailsCard'
+import { DetailsCard } from '~/modules/details/views/components/DetailsCard'
 import { cn } from '~/shared/utils/className'
 
 interface ArtworkDetailProps {

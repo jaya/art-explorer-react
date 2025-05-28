@@ -1,4 +1,4 @@
-import { DetailsView } from '~/modules/details/view'
+import { DetailsView } from '~/modules/details/views'
 
 interface PageProps {
   params: Promise<{ id: string }>

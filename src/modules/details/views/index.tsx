@@ -1,5 +1,5 @@
 import { getArtwork } from '~/modules/details/actions/getArtwork'
-import { ArtworkDetail } from '~/modules/details/view/components/ArtworkDetail'
+import { ArtworkDetail } from '~/modules/details/views/components/ArtworkDetail'
 
 interface DetailsViewProps {
   id: string
