@@ -20,6 +20,12 @@
     "enabled": true,
     "rules": {
       "recommended": true,
+      "a11y": {
+        "noRedundantAlt": "off"
+      },
+      "performance": {
+        "noImgElement": "off"
+      },
       "nursery": {
         "useSortedClasses": {
           "fix": "safe",

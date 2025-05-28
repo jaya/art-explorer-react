@@ -1,3 +1,5 @@
+import { ArtworksView } from '~/modules/artworks/views'
+
 export default function Page() {
-  return <h1 className="font-bold text-3xl">Art Explorer!</h1>
+  return <ArtworksView />
 }
