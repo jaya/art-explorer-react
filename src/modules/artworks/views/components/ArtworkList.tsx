@@ -4,8 +4,8 @@ import { Fragment } from 'react'
 
 import type { FetchArtworksResponse } from '~/modules/artworks/actions/fetchArtworks'
 import { useArtworks } from '~/modules/artworks/hooks/useArtworks'
-import { ArtworkCard } from '~/modules/artworks/views/components/ArtworkCard'
 import { LoadButton } from '~/modules/artworks/views/components/LoadButton'
+import { ArtworkCard } from '~/shared/components/ArtworkCard'
 
 interface ArtworksListProps {
   initialData: FetchArtworksResponse
