@@ -1,6 +1,7 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-@theme {
+@theme inline {
   --font-family-serif: var(--font-inria-serif);
   --font-family-sans: var(--font-inter);
 

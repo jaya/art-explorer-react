@@ -1,7 +1,8 @@
-import type { ComponentProps } from 'react'
+import type * as React from 'react'
+
 import { cn } from '~/shared/utils/className'
 
-export function Input({ className, type, ...props }: ComponentProps<'input'>) {
+export function Input({ className, type, ...props }: React.ComponentProps<'input'>) {
   return (
     <div
       className={cn(
