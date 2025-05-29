@@ -2,8 +2,6 @@
 
 import { create } from 'zustand'
 
-export type FilterType = 'all' | 'artistOrCulture' | 'department'
-
 interface SearchState {
   query: string
   departmentId: string
