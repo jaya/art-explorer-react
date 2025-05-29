@@ -8,6 +8,7 @@ import { QueryProvider } from '~/core/providers/QueryProvider'
 import { ThemeProvider } from '~/core/providers/ThemeProvider'
 import { Footer } from '~/shared/components/Footer'
 import { Header } from '~/shared/components/Header'
+import { Toaster } from '~/shared/components/Toaster'
 import { cn } from '~/shared/utils/className'
 
 const inter = Inter({
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </QueryProvider>
         </ThemeProvider>
         <Hydration />
+        <Toaster richColors />
       </body>
     </html>
   )
