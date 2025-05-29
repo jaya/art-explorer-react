@@ -7,7 +7,7 @@ import { tv, type VariantProps } from 'tailwind-variants'
 import { cn } from '~/shared/utils/className'
 
 export const buttonVariants = tv({
-  base: "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium text-sm outline-none transition-all focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  base: "inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium text-md outline-none transition-all focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
   variants: {
     variant: {
       primary: 'bg-primary text-primary-foreground shadow-xs hover:bg-primary/90',
@@ -20,10 +20,10 @@ export const buttonVariants = tv({
       link: 'text-primary underline-offset-4 hover:underline',
     },
     size: {
-      sm: 'h-8 rounded-lg px-3 has-[svg]:px-2',
-      md: 'h-9 px-3 py-2 text-sm has-[div>div>svg]:px-2',
-      lg: 'h-10 px-4 text-sm',
-      icon: 'size-9 rounded-md',
+      sm: 'h-8 rounded-lg px-3 text-sm has-[svg]:px-2',
+      md: 'h-9 px-3 py-2 text-md has-[div>div>svg]:px-2',
+      lg: 'h-10 px-4 text-md',
+      icon: 'size-9',
     },
   },
   defaultVariants: {

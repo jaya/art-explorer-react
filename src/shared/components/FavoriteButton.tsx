@@ -45,7 +45,7 @@ export function FavoriteButton({ artwork }: FavoriteButtonProps) {
 
   return (
     <motion.button
-      className="cursor-pointer rounded-full bg-white p-2 text-black shadow-md transition-colors duration-300 hover:bg-primary [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:stroke-[2.5]"
+      className="cursor-pointer rounded-full bg-white p-2 text-primary-foreground shadow-md transition-colors duration-300 hover:bg-primary [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:stroke-[2.5]"
       disabled={!isReady}
       onClick={handleClick}
       type="button">

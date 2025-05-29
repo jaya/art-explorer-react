@@ -6,11 +6,11 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import type { FormEvent } from 'react'
 
+import { useSearchStore } from '~/modules/search/store/search'
 import { Button } from '~/shared/components/Button'
 import { Input } from '~/shared/components/Input'
 import { SearchButton } from '~/shared/components/SearchButton'
 import { ThemeButton } from '~/shared/components/ThemeButton'
-import { useSearchStore } from '~/shared/store/search'
 import { cn } from '~/shared/utils/className'
 
 export function Header() {
@@ -35,14 +35,14 @@ export function Header() {
     <header className="relative">
       <div className="relative z-2 flex h-28 items-center bg-primary">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4">
-          <h1 className="font-serif text-3xl text-black">
+          <h1 className="font-serif text-3xl text-primary-foreground">
             <Link href="/">Art Explorer</Link>
           </h1>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             <nav>
               <Link
                 className={cn(
-                  'rounded-md bg-transparent px-4 py-2 text-black text-lg transition-colors duration-300 hover:bg-white',
+                  'rounded-md bg-transparent px-4 py-2 font-medium text-lg text-primary-foreground transition-colors duration-300 hover:bg-white',
                   isFavoritesPage && 'bg-white',
                 )}
                 href="/favorites">

@@ -22,7 +22,7 @@ export function ThemeButton() {
       type="button">
       <motion.div
         animate={{ rotate: 0, opacity: 1 }}
-        className="flex items-center justify-center text-black"
+        className="flex items-center justify-center text-primary-foreground"
         exit={{ rotate: 90, opacity: 0 }}
         initial={{ rotate: -90, opacity: 0 }}
         key={theme}

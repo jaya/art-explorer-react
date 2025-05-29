@@ -6,9 +6,9 @@ export function Input({ className, type, ...props }: React.ComponentProps<'input
   return (
     <div
       className={cn(
-        'flex h-9 w-full min-w-0 items-baseline gap-2 rounded-md border border-border bg-background px-3 py-2 font-medium text-base text-primary-dark',
-        'transition-[color,box-shadow] focus-within:border-border focus-within:ring-2 focus-within:ring-border/50',
-        'has-aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40',
+        'flex h-9 w-full min-w-0 rounded-md border border-input bg-background! px-3 py-2 text-md shadow-xs transition-all',
+        'focus-within:border-ring focus-within:ring-[3px] focus-within:ring-ring/50 dark:bg-input/30',
+        'aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40',
         className,
       )}
       data-slot="input">

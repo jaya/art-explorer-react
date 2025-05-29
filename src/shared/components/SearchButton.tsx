@@ -35,7 +35,7 @@ export function SearchButton({ isActive, onClick }: SearchButtonProps) {
       type="button">
       <motion.div
         animate={controls}
-        className="text-black">
+        className="text-primary-foreground">
         <SearchIcon />
       </motion.div>
     </motion.button>
