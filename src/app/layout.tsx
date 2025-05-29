@@ -5,6 +5,7 @@ import type { ReactNode } from 'react'
 
 import { Hydration } from '~/core/components/Hydration'
 import { QueryProvider } from '~/core/providers/QueryProvider'
+import { ThemeProvider } from '~/core/providers/ThemeProvider'
 import { Footer } from '~/shared/components/Footer'
 import { Header } from '~/shared/components/Header'
 import { cn } from '~/shared/utils/className'
@@ -22,14 +23,22 @@ const inriaSerif = Inria_Serif({
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      suppressHydrationWarning>
       <body
-        className={cn(inter.variable, inriaSerif.variable, 'flex min-h-dvh min-w-xs flex-col font-sans antialiased')}>
-        <QueryProvider>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </QueryProvider>
+        className={cn(
+          inter.variable,
+          inriaSerif.variable,
+          'flex min-h-dvh min-w-xs flex-col bg-background font-sans antialiased',
+        )}>
+        <ThemeProvider>
+          <QueryProvider>
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </QueryProvider>
+        </ThemeProvider>
         <Hydration />
       </body>
     </html>
