@@ -12,7 +12,7 @@ interface LoadButtonProps {
 export function LoadButton({ isFetching, onClick }: LoadButtonProps) {
   return (
     <button
-      className="relative flex w-fit cursor-pointer items-center justify-center rounded-md bg-white px-4 py-2 transition-colors hover:bg-muted disabled:cursor-not-allowed"
+      className="relative flex w-fit cursor-pointer items-center justify-center rounded-md bg-white px-4 py-2 transition-colors duration-300 hover:bg-muted disabled:cursor-not-allowed"
       disabled={isFetching}
       onClick={onClick}
       type="button">
