@@ -2,21 +2,23 @@
 
 import { create } from 'zustand'
 
+export type FilterType = 'all' | 'artistOrCulture' | 'department'
+
 interface SearchState {
   query: string
-  isOpen: boolean
+  departmentId: string
 }
 
 interface SearchActions {
   setQuery: (query: string) => void
-  setIsOpen: (isOpen: boolean) => void
+  setDepartmentId: (departmentId: string) => void
 }
 
 type SearchStore = SearchState & SearchActions
 
 export const useSearchStore = create<SearchStore>((set) => ({
   query: '',
-  isOpen: false,
+  departmentId: '',
   setQuery: (query) => set({ query: query.trim() }),
-  setIsOpen: (isOpen) => set({ isOpen }),
+  setDepartmentId: (departmentId) => set({ departmentId }),
 }))
