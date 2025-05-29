@@ -21,7 +21,7 @@ export function FavoriteButton({ artwork }: FavoriteButtonProps) {
 
   const { isReady } = useFavorites()
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (isFavorite) {
       toast.warning('Artwork removed from favorites')
       removeFavorite(artwork)
@@ -29,9 +29,7 @@ export function FavoriteButton({ artwork }: FavoriteButtonProps) {
       toast.success('Artwork added to favorites!')
       addFavorite(artwork)
     }
-  }
 
-  const handleTap = async () => {
     await controls.start({
       scale: [0.8, 1],
       transition: {
@@ -51,7 +49,6 @@ export function FavoriteButton({ artwork }: FavoriteButtonProps) {
       className="cursor-pointer rounded-full bg-white p-2 text-black shadow-md transition-colors duration-300 hover:bg-primary [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:stroke-[2.5]"
       disabled={!isReady}
       onClick={handleClick}
-      onTap={handleTap}
       type="button">
       <span className="sr-only">{isFavorite ? 'Remove from favorites' : 'Add to favorites'}</span>
       <motion.div

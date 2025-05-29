@@ -16,13 +16,13 @@ export function ThemeButton() {
 
   return (
     <button
-      className="cursor-pointer rounded-full bg-background p-2 transition-colors duration-300 hover:bg-accent-foreground hover:text-accent [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:stroke-[2.5]"
+      className="cursor-pointer rounded-full bg-transparent p-2 transition-colors duration-300 hover:bg-white [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:stroke-[2]"
       disabled={!isReady}
       onClick={handleClick}
       type="button">
       <motion.div
         animate={{ rotate: 0, opacity: 1 }}
-        className="flex items-center justify-center"
+        className="flex items-center justify-center text-black"
         exit={{ rotate: 90, opacity: 0 }}
         initial={{ rotate: -90, opacity: 0 }}
         key={theme}
