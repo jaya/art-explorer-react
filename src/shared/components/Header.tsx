@@ -1,24 +1,32 @@
 'use client'
 
+import { ArrowRightIcon } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import type { FormEvent } from 'react'
 
+import { Button } from '~/shared/components/Button'
 import { Input } from '~/shared/components/Input'
 import { SearchButton } from '~/shared/components/SearchButton'
 import { ThemeButton } from '~/shared/components/ThemeButton'
+import { useSearchStore } from '~/shared/store/search'
 import { cn } from '~/shared/utils/className'
 
 export function Header() {
+  const router = useRouter()
   const pathname = usePathname()
   const isFavoritesPage = pathname === '/favorites'
-  const isSearchPage = pathname === '/search'
 
-  const [isSearchOpen, setIsSearchOpen] = useState(false || isSearchPage)
+  const { query, setQuery, isOpen, setIsOpen } = useSearchStore()
 
-  const handleSearch = () => {
-    setIsSearchOpen(!isSearchOpen)
+  const handleOpenSearch = () => {
+    setIsOpen(!isOpen)
+  }
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    router.push(`/search/${query}`)
   }
 
   return (
@@ -40,15 +48,15 @@ export function Header() {
               </Link>
             </nav>
             <SearchButton
-              isActive={isSearchOpen}
-              onClick={handleSearch}
+              isActive={isOpen}
+              onClick={handleOpenSearch}
             />
             <ThemeButton />
           </div>
         </div>
       </div>
       <AnimatePresence mode="wait">
-        {isSearchOpen && (
+        {isOpen && (
           <motion.div
             animate={{ y: 0 }}
             className="absolute inset-x-0 top-28 z-1 flex h-16 items-center bg-accent"
@@ -56,10 +64,23 @@ export function Header() {
             initial={{ y: -64 }}
             transition={{ duration: 0.3 }}>
             <div className="mx-auto flex w-full max-w-7xl items-center justify-end px-4">
-              <Input
-                className="w-full max-w-md"
-                placeholder="Search for an artist, artwork, or department"
-              />
+              <form
+                className="relative flex w-full max-w-md items-center"
+                onSubmit={handleSubmit}>
+                <Input
+                  className="w-full"
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search for an artist, artwork, or department"
+                  value={query}
+                />
+                <Button
+                  className="absolute top-px right-px bottom-px h-auto"
+                  size="icon"
+                  type="submit"
+                  variant="ghost">
+                  <ArrowRightIcon />
+                </Button>
+              </form>
             </div>
           </motion.div>
         )}
