@@ -29,7 +29,8 @@ export function FavoriteButton({ artwork }: FavoriteButtonProps) {
 
   return (
     <button
-      className="cursor-pointer rounded-full bg-background p-2 transition-colors duration-300 hover:bg-primary"
+      className="cursor-pointer rounded-full bg-white p-2 text-black shadow-md transition-colors duration-300 hover:bg-primary [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:stroke-[2.5]"
+      disabled={!isReady}
       onClick={handleClick}
       type="button">
       <span className="sr-only">{isFavorite ? 'Remove from favorites' : 'Add to favorites'}</span>
