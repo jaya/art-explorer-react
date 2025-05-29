@@ -4,3 +4,4 @@ pre-commit:
     lint:
       glob: "*.{ts,tsx}"
       run: pnpm lint {staged_files}
+      stage_fixed: true
