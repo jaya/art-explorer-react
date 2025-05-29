@@ -16,13 +16,15 @@ export function ArtworkCard({ artwork }: ArtworkCardProps) {
   const hasArtist = artwork.artistDisplayName
 
   return (
-    <div className="relative rounded-lg border border-border">
+    <div className="relative flex overflow-hidden rounded-lg border border-sidebar-border">
       <div className="absolute top-4 right-4 z-1">
         <FavoriteButton artwork={artwork} />
       </div>
-      <Link href={`/details/${artwork.objectID}`}>
-        <div className="flex flex-col">
-          <div className="relative h-56 w-full overflow-hidden rounded-t-lg">
+      <Link
+        className="flex flex-1"
+        href={`/details/${artwork.objectID}`}>
+        <div className="flex flex-1 flex-col">
+          <div className="relative h-56 w-full rounded-t-lg">
             {imageUrl ? (
               <Image
                 alt={artwork.title}
@@ -38,7 +40,7 @@ export function ArtworkCard({ artwork }: ArtworkCardProps) {
               />
             )}
           </div>
-          <div className="flex flex-col p-4">
+          <div className="flex flex-1 flex-col bg-card p-4">
             <h3 className={cn('text-center font-serif text-2xl', hasArtist ? 'line-clamp-1' : 'line-clamp-2')}>
               {artwork.title}
             </h3>

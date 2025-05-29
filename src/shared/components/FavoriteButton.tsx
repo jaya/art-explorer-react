@@ -34,7 +34,7 @@ export function FavoriteButton({ artwork }: FavoriteButtonProps) {
       onClick={handleClick}
       type="button">
       <span className="sr-only">{isFavorite ? 'Remove from favorites' : 'Add to favorites'}</span>
-      {isFavorite ? <HeartMinus className="stroke-3" /> : <HeartPlus className="stroke-3" />}
+      {isFavorite ? <HeartMinus /> : <HeartPlus />}
     </button>
   )
 }
