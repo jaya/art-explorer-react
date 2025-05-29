@@ -6,7 +6,7 @@ import type * as React from 'react'
 
 import { cn } from '~/shared/utils/className'
 
-function Select({ ...props }: React.ComponentProps<typeof SelectPrimitive.Root>) {
+export function Select({ ...props }: React.ComponentProps<typeof SelectPrimitive.Root>) {
   return (
     <SelectPrimitive.Root
       data-slot="select"
@@ -15,7 +15,7 @@ function Select({ ...props }: React.ComponentProps<typeof SelectPrimitive.Root>)
   )
 }
 
-function SelectGroup({ ...props }: React.ComponentProps<typeof SelectPrimitive.Group>) {
+export function SelectGroup({ ...props }: React.ComponentProps<typeof SelectPrimitive.Group>) {
   return (
     <SelectPrimitive.Group
       data-slot="select-group"
@@ -24,7 +24,7 @@ function SelectGroup({ ...props }: React.ComponentProps<typeof SelectPrimitive.G
   )
 }
 
-function SelectValue({ ...props }: React.ComponentProps<typeof SelectPrimitive.Value>) {
+export function SelectValue({ ...props }: React.ComponentProps<typeof SelectPrimitive.Value>) {
   return (
     <SelectPrimitive.Value
       data-slot="select-value"
@@ -33,7 +33,7 @@ function SelectValue({ ...props }: React.ComponentProps<typeof SelectPrimitive.V
   )
 }
 
-function SelectTrigger({
+export function SelectTrigger({
   className,
   size = 'default',
   children,
@@ -58,7 +58,7 @@ function SelectTrigger({
   )
 }
 
-function SelectContent({
+export function SelectContent({
   className,
   children,
   position = 'popper',
@@ -91,7 +91,7 @@ function SelectContent({
   )
 }
 
-function SelectLabel({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.Label>) {
+export function SelectLabel({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.Label>) {
   return (
     <SelectPrimitive.Label
       className={cn('px-2 py-1.5 text-muted-foreground text-sm', className)}
@@ -101,7 +101,7 @@ function SelectLabel({ className, ...props }: React.ComponentProps<typeof Select
   )
 }
 
-function SelectItem({ className, children, ...props }: React.ComponentProps<typeof SelectPrimitive.Item>) {
+export function SelectItem({ className, children, ...props }: React.ComponentProps<typeof SelectPrimitive.Item>) {
   return (
     <SelectPrimitive.Item
       className={cn(
@@ -120,7 +120,7 @@ function SelectItem({ className, children, ...props }: React.ComponentProps<type
   )
 }
 
-function SelectSeparator({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.Separator>) {
+export function SelectSeparator({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.Separator>) {
   return (
     <SelectPrimitive.Separator
       className={cn('-mx-1 pointer-events-none my-1 h-px bg-border', className)}
@@ -130,7 +130,10 @@ function SelectSeparator({ className, ...props }: React.ComponentProps<typeof Se
   )
 }
 
-function SelectScrollUpButton({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.ScrollUpButton>) {
+export function SelectScrollUpButton({
+  className,
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.ScrollUpButton>) {
   return (
     <SelectPrimitive.ScrollUpButton
       className={cn('flex cursor-default items-center justify-center py-1', className)}
@@ -141,7 +144,7 @@ function SelectScrollUpButton({ className, ...props }: React.ComponentProps<type
   )
 }
 
-function SelectScrollDownButton({
+export function SelectScrollDownButton({
   className,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.ScrollDownButton>) {
@@ -153,17 +156,4 @@ function SelectScrollDownButton({
       <ChevronDownIcon className="size-4" />
     </SelectPrimitive.ScrollDownButton>
   )
-}
-
-export {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectScrollDownButton,
-  SelectScrollUpButton,
-  SelectSeparator,
-  SelectTrigger,
-  SelectValue,
 }
