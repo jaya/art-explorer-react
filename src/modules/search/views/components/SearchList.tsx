@@ -5,6 +5,7 @@ import { type FormEvent, useEffect } from 'react'
 
 import { useSearchStore } from '~/modules/search/store/search'
 import { DepartmentsDropdown } from '~/modules/search/views/components/DepartmentsDropdown'
+import { FilterTypeDropdown } from '~/modules/search/views/components/FilterTypeDropdown'
 import { Button } from '~/shared/components/Button'
 import { Input } from '~/shared/components/Input'
 
@@ -37,10 +38,11 @@ export function SearchList() {
           <form
             className="flex items-center gap-4"
             onSubmit={handleSubmit}>
+            <FilterTypeDropdown />
             <Input
               className="w-full"
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search for an artist, artwork, or department"
+              placeholder="Search for an artwork, artist, or department"
               value={query}
             />
             <Button
