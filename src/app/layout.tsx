@@ -3,7 +3,7 @@ import '~/shared/styles/globals.css'
 import { Inria_Serif, Inter } from 'next/font/google'
 import type { ReactNode } from 'react'
 
-import { QueryProvider } from '~/core/providers/query-provider'
+import { QueryProvider } from '~/core/providers/QueryProvider'
 import { Footer } from '~/shared/components/Footer'
 import { Header } from '~/shared/components/Header'
 import { cn } from '~/shared/utils/className'
