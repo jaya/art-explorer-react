@@ -2,6 +2,7 @@
 
 import { HeartMinus, HeartPlus } from 'lucide-react'
 import { motion, useAnimationControls } from 'motion/react'
+import { toast } from 'sonner'
 
 import type { Artwork } from '~/modules/artworks/types'
 import { useFavorites } from '~/modules/favorites/hooks/useFavorites'
@@ -22,8 +23,10 @@ export function FavoriteButton({ artwork }: FavoriteButtonProps) {
 
   const handleClick = () => {
     if (isFavorite) {
+      toast.warning('Artwork removed from favorites')
       removeFavorite(artwork)
     } else {
+      toast.success('Artwork added to favorites!')
       addFavorite(artwork)
     }
   }
