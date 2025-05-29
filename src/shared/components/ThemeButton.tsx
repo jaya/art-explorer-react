@@ -1,6 +1,7 @@
 'use client'
 
 import { Moon, Sun } from 'lucide-react'
+import { motion } from 'motion/react'
 
 import { useTheme } from '~/shared/hooks/useTheme'
 
@@ -19,7 +20,15 @@ export function ThemeButton() {
       disabled={!isReady}
       onClick={handleClick}
       type="button">
-      {theme === 'dark' ? <Sun /> : <Moon />}
+      <motion.div
+        animate={{ rotate: 0, opacity: 1 }}
+        className="flex items-center justify-center"
+        exit={{ rotate: 90, opacity: 0 }}
+        initial={{ rotate: -90, opacity: 0 }}
+        key={theme}
+        transition={{ duration: 0.3 }}>
+        {theme === 'dark' ? <Sun /> : <Moon />}
+      </motion.div>
     </button>
   )
 }
