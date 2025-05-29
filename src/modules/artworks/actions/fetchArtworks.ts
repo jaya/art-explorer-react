@@ -1,8 +1,8 @@
 'use server'
 
-import type { Artwork } from '~/modules/artworks/types'
 import { getArtwork } from '~/modules/details/actions/getArtwork'
 import { API } from '~/shared/helpers/api'
+import type { Artwork } from '~/shared/types'
 
 export interface FetchArtworksPayload {
   page: number

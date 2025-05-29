@@ -3,7 +3,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-import type { Artwork } from '~/modules/artworks/types'
+import type { Artwork } from '~/shared/types'
 
 interface FavoriteState {
   favorites: Artwork[]

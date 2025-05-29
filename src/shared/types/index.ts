@@ -14,3 +14,8 @@ export interface Artwork {
   department: string
   classification: string
 }
+
+export interface Department {
+  departmentId: number
+  displayName: string
+}

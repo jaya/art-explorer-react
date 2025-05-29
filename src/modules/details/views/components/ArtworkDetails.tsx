@@ -1,10 +1,9 @@
 'use client'
 
 import Image from 'next/image'
-
-import type { Artwork } from '~/modules/artworks/types'
 import { DetailsCard } from '~/modules/details/views/components/DetailsCard'
 import { FavoriteButton } from '~/shared/components/FavoriteButton'
+import type { Artwork } from '~/shared/types'
 import { cn } from '~/shared/utils/className'
 
 interface ArtworkDetailProps {

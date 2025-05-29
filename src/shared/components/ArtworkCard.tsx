@@ -3,9 +3,8 @@
 import { motion } from 'motion/react'
 import Image from 'next/image'
 import Link from 'next/link'
-
-import type { Artwork } from '~/modules/artworks/types'
 import { FavoriteButton } from '~/shared/components/FavoriteButton'
+import type { Artwork } from '~/shared/types'
 import { cn } from '~/shared/utils/className'
 
 interface ArtworkCardProps {

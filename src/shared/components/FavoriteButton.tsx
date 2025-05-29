@@ -3,10 +3,9 @@
 import { HeartMinus, HeartPlus } from 'lucide-react'
 import { motion, useAnimationControls } from 'motion/react'
 import { toast } from 'sonner'
-
-import type { Artwork } from '~/modules/artworks/types'
 import { useFavorites } from '~/modules/favorites/hooks/useFavorites'
 import { useFavoriteStore } from '~/modules/favorites/store/favorite'
+import type { Artwork } from '~/shared/types'
 
 interface FavoriteButtonProps {
   artwork: Artwork
