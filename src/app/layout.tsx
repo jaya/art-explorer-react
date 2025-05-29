@@ -23,7 +23,8 @@ const inriaSerif = Inria_Serif({
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body className={cn(inter.variable, inriaSerif.variable, 'flex min-h-dvh flex-col font-sans')}>
+      <body
+        className={cn(inter.variable, inriaSerif.variable, 'flex min-h-dvh min-w-xs flex-col font-sans antialiased')}>
         <QueryProvider>
           <Header />
           <main className="flex-1">{children}</main>
