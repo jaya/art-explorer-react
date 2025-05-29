@@ -17,6 +17,6 @@ type SearchStore = SearchState & SearchActions
 export const useSearchStore = create<SearchStore>((set) => ({
   query: '',
   isOpen: false,
-  setQuery: (query) => set({ query }),
+  setQuery: (query) => set({ query: query.trim() }),
   setIsOpen: (isOpen) => set({ isOpen }),
 }))

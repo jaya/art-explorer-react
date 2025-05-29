@@ -25,6 +25,8 @@ export function Header() {
   }
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    if (!query) return
+
     event.preventDefault()
     router.push(`/search/${query}`)
   }
