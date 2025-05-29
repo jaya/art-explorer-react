@@ -12,7 +12,7 @@ export function ThemeButton() {
     setTheme(theme === 'dark' ? 'light' : 'dark')
   }
 
-  if (!isReady) return null
+  if (!isReady) return <div className="size-10" />
 
   return (
     <button
