@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'motion/react'
+import { AnimatePresence, motion } from 'motion/react'
 import { useFavoriteStore } from '~/modules/favorites/store/favorite'
 import { containerVariants, itemVariants } from '~/shared/animations/stagger'
 import { ArtworkCard } from '~/shared/components/ArtworkCard'
@@ -23,16 +23,19 @@ export function FavoritesList() {
             animate="visible"
             className="grid grid-cols-1 gap-16 md:grid-cols-2 lg:grid-cols-3"
             initial="hidden"
-            key={favorites.length ?? 'initial'}
             variants={containerVariants}>
-            {favorites.map((favorite) => (
-              <motion.div
-                className="flex"
-                key={favorite.objectID}
-                variants={itemVariants}>
-                <ArtworkCard artwork={favorite} />
-              </motion.div>
-            ))}
+            <AnimatePresence mode="popLayout">
+              {favorites.map((favorite) => (
+                <motion.div
+                  className="flex"
+                  exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.2 } }}
+                  key={favorite.objectID}
+                  layout
+                  variants={itemVariants}>
+                  <ArtworkCard artwork={favorite} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </motion.div>
         )}
       </div>
