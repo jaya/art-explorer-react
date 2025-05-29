@@ -3,6 +3,7 @@ import '~/shared/styles/globals.css'
 import { Inria_Serif, Inter } from 'next/font/google'
 import type { ReactNode } from 'react'
 
+import { Hydration } from '~/core/components/Hydration'
 import { QueryProvider } from '~/core/providers/QueryProvider'
 import { Footer } from '~/shared/components/Footer'
 import { Header } from '~/shared/components/Header'
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <main className="flex-1">{children}</main>
           <Footer />
         </QueryProvider>
+        <Hydration />
       </body>
     </html>
   )
