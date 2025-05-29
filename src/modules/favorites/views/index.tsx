@@ -1,5 +1,5 @@
-import { FavoriteList } from '~/modules/favorites/views/components/FavoriteList'
+import { FavoritesList } from '~/modules/favorites/views/components/FavoritesList'
 
 export function FavoritesView() {
-  return <FavoriteList />
+  return <FavoritesList />
 }

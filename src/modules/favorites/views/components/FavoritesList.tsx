@@ -3,7 +3,7 @@
 import { useFavoriteStore } from '~/modules/favorites/store/favorite'
 import { ArtworkCard } from '~/shared/components/ArtworkCard'
 
-export function FavoriteList() {
+export function FavoritesList() {
   const favorites = useFavoriteStore((state) => state.favorites)
 
   return (
