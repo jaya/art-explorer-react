@@ -1,6 +1,8 @@
 'use client'
 
+import { motion } from 'motion/react'
 import { useFavoriteStore } from '~/modules/favorites/store/favorite'
+import { containerVariants, itemVariants } from '~/shared/animations/stagger'
 import { ArtworkCard } from '~/shared/components/ArtworkCard'
 
 export function FavoritesList() {
@@ -17,14 +19,21 @@ export function FavoritesList() {
             This place is so empty, please add some artworks to your favorites!
           </p>
         ) : (
-          <div className="grid grid-cols-1 gap-16 md:grid-cols-2 lg:grid-cols-3">
+          <motion.div
+            animate="visible"
+            className="grid grid-cols-1 gap-16 md:grid-cols-2 lg:grid-cols-3"
+            initial="hidden"
+            key={favorites.length ?? 'initial'}
+            variants={containerVariants}>
             {favorites.map((favorite) => (
-              <ArtworkCard
-                artwork={favorite}
+              <motion.div
+                className="flex"
                 key={favorite.objectID}
-              />
+                variants={itemVariants}>
+                <ArtworkCard artwork={favorite} />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
       </div>
     </section>
