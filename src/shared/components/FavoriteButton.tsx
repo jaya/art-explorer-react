@@ -3,8 +3,9 @@
 import { HeartMinus, HeartPlus } from 'lucide-react'
 import { motion, useAnimationControls } from 'motion/react'
 import { toast } from 'sonner'
-import { useFavorites } from '~/modules/favorites/hooks/useFavorites'
+
 import { useFavoriteStore } from '~/modules/favorites/store/favorite'
+import { useClient } from '~/shared/hooks/useClient'
 import type { Artwork } from '~/shared/types'
 
 interface FavoriteButtonProps {
@@ -18,7 +19,7 @@ export function FavoriteButton({ artwork }: FavoriteButtonProps) {
 
   const controls = useAnimationControls()
 
-  const { isReady } = useFavorites()
+  const { isReady } = useClient()
 
   const handleClick = async () => {
     if (isFavorite) {

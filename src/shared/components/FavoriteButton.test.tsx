@@ -1,13 +1,13 @@
 import { toast } from 'sonner'
 
-import { useFavorites } from '~/modules/favorites/hooks/useFavorites'
 import { useFavoriteStore } from '~/modules/favorites/store/favorite'
+import { useClient } from '~/shared/hooks/useClient'
 import { fireEvent, render, screen } from '~/shared/tests/utils'
 import { FavoriteButton } from './FavoriteButton'
 
 vi.mock('sonner')
 vi.mock('~/modules/favorites/store/favorite')
-vi.mock('~/modules/favorites/hooks/useFavorites')
+vi.mock('~/shared/hooks/useClient')
 
 const mockArtwork = {
   objectID: 1,
@@ -22,7 +22,7 @@ const mockArtwork = {
 }
 
 const mockUseFavoriteStore = vi.mocked(useFavoriteStore)
-const mockUseFavorites = vi.mocked(useFavorites)
+const mockUseClient = vi.mocked(useClient)
 const mockToast = vi.mocked(toast)
 
 describe('FavoriteButton', () => {
@@ -33,7 +33,7 @@ describe('FavoriteButton', () => {
   beforeEach(() => {
     vi.clearAllMocks()
 
-    mockUseFavorites.mockReturnValue({ isReady: true })
+    mockUseClient.mockReturnValue({ isReady: true })
 
     mockUseFavoriteStore.mockImplementation((selector) => {
       const state = {
@@ -47,7 +47,7 @@ describe('FavoriteButton', () => {
   })
 
   it('renders nothing when not ready', () => {
-    mockUseFavorites.mockReturnValue({ isReady: false })
+    mockUseClient.mockReturnValue({ isReady: false })
 
     render(<FavoriteButton artwork={mockArtwork} />)
 

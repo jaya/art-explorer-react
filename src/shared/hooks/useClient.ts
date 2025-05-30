@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-export function useFavorites() {
+export function useClient() {
   const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
