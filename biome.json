@@ -7,7 +7,14 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "includes": ["src/**/*.{ts,tsx}", "next.config.ts", "postcss.config.mjs", "vitest.config.ts", "vitest.setup.ts"]
+    "includes": [
+      "src/**/*.{ts,tsx}",
+      "next.config.ts",
+      "postcss.config.mjs",
+      "vitest.config.ts",
+      "vitest.setup.ts",
+      "playwright.config.ts"
+    ]
   },
   "formatter": {
     "enabled": true,
