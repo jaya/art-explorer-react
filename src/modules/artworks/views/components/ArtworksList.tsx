@@ -4,9 +4,9 @@ import { motion } from 'motion/react'
 
 import type { FetchArtworksResponse } from '~/modules/artworks/actions/fetchArtworks'
 import { useArtworks } from '~/modules/artworks/hooks/useArtworks'
-import { LoadButton } from '~/modules/artworks/views/components/LoadButton'
 import { containerVariants, itemVariants } from '~/shared/animations/stagger'
 import { ArtworkCard } from '~/shared/components/ArtworkCard'
+import { LoadButton } from '~/shared/components/LoadButton'
 
 interface ArtworksListProps {
   initialData: FetchArtworksResponse
