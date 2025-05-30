@@ -1,12 +1,12 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useQueryClient } from '@tanstack/react-query'
 import { Loader2 } from 'lucide-react'
 import { motion } from 'motion/react'
-import { usePathname, useSearchParams } from 'next/navigation'
-import { useEffect } from 'react'
-import { useForm } from 'react-hook-form'
-
+import { useSearchParams } from 'next/navigation'
+import { useEffect, useRef } from 'react'
+import { useForm, useWatch } from 'react-hook-form'
 import { useSearch } from '~/modules/search/hooks/useSearch'
 import { type SearchSchema, searchSchema } from '~/modules/search/schemas/search'
 import { DepartmentsField } from '~/modules/search/views/components/DepartmentsField'
@@ -19,7 +19,7 @@ import { Form } from '~/shared/components/Form'
 import { LoadButton } from '~/shared/components/LoadButton'
 
 export function SearchList() {
-  const pathname = usePathname()
+  const queryClient = useQueryClient()
   const searchParams = useSearchParams()
   const queryParam = searchParams.get('query')
 
@@ -32,16 +32,27 @@ export function SearchList() {
     },
   })
 
-  const formData = form.watch()
+  const formData = useRef(form.getValues())
+  const searchType = useWatch({
+    control: form.control,
+    name: 'searchType',
+  })
 
-  const { data, refetch, isFetching, hasNextPage, fetchNextPage, isFetchingNextPage } = useSearch({
-    query: formData.query,
-    searchType: formData.searchType,
-    departmentId: formData.departmentId,
-    enabled: !!(formData.query && form.formState.isSubmitting),
+  const {
+    data: searchResults,
+    refetch,
+    isFetching,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useSearch({
+    query: formData.current.query,
+    searchType: formData.current.searchType,
+    departmentId: formData.current.departmentId,
   })
 
   const handleSubmit = form.handleSubmit(() => {
+    queryClient.removeQueries({ queryKey: ['search', formData.current.query] })
     refetch()
   })
 
@@ -51,12 +62,12 @@ export function SearchList() {
     }
   }, [queryParam, form])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: to reset the form when the pathname changes
   useEffect(() => {
-    return () => {
-      form.reset()
-    }
-  }, [pathname, form])
+    const subscription = form.watch((value) => {
+      formData.current = value
+    })
+    return () => subscription.unsubscribe()
+  }, [form])
 
   return (
     <section>
@@ -71,7 +82,7 @@ export function SearchList() {
               className="flex items-center gap-4"
               onSubmit={handleSubmit}>
               <SearchTypeField />
-              {formData.searchType === 'department' && <DepartmentsField />}
+              {searchType === 'department' && <DepartmentsField />}
               <QueryField />
               <Button
                 size="md"
@@ -87,7 +98,12 @@ export function SearchList() {
             <Loader2 className="animate-spin text-muted-foreground" />
           </div>
         )}
-        {data?.pages?.map((page) => (
+        {searchResults?.pages[0].data.length === 0 && (
+          <div className="flex justify-center">
+            <p className="text-muted-foreground">No results found</p>
+          </div>
+        )}
+        {searchResults?.pages?.map((page) => (
           <motion.div
             animate="visible"
             className="grid grid-cols-1 gap-16 md:grid-cols-2 lg:grid-cols-3"

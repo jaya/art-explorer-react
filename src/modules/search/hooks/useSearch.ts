@@ -9,14 +9,13 @@ interface UseSearchProps {
   query?: string
   searchType?: SearchType
   departmentId?: string
-  enabled?: boolean
 }
 
-export function useSearch({ query = '', searchType = 'all', departmentId = '', enabled = false }: UseSearchProps) {
+export function useSearch({ query = '', searchType = 'all', departmentId = '' }: UseSearchProps) {
   const queryClient = useQueryClient()
 
   return useInfiniteQuery({
-    queryKey: ['search'],
+    queryKey: ['search', query],
     queryFn: ({ pageParam = 1 }) => fetchSearch({ page: pageParam, query, searchType, departmentId }),
     getNextPageParam: (lastPage) => lastPage.nextPage,
     select: (data) => {
@@ -28,6 +27,6 @@ export function useSearch({ query = '', searchType = 'all', departmentId = '', e
       return data
     },
     initialPageParam: 1,
-    enabled,
+    enabled: !!query,
   })
 }

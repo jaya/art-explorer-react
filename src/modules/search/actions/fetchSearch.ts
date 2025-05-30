@@ -33,6 +33,13 @@ export async function fetchSearch({ page, query, searchType, departmentId }: Fet
     },
   })
 
+  if (!artworksIds.objectIDs || artworksIds.objectIDs.length === 0) {
+    return {
+      data: [],
+      nextPage: null,
+    }
+  }
+
   const slice = artworksIds.objectIDs.slice((page - 1) * LIMIT, page * LIMIT)
   const promises = slice.map((objectID) => getArtwork({ objectID: Number(objectID) }))
 
