@@ -6,10 +6,14 @@ import { motion } from 'motion/react'
 import { useTheme } from '~/shared/hooks/useTheme'
 
 export function ThemeButton() {
-  const { theme, setTheme, isReady } = useTheme()
+  const { theme, setTheme, systemTheme, isReady } = useTheme()
 
   const handleClick = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark')
+    if (systemTheme === 'system' || theme === 'dark') {
+      setTheme('light')
+    } else {
+      setTheme('dark')
+    }
   }
 
   if (!isReady) return <div className="size-10" />
