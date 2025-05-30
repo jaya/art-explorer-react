@@ -1,18 +1,25 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useSearchParams } from 'next/navigation'
+import { Loader2 } from 'lucide-react'
+import { motion } from 'motion/react'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { useSearch } from '~/modules/search/hooks/useSearch'
 import { type SearchSchema, searchSchema } from '~/modules/search/schemas/search'
 import { DepartmentsField } from '~/modules/search/views/components/DepartmentsField'
 import { QueryField } from '~/modules/search/views/components/QueryField'
 import { SearchTypeField } from '~/modules/search/views/components/SearchTypeField'
+import { containerVariants, itemVariants } from '~/shared/animations/stagger'
+import { ArtworkCard } from '~/shared/components/ArtworkCard'
 import { Button } from '~/shared/components/Button'
 import { Form } from '~/shared/components/Form'
+import { LoadButton } from '~/shared/components/LoadButton'
 
 export function SearchList() {
+  const pathname = usePathname()
   const searchParams = useSearchParams()
   const queryParam = searchParams.get('query')
 
@@ -25,7 +32,18 @@ export function SearchList() {
     },
   })
 
-  const searchType = form.watch('searchType')
+  const formData = form.watch()
+
+  const { data, refetch, isFetching, hasNextPage, fetchNextPage, isFetchingNextPage } = useSearch({
+    query: formData.query,
+    searchType: formData.searchType,
+    departmentId: formData.departmentId,
+    enabled: !!(formData.query && form.formState.isSubmitting),
+  })
+
+  const handleSubmit = form.handleSubmit(() => {
+    refetch()
+  })
 
   useEffect(() => {
     if (queryParam) {
@@ -33,9 +51,12 @@ export function SearchList() {
     }
   }, [queryParam, form])
 
-  const handleSubmit = form.handleSubmit((data) => {
-    console.log(data)
-  })
+  // biome-ignore lint/correctness/useExhaustiveDependencies: to reset the form when the pathname changes
+  useEffect(() => {
+    return () => {
+      form.reset()
+    }
+  }, [pathname, form])
 
   return (
     <section>
@@ -50,7 +71,7 @@ export function SearchList() {
               className="flex items-center gap-4"
               onSubmit={handleSubmit}>
               <SearchTypeField />
-              {searchType === 'department' && <DepartmentsField />}
+              {formData.searchType === 'department' && <DepartmentsField />}
               <QueryField />
               <Button
                 size="md"
@@ -61,6 +82,36 @@ export function SearchList() {
             </form>
           </Form>
         </div>
+        {isFetching && (
+          <div className="flex justify-center">
+            <Loader2 className="animate-spin text-muted-foreground" />
+          </div>
+        )}
+        {data?.pages?.map((page) => (
+          <motion.div
+            animate="visible"
+            className="grid grid-cols-1 gap-16 md:grid-cols-2 lg:grid-cols-3"
+            initial="hidden"
+            key={page.nextPage ?? 'initial'}
+            variants={containerVariants}>
+            {page.data.map((artwork) => (
+              <motion.div
+                className="flex"
+                key={artwork.objectID}
+                variants={itemVariants}>
+                <ArtworkCard artwork={artwork} />
+              </motion.div>
+            ))}
+          </motion.div>
+        ))}
+        {hasNextPage && (
+          <div className="flex justify-center">
+            <LoadButton
+              isFetching={isFetchingNextPage}
+              onClick={() => fetchNextPage()}
+            />
+          </div>
+        )}
       </div>
     </section>
   )
