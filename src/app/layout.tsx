@@ -35,7 +35,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <ThemeProvider>
           <QueryProvider>
             <Header />
-            <main className="flex-1">{children}</main>
+            <main className="flex flex-1 flex-col">{children}</main>
             <Footer />
           </QueryProvider>
         </ThemeProvider>

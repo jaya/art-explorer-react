@@ -17,7 +17,7 @@ export function Input({ className, type, ...props }: React.ComponentProps<'input
       <input
         className={cn(
           'm-0 h-full w-full appearance-none border-none bg-transparent p-0 font-inherit text-inherit outline-none',
-          'placeholder:text-muted-foreground placeholder:text-sm disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50',
+          'placeholder:text-md placeholder:text-muted-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50',
         )}
         type={type}
         {...props}
