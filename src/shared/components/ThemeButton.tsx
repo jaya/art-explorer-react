@@ -17,6 +17,7 @@ export function ThemeButton() {
   return (
     <button
       className="cursor-pointer rounded-full bg-transparent p-2 transition-colors duration-300 hover:bg-white [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:stroke-[2]"
+      data-theme={theme}
       disabled={!isReady}
       onClick={handleClick}
       type="button">
