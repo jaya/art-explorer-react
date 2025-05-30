@@ -4,9 +4,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useQueryClient } from '@tanstack/react-query'
 import { Loader2 } from 'lucide-react'
 import { motion } from 'motion/react'
-import { useSearchParams } from 'next/navigation'
-import { useEffect, useRef } from 'react'
-import { useForm, useWatch } from 'react-hook-form'
+import { parseAsString, useQueryStates } from 'nuqs'
+import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+
 import { useSearch } from '~/modules/search/hooks/useSearch'
 import { type SearchSchema, searchSchema } from '~/modules/search/schemas/search'
 import { DepartmentsField } from '~/modules/search/views/components/DepartmentsField'
@@ -18,56 +19,56 @@ import { Button } from '~/shared/components/Button'
 import { Form } from '~/shared/components/Form'
 import { LoadButton } from '~/shared/components/LoadButton'
 
+const defaultValues = {
+  query: '',
+  searchType: 'all' as const,
+  departmentId: '',
+}
+
 export function SearchList() {
+  const [searchParams, setSearchParams] = useState<SearchSchema>(defaultValues)
+
   const queryClient = useQueryClient()
-  const searchParams = useSearchParams()
-  const queryParam = searchParams.get('query')
+  const [search, setSearch] = useQueryStates({
+    query: parseAsString,
+  })
 
   const form = useForm<SearchSchema>({
     resolver: zodResolver(searchSchema),
-    defaultValues: {
-      query: queryParam || '',
-      searchType: 'all',
-      departmentId: '',
-    },
-  })
-
-  const formData = useRef(form.getValues())
-  const searchType = useWatch({
-    control: form.control,
-    name: 'searchType',
+    defaultValues,
   })
 
   const {
     data: searchResults,
-    refetch,
     isFetching,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
   } = useSearch({
-    query: formData.current.query,
-    searchType: formData.current.searchType,
-    departmentId: formData.current.departmentId,
+    query: searchParams.query,
+    searchType: searchParams.searchType,
+    departmentId: searchParams.departmentId,
+    enabled: searchParams.query.trim().length > 0,
   })
 
-  const handleSubmit = form.handleSubmit(() => {
-    queryClient.removeQueries({ queryKey: ['search', formData.current.query] })
-    refetch()
+  const handleSubmit = form.handleSubmit((values) => {
+    setSearchParams(values)
+    setSearch({ query: values.query })
+    queryClient.removeQueries({ queryKey: ['search', values.query] })
   })
 
   useEffect(() => {
-    if (queryParam) {
-      form.setValue('query', queryParam)
+    if (search.query) {
+      const newParams = {
+        ...form.getValues(),
+        query: search.query,
+      }
+      form.reset(newParams)
+      setSearchParams(newParams)
     }
-  }, [queryParam, form])
+  }, [search.query, form])
 
-  useEffect(() => {
-    const subscription = form.watch((value) => {
-      formData.current = value
-    })
-    return () => subscription.unsubscribe()
-  }, [form])
+  const searchType = form.watch('searchType')
 
   return (
     <section>
@@ -105,7 +106,7 @@ export function SearchList() {
         )}
         {searchResults?.pages[0].data.length === 0 && (
           <div className="flex justify-center">
-            <p className="text-muted-foreground">No results found</p>
+            <p className="text-center text-2xl text-muted-foreground">No results found!</p>
           </div>
         )}
         {searchResults?.pages?.map((page) => (

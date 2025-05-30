@@ -9,9 +9,10 @@ interface UseSearchProps {
   query?: string
   searchType?: SearchType
   departmentId?: string
+  enabled?: boolean
 }
 
-export function useSearch({ query = '', searchType = 'all', departmentId = '' }: UseSearchProps) {
+export function useSearch({ query = '', searchType = 'all', departmentId = '', enabled = true }: UseSearchProps) {
   const queryClient = useQueryClient()
 
   return useInfiniteQuery({
@@ -27,6 +28,6 @@ export function useSearch({ query = '', searchType = 'all', departmentId = '' }:
       return data
     },
     initialPageParam: 1,
-    enabled: !!query,
+    enabled,
   })
 }
