@@ -1,31 +1,41 @@
 'use client'
 
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useSearchParams } from 'next/navigation'
-import { type FormEvent, useEffect } from 'react'
+import { useEffect } from 'react'
+import { useForm } from 'react-hook-form'
 
-import { useSearchStore } from '~/modules/search/store/search'
-import { DepartmentsDropdown } from '~/modules/search/views/components/DepartmentsDropdown'
-import { FilterTypeDropdown } from '~/modules/search/views/components/FilterTypeDropdown'
+import { type SearchSchema, searchSchema } from '~/modules/search/schemas/search'
+import { DepartmentsField } from '~/modules/search/views/components/DepartmentsField'
+import { QueryField } from '~/modules/search/views/components/QueryField'
+import { SearchTypeField } from '~/modules/search/views/components/SearchTypeField'
 import { Button } from '~/shared/components/Button'
-import { Input } from '~/shared/components/Input'
+import { Form } from '~/shared/components/Form'
 
 export function SearchList() {
   const searchParams = useSearchParams()
   const queryParam = searchParams.get('query')
 
-  const { query, setQuery } = useSearchStore()
+  const form = useForm<SearchSchema>({
+    resolver: zodResolver(searchSchema),
+    defaultValues: {
+      query: queryParam || '',
+      searchType: 'all',
+      departmentId: '',
+    },
+  })
+
+  const searchType = form.watch('searchType')
 
   useEffect(() => {
     if (queryParam) {
-      setQuery(queryParam)
+      form.setValue('query', queryParam)
     }
-  }, [queryParam, setQuery])
+  }, [queryParam, form])
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    if (!query) return
-
-    event.preventDefault()
-  }
+  const handleSubmit = form.handleSubmit((data) => {
+    console.log(data)
+  })
 
   return (
     <section>
@@ -35,27 +45,21 @@ export function SearchList() {
         </h2>
         <div className="mx-auto flex w-full max-w-4xl flex-col gap-4">
           <h3 className="font-serif text-2xl text-foreground">Search the collection</h3>
-          <form
-            className="flex items-center gap-4"
-            onSubmit={handleSubmit}>
-            <FilterTypeDropdown />
-            <Input
-              className="w-full"
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search for an artwork, artist, or department"
-              value={query}
-            />
-            <Button
-              size="md"
-              type="submit"
-              variant="primary">
-              Search
-            </Button>
-          </form>
-        </div>
-        <div className="mx-auto flex w-full max-w-4xl flex-col gap-4">
-          <h3 className="font-serif text-2xl text-foreground">Filter by</h3>
-          <DepartmentsDropdown />
+          <Form {...form}>
+            <form
+              className="flex items-center gap-4"
+              onSubmit={handleSubmit}>
+              <SearchTypeField />
+              {searchType === 'department' && <DepartmentsField />}
+              <QueryField />
+              <Button
+                size="md"
+                type="submit"
+                variant="primary">
+                Search
+              </Button>
+            </form>
+          </Form>
         </div>
       </div>
     </section>
