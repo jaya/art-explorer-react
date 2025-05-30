@@ -19,3 +19,5 @@ export interface Department {
   departmentId: number
   displayName: string
 }
+
+export type SearchType = 'all' | 'artistOrCulture' | 'department'

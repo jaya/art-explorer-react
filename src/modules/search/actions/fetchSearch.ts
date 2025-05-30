@@ -2,13 +2,16 @@
 
 import { getArtwork } from '~/modules/details/actions/getArtwork'
 import { API } from '~/shared/helpers/api'
-import type { Artwork } from '~/shared/types'
+import type { Artwork, SearchType } from '~/shared/types'
 
-export interface FetchArtworksPayload {
+export interface FetchSearchPayload {
   page: number
+  query?: string
+  searchType?: SearchType
+  departmentId?: string
 }
 
-export interface FetchArtworksResponse {
+export interface FetchSearchResponse {
   data: Artwork[]
   nextPage: number | null
 }
@@ -19,13 +22,14 @@ export interface ApiResponse {
 }
 
 const LIMIT = 15
-const DEFAULT_QUERY = 'painting'
 
-export async function fetchArtworks({ page }: FetchArtworksPayload) {
+export async function fetchSearch({ page, query, searchType, departmentId }: FetchSearchPayload) {
   const { data: artworksIds } = await API.get<ApiResponse>('/search', {
     params: {
       hasImages: true,
-      q: DEFAULT_QUERY,
+      artistOrCulture: searchType === 'artistOrCulture' ? true : undefined,
+      departmentId: searchType === 'department' ? departmentId : undefined,
+      q: query,
     },
   })
 
