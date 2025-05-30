@@ -9,3 +9,18 @@ export const mockArtwork = {
   medium: 'Test Medium',
   department: 'Test Department',
 }
+
+export const mockDepartments = [
+  {
+    departmentId: 1,
+    displayName: 'Test Department',
+  },
+  {
+    departmentId: 2,
+    displayName: 'Test Department 2',
+  },
+  {
+    departmentId: 3,
+    displayName: 'Test Department 3',
+  },
+]
