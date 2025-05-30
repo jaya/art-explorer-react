@@ -19,23 +19,33 @@ export function ArtworkDetail({ artwork }: ArtworkDetailProps) {
     link: artwork.objectURL,
   }
 
+  const imageUrl = artwork.primaryImage
+
   return (
     <>
       <section className="relative bg-secondary">
         <div className="absolute top-8 right-8 z-1">
           <FavoriteButton artwork={artwork} />
         </div>
-        <div className="mx-auto flex max-w-7xl flex-col items-center gap-8 px-4 py-24">
+        <div className="mx-auto flex max-w-7xl flex-col items-center gap-16 px-4 py-24">
           <h1 className="text-center font-serif text-7xl text-foreground after:mx-auto after:mt-4 after:block after:h-0.5 after:w-2/5 after:bg-primary">
             {artwork.title}
           </h1>
           <div className="relative h-auto w-full max-w-3xl overflow-hidden rounded-lg shadow-2xl">
-            <Image
-              alt={artwork.title}
-              height={1000}
-              src={artwork.primaryImage}
-              width={1000}
-            />
+            {imageUrl ? (
+              <Image
+                alt={artwork.title}
+                height={1000}
+                src={imageUrl}
+                width={1000}
+              />
+            ) : (
+              <img
+                alt="No image available"
+                className="object-cover"
+                src="https://placehold.co/1000x700?text=No+image+available"
+              />
+            )}
           </div>
         </div>
       </section>
