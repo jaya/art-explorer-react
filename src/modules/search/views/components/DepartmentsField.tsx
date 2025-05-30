@@ -17,7 +17,7 @@ export function DepartmentsField() {
       control={form.control}
       name={'departmentId'}
       render={({ field, fieldState }) => (
-        <FormItem className="w-60">
+        <FormItem className="w-full md:w-60">
           <FormControl>
             <Select
               onValueChange={field.onChange}

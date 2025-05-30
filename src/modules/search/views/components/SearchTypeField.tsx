@@ -14,7 +14,7 @@ export function SearchTypeField() {
       control={form.control}
       name={'searchType'}
       render={({ field, fieldState }) => (
-        <FormItem className="w-56">
+        <FormItem className="w-full md:w-48">
           <FormControl>
             <Select
               onValueChange={(value) => {

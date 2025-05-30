@@ -79,17 +79,22 @@ export function SearchList() {
           <h3 className="font-serif text-2xl text-foreground">Search the collection</h3>
           <Form {...form}>
             <form
-              className="flex items-center gap-4"
+              className="flex flex-col gap-4 md:flex-row"
               onSubmit={handleSubmit}>
-              <SearchTypeField />
-              {searchType === 'department' && <DepartmentsField />}
-              <QueryField />
-              <Button
-                size="md"
-                type="submit"
-                variant="primary">
-                Search
-              </Button>
+              <div className="flex xs:flex-row flex-col items-center gap-4">
+                <SearchTypeField />
+                {searchType === 'department' && <DepartmentsField />}
+              </div>
+              <div className="flex flex-1 xs:flex-row flex-col items-center gap-4">
+                <QueryField />
+                <Button
+                  className="w-full xs:w-auto"
+                  size="md"
+                  type="submit"
+                  variant="primary">
+                  Search
+                </Button>
+              </div>
             </form>
           </Form>
         </div>
