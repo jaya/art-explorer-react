@@ -107,6 +107,7 @@ export function SearchList() {
           <motion.div
             animate="visible"
             className="grid grid-cols-1 gap-16 md:grid-cols-2 lg:grid-cols-3"
+            data-testid="search-list"
             initial="hidden"
             key={page.nextPage ?? 'initial'}
             variants={containerVariants}>

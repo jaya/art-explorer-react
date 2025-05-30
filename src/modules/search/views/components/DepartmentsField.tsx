@@ -24,7 +24,8 @@ export function DepartmentsField() {
               value={field.value}>
               <SelectTrigger
                 aria-invalid={!!fieldState.error}
-                className="w-full">
+                className="w-full"
+                data-testid="departments-trigger">
                 <SelectValue placeholder="Select a department" />
               </SelectTrigger>
               <SelectContent>

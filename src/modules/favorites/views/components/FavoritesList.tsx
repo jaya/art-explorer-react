@@ -22,6 +22,7 @@ export function FavoritesList() {
           <motion.div
             animate="visible"
             className="grid grid-cols-1 gap-16 md:grid-cols-2 lg:grid-cols-3"
+            data-testid="favorites-list"
             initial="hidden"
             variants={containerVariants}>
             <AnimatePresence mode="popLayout">

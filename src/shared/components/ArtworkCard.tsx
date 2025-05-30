@@ -16,7 +16,7 @@ export function ArtworkCard({ artwork }: ArtworkCardProps) {
   const hasArtist = artwork.artistDisplayName
 
   return (
-    <div className="relative flex flex-1 overflow-hidden rounded-lg border border-sidebar-border">
+    <article className="relative flex flex-1 overflow-hidden rounded-lg border border-sidebar-border">
       <div className="absolute top-4 right-4 z-1">
         <FavoriteButton artwork={artwork} />
       </div>
@@ -32,6 +32,7 @@ export function ArtworkCard({ artwork }: ArtworkCardProps) {
                 alt={artwork.title}
                 className="object-cover"
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 src={imageUrl}
               />
             ) : (
@@ -50,6 +51,6 @@ export function ArtworkCard({ artwork }: ArtworkCardProps) {
           </div>
         </div>
       </Link>
-    </div>
+    </article>
   )
 }

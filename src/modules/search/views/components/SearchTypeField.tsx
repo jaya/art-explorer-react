@@ -26,7 +26,8 @@ export function SearchTypeField() {
               value={field.value}>
               <SelectTrigger
                 aria-invalid={!!fieldState.error}
-                className="w-full">
+                className="w-full"
+                data-testid="search-type-trigger">
                 <SelectValue placeholder="All fields" />
               </SelectTrigger>
               <SelectContent>
