@@ -24,6 +24,7 @@ Art Explorer é uma aplicação web que permite explorar obras de arte da coleç
 - [React Query](https://tanstack.com/query/latest)
 - [Zustand](https://zustand-demo.pmnd.rs/)
 - [React Hook Form](https://react-hook-form.com/)
+- [Nuqs](https://nuqs.dev/)
 - [Zod](https://zod.dev/)
 - [Motion](https://motion.dev/)
 - [Vitest](https://vitest.dev/)
