@@ -43,7 +43,7 @@ export function ArtworkDetail({ artwork }: ArtworkDetailProps) {
         <div className="mx-auto grid max-w-5xl grid-cols-1 gap-16 px-4 py-24 md:grid-cols-2">
           {Object.entries(details).map(([label, value]) => (
             <DetailsCard
-              className={cn(label === 'link' && 'col-span-2')}
+              className={cn(label === 'link' && 'md:col-span-2')}
               key={label}
               label={label}
               value={value}

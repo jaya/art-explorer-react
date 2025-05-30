@@ -14,7 +14,7 @@ export function DetailsCard({ label, value, className }: DetailsCardProps) {
       </p>
       {label === 'link' ? (
         <a
-          className="col-span-2 text-3xl text-foreground underline-offset-4 hover:underline"
+          className="col-span-2 break-words text-3xl text-foreground underline-offset-4 hover:underline"
           href={value}
           rel="noopener noreferrer"
           target="_blank">
