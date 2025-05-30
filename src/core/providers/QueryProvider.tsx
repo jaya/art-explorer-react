@@ -2,7 +2,9 @@
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
+
+import { useFavoriteStore } from '~/modules/favorites/store/favorite'
 
 export function QueryProvider({ children }: React.PropsWithChildren) {
   const queryClient = useRef(
@@ -18,6 +20,10 @@ export function QueryProvider({ children }: React.PropsWithChildren) {
       },
     }),
   ).current
+
+  useEffect(() => {
+    useFavoriteStore.persist.rehydrate()
+  }, [])
 
   return (
     <QueryClientProvider client={queryClient}>

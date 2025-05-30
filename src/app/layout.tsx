@@ -3,7 +3,6 @@ import '~/shared/styles/globals.css'
 import { Inria_Serif, Inter } from 'next/font/google'
 import type { ReactNode } from 'react'
 
-import { Hydration } from '~/core/components/Hydration'
 import { QueryProvider } from '~/core/providers/QueryProvider'
 import { ThemeProvider } from '~/core/providers/ThemeProvider'
 import { Footer } from '~/shared/components/Footer'
@@ -40,7 +39,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Footer />
           </QueryProvider>
         </ThemeProvider>
-        <Hydration />
         <Toaster richColors />
       </body>
     </html>
