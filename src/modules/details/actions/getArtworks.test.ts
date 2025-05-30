@@ -8,7 +8,7 @@ vi.mock('~/shared/helpers/api', () => ({
   },
 }))
 
-vi.mock('./getArtwork')
+vi.mock('~/modules/details/actions/getArtwork')
 
 const mockAPI = vi.mocked(API.get)
 const mockGetArtwork = vi.mocked(getArtwork)
