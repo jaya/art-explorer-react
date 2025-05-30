@@ -3,8 +3,7 @@ import '~/shared/styles/globals.css'
 import { Inria_Serif, Inter } from 'next/font/google'
 import type { ReactNode } from 'react'
 
-import { QueryProvider } from '~/core/providers/QueryProvider'
-import { ThemeProvider } from '~/core/providers/ThemeProvider'
+import { Providers } from '~/core/providers'
 import { Footer } from '~/shared/components/Footer'
 import { Header } from '~/shared/components/Header'
 import { Toaster } from '~/shared/components/Toaster'
@@ -32,13 +31,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           inriaSerif.variable,
           'flex min-h-dvh min-w-xs flex-col bg-background font-sans antialiased',
         )}>
-        <ThemeProvider>
-          <QueryProvider>
-            <Header />
-            <main className="flex flex-1 flex-col">{children}</main>
-            <Footer />
-          </QueryProvider>
-        </ThemeProvider>
+        <Providers>
+          <Header />
+          <main className="flex flex-1 flex-col">{children}</main>
+          <Footer />
+        </Providers>
         <Toaster richColors />
       </body>
     </html>
