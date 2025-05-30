@@ -1,5 +1,7 @@
 import '@testing-library/jest-dom/vitest'
 
+process.env.NEXT_PUBLIC_API_URL = 'https://test-api.com'
+
 // Mock window.matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,

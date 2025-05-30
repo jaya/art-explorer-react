@@ -1,4 +1,4 @@
-import { type RenderOptions, render } from '@testing-library/react'
+import { type RenderHookOptions, type RenderOptions, render, renderHook } from '@testing-library/react'
 import type { ReactElement } from 'react'
 
 import { QueryProvider } from '~/core/providers/QueryProvider'
@@ -16,5 +16,12 @@ const customRender = (ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'>
   return render(ui, { wrapper: AllTheProviders, ...options })
 }
 
+const customRenderHook = <Result, Props>(
+  hook: (initialProps: Props) => Result,
+  options?: Omit<RenderHookOptions<Props>, 'wrapper'>,
+) => {
+  return renderHook(hook, { wrapper: AllTheProviders, ...options })
+}
+
 export * from '@testing-library/react'
-export { customRender as render }
+export { customRender as render, customRenderHook as renderHook }
