@@ -4,9 +4,16 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
   const params = await searchParams
   const query = params.query
 
+  if (query) {
+    return {
+      title: `Search: ${query} | Art Explorer`,
+      description: `Search for art with the Met Museum API for ${query}`,
+    }
+  }
+
   return {
-    title: `Search: ${params.query} | Art Explorer`,
-    description: `Search for art with the Met Museum API for ${query}`,
+    title: 'Search | Art Explorer',
+    description: 'Search for art with the Met Museum API',
   }
 }
 
