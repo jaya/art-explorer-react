@@ -4,7 +4,7 @@ test.describe('Details page', () => {
   test('has image, title, artist name and informations', async ({ page }) => {
     await page.goto('/details/451023')
 
-    await expect(page).toHaveTitle('Details | Art Explorer')
+    await expect(page).toHaveTitle('Details of The Lovers | Art Explorer')
 
     await expect(page.getByRole('heading', { name: 'The Lovers' })).toBeVisible()
 

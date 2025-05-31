@@ -37,6 +37,25 @@ test.describe('Search page', () => {
     await expect(artworks).toHaveCount(15)
   })
 
+  test('has search results by query with params', async ({ page }) => {
+    await page.goto('/search?query=paintings')
+
+    await expect(page).toHaveTitle('Search: paintings | Art Explorer')
+
+    const searchInput = page.getByRole('textbox', { name: 'Search' })
+    await expect(searchInput).toBeVisible()
+
+    const searchButton = page.getByRole('button', { name: 'Search' })
+    await expect(searchButton).toBeVisible()
+    await searchButton.click()
+
+    const searchList = page.getByTestId('search-list')
+    await expect(searchList).toBeVisible()
+
+    const artworks = searchList.getByRole('article')
+    await expect(artworks).toHaveCount(15)
+  })
+
   test('has search results by artist', async ({ page }) => {
     await page.goto('/search')
 

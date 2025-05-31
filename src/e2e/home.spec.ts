@@ -16,8 +16,11 @@ test.describe('Home page', () => {
 
     const themeButton = page.getByTestId('theme-button')
     await expect(themeButton).toBeVisible()
-    await themeButton.click()
 
+    await themeButton.click()
+    await expect(themeButton).toHaveAttribute('data-theme', 'light')
+
+    await themeButton.click()
     await expect(themeButton).toHaveAttribute('data-theme', 'dark')
   })
 
