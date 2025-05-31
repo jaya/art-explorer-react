@@ -62,8 +62,25 @@ pnpm dev
 - **Testes:** `Vitest` para testes unitários e `React Testing Library` para testes de interface. `Playwright` para testes de integração.
 - **Linter e Formatação:** `Biome` para garantir consistência e produtividade.
 
+## Observabilidade
+
+O projeto inclui mecanismos básicos de observabilidade com foco em extensibilidade futura:
+
+- **Tratamento de erros centralizado:**
+  Toda falha em chamadas assíncronas (como fetch em server actions) é capturada pela função `handleError()`, que atualmente usa `console.error` e já está preparada para integrar ferramentas como [Sentry](https://sentry.io), [LogRocket](https://logrocket.com) ou [Datadog](https://www.datadoghq.com).
+
+- **Logger de eventos do usuário:**
+  Eventos como mudança de tema, adição/remoção de favoritos, cliques em links do menu e navegação entre páginas são pontos onde o logger será aplicado.
+  A função `logger()` já está estruturada para capturar o tipo de evento, contexto (rota atual), payload relevante, e pode ser facilmente integrada com ferramentas de rastreamento de erros.
+
+- **Exemplo de evento logado:**
+  ```ts
+  logger('info', 'click:menuLink', { from: '/home', to: '/favorites' })
+  logger('info', 'favorite:add', { objectID: 123, title: 'Starry Night' })
+
 ## Melhorias que podem ser implementadas
 
+- [ ] Integração com ferramentas de rastreamento de erros
 - [ ] Deixar o fetch mais robusto, adicionando um novo objectID caso alguma promise seja rejeitada, retornando assim um array com 15 itens
 - [ ] Adicionar um botão para limpar buscas
 - [ ] Adicionar traduções com i18n
