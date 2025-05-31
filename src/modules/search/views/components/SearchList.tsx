@@ -18,6 +18,7 @@ import { ArtworkCard } from '~/shared/components/ArtworkCard'
 import { Button } from '~/shared/components/Button'
 import { Form } from '~/shared/components/Form'
 import { LoadButton } from '~/shared/components/LoadButton'
+import { logger } from '~/shared/helpers/logger'
 
 const defaultValues = {
   query: '',
@@ -122,7 +123,15 @@ export function SearchList() {
                 className="flex"
                 key={artwork.objectID}
                 variants={itemVariants}>
-                <ArtworkCard artwork={artwork} />
+                <ArtworkCard
+                  artwork={artwork}
+                  onClick={() =>
+                    logger('info', 'click:artworkCard from search list', {
+                      artworkId: artwork.objectID,
+                      title: artwork.title,
+                    })
+                  }
+                />
               </motion.div>
             ))}
           </motion.div>
@@ -131,7 +140,12 @@ export function SearchList() {
           <div className="flex justify-center">
             <LoadButton
               isFetching={isFetchingNextPage}
-              onClick={() => fetchNextPage()}
+              onClick={() => {
+                logger('info', 'click:loadMoreArtworks from search list', {
+                  page: searchResults?.pages[searchResults.pages.length - 1].nextPage,
+                })
+                fetchNextPage()
+              }}
             />
           </div>
         )}

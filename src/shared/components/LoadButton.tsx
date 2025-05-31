@@ -6,7 +6,7 @@ import { cn } from '~/shared/utils/className'
 
 interface LoadButtonProps {
   isFetching: boolean
-  onClick: () => void
+  onClick?: () => void
 }
 
 export function LoadButton({ isFetching, onClick }: LoadButtonProps) {

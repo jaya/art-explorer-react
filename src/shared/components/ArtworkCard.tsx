@@ -9,9 +9,10 @@ import { cn } from '~/shared/utils/className'
 
 interface ArtworkCardProps {
   artwork: Artwork
+  onClick?: () => void
 }
 
-export function ArtworkCard({ artwork }: ArtworkCardProps) {
+export function ArtworkCard({ artwork, onClick }: ArtworkCardProps) {
   const imageUrl = artwork.primaryImageSmall
   const hasArtist = artwork.artistDisplayName
 
@@ -22,7 +23,8 @@ export function ArtworkCard({ artwork }: ArtworkCardProps) {
       </div>
       <Link
         className="flex flex-1"
-        href={`/details/${artwork.objectID}`}>
+        href={`/details/${artwork.objectID}`}
+        onClick={onClick}>
         <div className="flex flex-1 flex-col">
           <motion.div
             className="relative h-56 w-full rounded-t-lg"
