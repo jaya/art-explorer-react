@@ -2,6 +2,7 @@
 
 import { getArtwork } from '~/modules/details/actions/getArtwork'
 import { API } from '~/shared/helpers/api'
+import { handleError } from '~/shared/helpers/errorHandler'
 import type { Artwork, SearchType } from '~/shared/types'
 
 export interface FetchSearchPayload {
@@ -24,30 +25,39 @@ export interface ApiResponse {
 const LIMIT = 15
 
 export async function fetchSearch({ page, query, searchType, departmentId }: FetchSearchPayload) {
-  const { data: artworksIds } = await API.get<ApiResponse>('/search', {
-    params: {
-      hasImages: true,
-      artistOrCulture: searchType === 'artistOrCulture' ? true : undefined,
-      departmentId: searchType === 'department' ? departmentId : undefined,
-      q: query,
-    },
-  })
+  try {
+    const { data: artworksIds } = await API.get<ApiResponse>('/search', {
+      params: {
+        hasImages: true,
+        artistOrCulture: searchType === 'artistOrCulture' ? true : undefined,
+        departmentId: searchType === 'department' ? departmentId : undefined,
+        q: query,
+      },
+    })
 
-  if (!artworksIds.objectIDs || artworksIds.objectIDs.length === 0) {
+    if (!artworksIds.objectIDs || artworksIds.objectIDs.length === 0) {
+      return {
+        data: [],
+        nextPage: null,
+      }
+    }
+
+    const slice = artworksIds.objectIDs.slice((page - 1) * LIMIT, page * LIMIT)
+    const promises = slice.map((objectID) => getArtwork({ objectID: Number(objectID) }))
+
+    const results = await Promise.allSettled(promises)
+    const data = results.filter((result) => result.status === 'fulfilled').map((result) => result.value)
+
+    return {
+      data,
+      nextPage: artworksIds.total > page * LIMIT ? page + 1 : null,
+    }
+  } catch (error) {
+    handleError(error, 'fetchSearch')
+
     return {
       data: [],
       nextPage: null,
     }
-  }
-
-  const slice = artworksIds.objectIDs.slice((page - 1) * LIMIT, page * LIMIT)
-  const promises = slice.map((objectID) => getArtwork({ objectID: Number(objectID) }))
-
-  const results = await Promise.allSettled(promises)
-  const data = results.filter((result) => result.status === 'fulfilled').map((result) => result.value)
-
-  return {
-    data,
-    nextPage: artworksIds.total > page * LIMIT ? page + 1 : null,
   }
 }
