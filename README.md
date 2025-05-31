@@ -20,6 +20,7 @@ Art Explorer é uma aplicação web que permite explorar obras de arte da coleç
 - [Next.js](https://nextjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [TailwindCSS](https://tailwindcss.com/)
+- [Shadcn UI](https://ui.shadcn.com/)
 - [Axios](https://axios-http.com/)
 - [React Query](https://tanstack.com/query/latest)
 - [Zustand](https://zustand-demo.pmnd.rs/)
@@ -29,8 +30,8 @@ Art Explorer é uma aplicação web que permite explorar obras de arte da coleç
 - [Motion](https://motion.dev/)
 - [Vitest](https://vitest.dev/)
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
+- [Playwright](https://playwright.dev/)
 - [Biome](https://biomejs.dev/)
-- [Shadcn UI](https://ui.shadcn.com/)
 
 ## API do The Met Museum
 
@@ -46,11 +47,24 @@ pnpm install
 pnpm dev
 ```
 
+## Decisões de Arquitetura
+
+- **Framework Escolhido:** Next.js
+  - Utilizado por oferecer renderização híbrida (SSG e SSR), roteamento baseado em arquivos, ótima integração com React Server Components e performance otimizada por padrão.
+- **Home Page:** Gerada estaticamente no build (SSG) para acelerar a entrega inicial e reduzir chamadas à API do The Met.
+  - A primeira página é gerada server-side, a partir da segunda página é feito fetch dos dados no client-side.
+- **Organização do Projeto:** Estrutura orientada a features (`modules/`), com separação clara entre `actions`, `hooks`, `views`, `store`, etc.
+- **Gerenciamento de Estado:** Utilização de `Zustand` para controle leve de favoritos e tema, mantendo a simplicidade e performance.
+- **Fetch de Dados:** Implementado com `React Query` + `server actions`.
+- **Estilização:** Utilização de `TailwindCSS` + `shadcn UI`, garantindo produtividade e consistência visual.
+- **Formulários e validação:** Utilização de `React Hook Form` + `Zod`, garantindo performance e regras claras de validação.
+- **Navegação:** `Nuqs` para gerenciamento de query params, mantendo a URL amigável e o histórico do navegador.
+- **Testes:** `Vitest` para testes unitários e `React Testing Library` para testes de interface. `Playwright` para testes de integração.
+- **Linter e Formatação:** `Biome` para garantir consistência e produtividade.
+
 ## Melhorias que podem ser implementadas
 
-- [ ] Adicionar tratamento de erro nas server actions com mensagens para o usuário
 - [ ] Deixar o fetch mais robusto, adicionando um novo objectID caso alguma promise seja rejeitada, retornando assim um array com 15 itens
-- [ ] Adicionar um botão para limpar buscas e filtros
+- [ ] Adicionar um botão para limpar buscas
 - [ ] Adicionar traduções com i18n
-- [ ] Melhorar estrutura de módulos e arquivos compartilhados
 - [ ] Adicionar testes unitários para componentes visuais
