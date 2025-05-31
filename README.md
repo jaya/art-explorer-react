@@ -45,6 +45,11 @@ pnpm install
 
 # Rodar o projeto
 pnpm dev
+
+# Rodar os testes
+pnpm test:unit # unitários
+pnpm test:e2e # integração
+pnpm test:e2e:ui # interface de testes
 ```
 
 ## Decisões de Arquitetura
