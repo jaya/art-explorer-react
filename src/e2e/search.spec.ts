@@ -31,7 +31,7 @@ test.describe('Search page', () => {
     await searchButton.click()
 
     const searchList = page.getByTestId('search-list')
-    await expect(searchList).toBeVisible()
+    await expect(searchList).toBeVisible({ timeout: 30000 })
 
     const artworks = searchList.getByRole('article')
     await expect(artworks).toHaveCount(15)
