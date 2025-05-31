@@ -33,7 +33,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         )}>
         <Providers>
           <Header />
-          <main className="flex flex-1 flex-col">{children}</main>
+          <main className="mt-12 xs:mt-0 flex flex-1 flex-col">{children}</main>
           <Footer />
         </Providers>
         <Toaster richColors />

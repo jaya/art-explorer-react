@@ -17,9 +17,7 @@ export function LoadButton({ isFetching, onClick }: LoadButtonProps) {
       onClick={onClick}
       type="button">
       <span className={cn(isFetching && 'opacity-0')}>Load more artworks</span>
-      {isFetching && (
-        <Loader2 className="-translate-1/2 absolute top-1/2 left-1/2 animate-spin text-muted-foreground" />
-      )}
+      {isFetching && <Loader2 className="-translate-1/2 absolute top-1/2 left-1/2 animate-spin text-primary" />}
     </button>
   )
 }
