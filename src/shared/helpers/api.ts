@@ -12,8 +12,7 @@ API.interceptors.response.use(
   (response) => response,
   (error) => {
     if (axios.isAxiosError(error)) {
-      console.error('API Error:', error.message)
-      logger('error', 'API Error', { error: error.message })
+      logger('error', 'API Error', { error: error.message, status: error.response?.status })
     }
     return Promise.reject(error)
   },
