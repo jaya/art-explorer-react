@@ -80,7 +80,7 @@ describe('FavoriteButton', () => {
     fireEvent.click(screen.getByRole('button'))
 
     expect(mockAddFavorite).toHaveBeenCalledWith(mockArtwork)
-    expect(mockToast.success).toHaveBeenCalledWith('Artwork added to favorites!')
+    expect(mockToast.success).toHaveBeenCalledWith('Artwork added to favorites')
   })
 
   it('removes artwork from favorites when clicked and is favorite', () => {

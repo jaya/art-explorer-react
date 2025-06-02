@@ -22,6 +22,7 @@ describe('handleError', () => {
       error: 'Test error message',
       context: 'test context',
       stack: 'Error stack trace',
+      timestamp: expect.any(String),
     })
 
     expect(result).toBe(error)
