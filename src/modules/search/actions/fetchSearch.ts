@@ -34,7 +34,7 @@ export async function fetchSearch({ page, query, searchType, departmentId }: Fet
         hasImages: true,
         artistOrCulture: searchType === 'artistOrCulture' ? true : undefined,
         departmentId: searchType === 'department' ? departmentId : undefined,
-        q: query || '*',
+        q: query || 'paintings',
       },
     })
 

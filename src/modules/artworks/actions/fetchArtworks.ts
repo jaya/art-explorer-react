@@ -21,7 +21,7 @@ export interface ApiResponse {
 }
 
 const LIMIT = 15
-const DEFAULT_QUERY = '*'
+const DEFAULT_QUERY = 'paintings'
 const MAX_ATTEMPTS = 30
 
 export async function fetchArtworks({ page }: FetchArtworksPayload) {
