@@ -3,6 +3,7 @@
 import { getArtwork } from '~/modules/details/actions/getArtwork'
 import { API } from '~/shared/helpers/api'
 import { handleError } from '~/shared/helpers/errorHandler'
+import { logDomainAction } from '~/shared/helpers/logger'
 import type { Artwork } from '~/shared/types'
 
 export interface FetchArtworksPayload {
@@ -20,10 +21,12 @@ export interface ApiResponse {
 }
 
 const LIMIT = 15
-const DEFAULT_QUERY = 'painting'
+const DEFAULT_QUERY = '*'
 
 export async function fetchArtworks({ page }: FetchArtworksPayload) {
   try {
+    logDomainAction('artworks', 'fetchList', { page })
+
     const { data: artworksIds } = await API.get<ApiResponse>('/search', {
       params: {
         hasImages: true,
@@ -38,15 +41,17 @@ export async function fetchArtworks({ page }: FetchArtworksPayload) {
       }
     }
 
-    const slice = artworksIds.objectIDs.slice((page - 1) * LIMIT, page * LIMIT)
-    const promises = slice.map((objectID) => getArtwork({ objectID: Number(objectID) }))
+    const startIndex = (page - 1) * LIMIT
+    const endIndex = startIndex + LIMIT
+    const paginatedIds = artworksIds.objectIDs.slice(startIndex, endIndex)
 
+    const promises = paginatedIds.map((objectID) => getArtwork({ objectID: Number(objectID) }))
     const results = await Promise.allSettled(promises)
     const data = results.filter((result) => result.status === 'fulfilled').map((result) => result.value)
 
     return {
       data,
-      nextPage: artworksIds.total > page * LIMIT ? page + 1 : null,
+      nextPage: endIndex < artworksIds.objectIDs.length ? page + 1 : null,
     }
   } catch (error) {
     handleError(error, 'fetchArtworks')

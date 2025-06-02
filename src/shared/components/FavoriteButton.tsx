@@ -5,7 +5,7 @@ import { motion, useAnimationControls } from 'motion/react'
 import { toast } from 'sonner'
 
 import { useFavoriteStore } from '~/modules/favorites/store/favorite'
-import { logger } from '~/shared/helpers/logger'
+import { logUserAction } from '~/shared/helpers/logger'
 import { useClient } from '~/shared/hooks/useClient'
 import type { Artwork } from '~/shared/types'
 
@@ -23,13 +23,15 @@ export function FavoriteButton({ artwork }: FavoriteButtonProps) {
   const { isReady } = useClient()
 
   const handleClick = async () => {
-    logger('info', 'click:favoriteButton', { artworkId: artwork.objectID, isFavorite })
-
     if (isFavorite) {
+      logUserAction('click:removeFavorite', { artworkId: artwork.objectID })
+
       toast.warning('Artwork removed from favorites')
       removeFavorite(artwork)
     } else {
-      toast.success('Artwork added to favorites!')
+      logUserAction('click:addFavorite', { artworkId: artwork.objectID })
+
+      toast.success('Artwork added to favorites')
       addFavorite(artwork)
     }
 

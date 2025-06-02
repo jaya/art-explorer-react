@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { env } from '~/shared/helpers/env'
-import { logger } from '~/shared/helpers/logger'
+import { logApiCall } from '~/shared/helpers/logger'
 
 export const API = axios.create({
   baseURL: env.NEXT_PUBLIC_API_URL,
@@ -9,10 +9,22 @@ export const API = axios.create({
 })
 
 API.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    const url = `${response.config?.baseURL}${response.config?.url}` || 'unknown'
+    const method = response.config?.method?.toUpperCase() || 'GET'
+    const status = response.status
+
+    logApiCall(url, method, status)
+
+    return response
+  },
   (error) => {
     if (axios.isAxiosError(error)) {
-      logger('error', 'API Error', { error: error.message, status: error.response?.status })
+      const url = `${error.config?.baseURL}${error.config?.url}` || 'unknown'
+      const method = error.config?.method?.toUpperCase() || 'GET'
+      const status = error.response?.status
+
+      logApiCall(url, method, status)
     }
     return Promise.reject(error)
   },

@@ -7,7 +7,7 @@ import { useArtworks } from '~/modules/artworks/hooks/useArtworks'
 import { containerVariants, itemVariants } from '~/shared/animations/stagger'
 import { ArtworkCard } from '~/shared/components/ArtworkCard'
 import { LoadButton } from '~/shared/components/LoadButton'
-import { logger } from '~/shared/helpers/logger'
+import { logUserAction } from '~/shared/helpers/logger'
 
 interface ArtworksContentProps {
   initialData: FetchArtworksResponse
@@ -38,7 +38,10 @@ export function ArtworksContent({ initialData }: ArtworksContentProps) {
                 <ArtworkCard
                   artwork={artwork}
                   onClick={() =>
-                    logger('info', 'click:artworkCard from artworks list', { artworkId: artwork.objectID })
+                    logUserAction('click:artworkCard', {
+                      from: 'home page',
+                      artworkId: artwork.objectID,
+                    })
                   }
                 />
               </motion.div>
@@ -50,7 +53,8 @@ export function ArtworksContent({ initialData }: ArtworksContentProps) {
             <LoadButton
               isFetching={isFetchingNextPage}
               onClick={() => {
-                logger('info', 'click:loadMoreArtworks from artworks list', {
+                logUserAction('click:loadMoreArtworks', {
+                  from: 'home page',
                   page: data?.pages[data.pages.length - 1].nextPage,
                 })
                 fetchNextPage()

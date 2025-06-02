@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import { ThemeButton } from '~/shared/components/ThemeButton'
-import { logger } from '~/shared/helpers/logger'
+import { logUserAction } from '~/shared/helpers/logger'
 import { cn } from '~/shared/utils/className'
 
 const links = [
@@ -38,7 +38,7 @@ export function Header() {
                   )}
                   href={link.href}
                   key={link.href}
-                  onClick={() => logger('info', 'click:menuLink', { from: pathname, to: link.href })}>
+                  onClick={() => logUserAction('click:menuLink', { from: pathname, to: link.href })}>
                   {link.label}
                 </Link>
               ))}

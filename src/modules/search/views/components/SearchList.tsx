@@ -18,7 +18,7 @@ import { ArtworkCard } from '~/shared/components/ArtworkCard'
 import { Button } from '~/shared/components/Button'
 import { Form } from '~/shared/components/Form'
 import { LoadButton } from '~/shared/components/LoadButton'
-import { logger } from '~/shared/helpers/logger'
+import { logDomainAction, logUserAction } from '~/shared/helpers/logger'
 
 const defaultValues = {
   query: '',
@@ -53,6 +53,11 @@ export function SearchList() {
   })
 
   const handleSubmit = form.handleSubmit((values) => {
+    logDomainAction('search', 'submitted', {
+      query: values.query,
+      type: values.searchType,
+      department: values.departmentId,
+    })
     setSearchParams(values)
     setSearch({ query: values.query })
     queryClient.removeQueries({ queryKey: ['search', values.query] })
@@ -116,7 +121,7 @@ export function SearchList() {
             className="grid grid-cols-1 gap-16 md:grid-cols-2 lg:grid-cols-3"
             data-testid="search-list"
             initial="hidden"
-            key={page.nextPage ?? 'initial'}
+            key={page.data.length ?? 'initial'}
             variants={containerVariants}>
             {page.data.map((artwork) => (
               <motion.div
@@ -126,7 +131,8 @@ export function SearchList() {
                 <ArtworkCard
                   artwork={artwork}
                   onClick={() =>
-                    logger('info', 'click:artworkCard from search list', {
+                    logUserAction('click:artworkCard', {
+                      from: 'search page',
                       artworkId: artwork.objectID,
                       title: artwork.title,
                     })
@@ -141,7 +147,8 @@ export function SearchList() {
             <LoadButton
               isFetching={isFetchingNextPage}
               onClick={() => {
-                logger('info', 'click:loadMoreArtworks from search list', {
+                logUserAction('click:loadMoreArtworks', {
+                  from: 'search page',
                   page: searchResults?.pages[searchResults.pages.length - 1].nextPage,
                 })
                 fetchNextPage()

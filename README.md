@@ -56,8 +56,7 @@ pnpm test:e2e:ui # interface de testes
 
 - **Framework Escolhido:** Next.js
   - Utilizado por oferecer renderização híbrida (SSG e SSR), roteamento baseado em arquivos, ótima integração com React Server Components e performance otimizada por padrão.
-- **Home Page:** Gerada estaticamente no build (SSG) para acelerar a entrega inicial e reduzir chamadas à API do The Met.
-  - A primeira página é gerada server-side, a partir da segunda página é feito fetch dos dados no client-side.
+  - A página inicial é gerada estaticamente no build (SSG) para acelerar a entrega inicial e reduzir chamadas à API do The Met.
 - **Organização do Projeto:** Estrutura orientada a features (`modules/`), com separação clara entre `actions`, `hooks`, `views`, `store`, etc.
 - **Gerenciamento de Estado:** Utilização de `Zustand` para controle leve de favoritos e tema, mantendo a simplicidade e performance.
 - **Fetch de Dados:** Implementado com `React Query` + `server actions`.
@@ -69,19 +68,21 @@ pnpm test:e2e:ui # interface de testes
 
 ## Observabilidade
 
-O projeto inclui mecanismos básicos de observabilidade com foco em extensibilidade futura:
+O projeto implementa logging estruturado e tratamento centralizado de erros:
 
-- **Tratamento de erros centralizado:**
-  Toda falha em chamadas assíncronas (como fetch em server actions) é capturada pela função `handleError()`, que atualmente usa `console.error` e já está preparada para integrar ferramentas como [Sentry](https://sentry.io), [LogRocket](https://logrocket.com) ou [Datadog](https://www.datadoghq.com).
+### Logger
+Sistema com funções auxiliares para diferentes tipos de eventos:
+- `logDomainAction()` - Ações de negócio (favoritos, busca, consulta de obras)
+- `logUserAction()` - Interações do usuário (cliques, navegação)
+- `logApiCall()` - Chamadas de API (requests, responses, erros)
+- `logPerformance()` - Operações com tempo de resposta
 
-- **Logger de eventos do usuário:**
-  Eventos como mudança de tema, adição/remoção de favoritos, cliques em links do menu e navegação entre páginas são pontos onde o logger será aplicado.
-  A função `logger()` já está estruturada para capturar o tipo de evento, contexto (rota atual), payload relevante, e pode ser facilmente integrada com ferramentas de rastreamento de erros.
+### Error Handler
+- Captura centralizada de todos os erros
+- Logs estruturados com contexto e timestamp
 
-- **Exemplo de evento logado:**
-  ```ts
-  logger('info', 'click:menuLink', { from: '/home', to: '/favorites' })
-  logger('info', 'favorite:add', { objectID: 123, title: 'Starry Night' })
+### Integração
+Preparado para integração com Sentry, Datadog ou Amplitude através de TODOs nos arquivos `logger.ts` e `errorHandler.ts`.
 
 ## Melhorias que podem ser implementadas
 

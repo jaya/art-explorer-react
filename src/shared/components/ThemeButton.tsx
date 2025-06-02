@@ -2,18 +2,18 @@
 
 import { Moon, Sun } from 'lucide-react'
 import { motion } from 'motion/react'
-import { logger } from '~/shared/helpers/logger'
+import { logUserAction } from '~/shared/helpers/logger'
 import { useTheme } from '~/shared/hooks/useTheme'
 
 export function ThemeButton() {
   const { theme, setTheme, systemTheme, isReady } = useTheme()
 
   const handleClick = () => {
-    logger('info', 'click:themeButton', { theme })
-
     if (systemTheme === 'system' || theme === 'dark') {
+      logUserAction('click:themeButton', { theme: 'light' })
       setTheme('light')
     } else {
+      logUserAction('click:themeButton', { theme: 'dark' })
       setTheme('dark')
     }
   }
