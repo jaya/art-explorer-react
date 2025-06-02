@@ -1,134 +1,94 @@
-# Art Explorer - Desafio Front-end com React + The Met Museum API
+# Art Explorer
 
-## 🌟 Objetivo
+## Descrição
 
-Criar uma aplicação web responsiva utilizando **React**, **TypeScript** e **Node.js** (para o backend), com o objetivo de explorar obras de arte da coleção do Metropolitan Museum of Art (The Met). O sistema deve permitir:
+Art Explorer é uma aplicação web que permite explorar obras de arte da coleção do Metropolitan Museum of Art (The Met). As principais funcionalidades são:
 
-* Buscar obras com imagem
-* Visualizar detalhes das obras
-* Marcar como favorita
-* Listar favoritas
+- Buscar obras com imagem
+- Visualizar detalhes das obras
+- Marcar como favorita
+- Listar favoritas
+- Procurar obras por departamento ou artista
 
----
+## Preview
 
-## 🔍 Funcionalidades Requeridas
+![Art Explorer Preview](./.public/preview.png)
 
-### 1. **Listagem de Obras com Imagem**
+## Tecnologias
 
-* Utilizar a API: `GET /public/collection/v1/search?hasImages=true&q=painting`
-* Simular paginação (15 por vez) usando slices do array de `objectIDs`
+- [React](https://react.dev/)
+- [Next.js](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [TailwindCSS](https://tailwindcss.com/)
+- [Shadcn UI](https://ui.shadcn.com/)
+- [Axios](https://axios-http.com/)
+- [React Query](https://tanstack.com/query/latest)
+- [Zustand](https://zustand-demo.pmnd.rs/)
+- [React Hook Form](https://react-hook-form.com/)
+- [Nuqs](https://nuqs.dev/)
+- [Zod](https://zod.dev/)
+- [Motion](https://motion.dev/)
+- [Vitest](https://vitest.dev/)
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
+- [Playwright](https://playwright.dev/)
+- [Biome](https://biomejs.dev/)
 
-### 2. **Detalhes de Obra**
+## API do The Met Museum
 
-* Buscar detalhes de uma obra: `GET /public/collection/v1/objects/{objectID}`
-* Exibir: imagem, título, artista, data, técnica, departamento, link para o site oficial
+- [The Met Museum API](https://metmuseum.github.io/)
 
-### 3. **Favoritar Obras**
+## Rodando o projeto
 
-* Botão para marcar/desmarcar favoritos
-* Persistir localmente (no browser usando `localStorage` ou `IndexedDB`)
+```bash
+# Instalar dependências
+pnpm install
 
-### 4. **Listar Favoritas**
+# Rodar o projeto
+pnpm dev
 
-* Seção ou página dedicada para exibir as obras favoritadas
-
-### 5. **Interface Responsiva**
-
-* Design responsivo (preferîncialmente com TailwindCSS ou CSS Modules)
-* Scroll infinito ou botão "carregar mais"
-
----
-
-## 🚀 Stack Tecnológica
-
-* **Frontend:** React + TypeScript + Axios + TailwindCSS (ou equivalente)
-* **Backend (opcional):** Node.js + Express (poderá ser usado como proxy de requisições ou para features futuras)
-
----
-
-## 🔗 Endpoints da API do The Met Museum
-
-| Funcionalidade             | Endpoint                                                           |
-| -------------------------- | ------------------------------------------------------------------ |
-| Buscar obras com imagens   | `GET /public/collection/v1/search?hasImages=true&q=painting`       |
-| Detalhes de uma obra       | `GET /public/collection/v1/objects/{objectID}`                     |
-| Buscar por artista/cultura | `GET /public/collection/v1/search?artistOrCulture=true&q=van+gogh` |
-| Listar departamentos       | `GET /public/collection/v1/departments`                            |
-| Buscar por departamento    | `GET /public/collection/v1/search?departmentId=11&q=portrait`      |
-
----
-
-## 📊 Requisitos Desejáveis
-
-* Barra de busca com autocomplete
-* Filtro por departamento ou artista
-* Animações com Framer Motion
-* Dark mode
-* Deploy (ex: Vercel/Netlify para frontend, Render para backend)
-
----
-
-## ⌚ Diagrama de Sequência (Mermaid)
-
-```mermaid
-sequenceDiagram
-    actor User
-    participant UI
-    participant LocalStore
-    participant MetAPI
-
-    User->>UI: Scroll até o fim da lista
-    UI->>MetAPI: GET /search?hasImages=true&q=painting
-    MetAPI-->>UI: Retorna lista de objectIDs
-    loop Para cada objectID (15 por página)
-        UI->>MetAPI: GET /objects/{objectID}
-        MetAPI-->>UI: Detalhes da obra
-    end
-    User->>UI: Marca obra como favorita
-    UI->>LocalStore: Salva objeto nos favoritos
-    User->>UI: Vai para "favoritas"
-    UI->>LocalStore: Recupera favoritos
+# Rodar os testes
+pnpm test:unit # unitários
+pnpm test:e2e # integração
+pnpm test:e2e:ui # interface de testes
 ```
 
----
+## Decisões de Arquitetura
 
-## 📆 Entrega
+- **Framework Escolhido:** Next.js
+  - Utilizado por oferecer renderização híbrida (SSG e SSR), roteamento baseado em arquivos, ótima integração com React Server Components e performance otimizada por padrão.
+  - A página inicial é gerada estaticamente no build (SSG) para acelerar a entrega inicial e reduzir chamadas à API do The Met.
+- **Organização do Projeto:** Estrutura orientada a features (`modules/`), com separação clara entre `actions`, `hooks`, `views`, `store`, etc.
+- **Gerenciamento de Estado:** Utilização de `Zustand` para controle leve de favoritos e tema, mantendo a simplicidade e performance.
+- **Fetch de Dados:** Implementado com `React Query` + `server actions`.
+- **Estilização:** Utilização de `TailwindCSS` + `shadcn UI`, garantindo produtividade e consistência visual.
+- **Formulários e validação:** Utilização de `React Hook Form` + `Zod`, garantindo performance e regras claras de validação.
+- **Navegação:** `Nuqs` para gerenciamento de query params, mantendo a URL amigável e o histórico do navegador.
+- **Testes:** `Vitest` para testes unitários e `React Testing Library` para testes de interface. `Playwright` para testes de integração.
+- **Linter e Formatação:** `Biome` para garantir consistência e produtividade.
 
-1. **Fork do Repositório Base**
-2. **Crie uma Branch com seu Nome (snake\_case)**
+## Observabilidade
 
-   ```bash
-   git checkout -b joao_silva_souza
-   ```
-3. **Implemente e Suba o Projeto**
+O projeto implementa logging estruturado e tratamento centralizado de erros:
 
-   ```bash
-   git add .
-   git commit -m "Entrega desafio frontend - João Silva Souza"
-   git push origin joao_silva_souza
-   ```
-4. **Abra um Pull Request** para a branch `main`
+### Logger
+Sistema com funções auxiliares para diferentes tipos de eventos:
+- `logDomainAction()` - Ações de negócio (favoritos, busca, consulta de obras)
+- `logUserAction()` - Interações do usuário (cliques, navegação)
+- `logApiCall()` - Chamadas de API (requests, responses, erros)
+- `logPerformance()` - Operações com tempo de resposta
 
-   * Título: `Entrega - joao_silva_souza`
-   * Corpo: nome, data, observações opcionais
+### Error Handler
+- Captura centralizada de todos os erros
+- Logs estruturados com contexto e timestamp
 
----
+### Integração
+Preparado para integração com Sentry, Datadog ou Amplitude através de TODOs nos arquivos `logger.ts` e `errorHandler.ts`.
 
-## 📚 Extras
+## Melhorias que podem ser implementadas
 
-* Pode usar bibliotecas como React Query, Zustand, Redux, etc.
-* Não é necessário criar backend se não for preciso, mas é bem-vindo caso deseje mostrar arquitetura completa.
-* Bonus: testes com Jest + React Testing Library
-
----
-
-## 🎓 Licença
-
-Dados públicos da API do The Met sob [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)
-
----
-
-## 📢 Contato
-
-* Autor: Leandro Costa
-* Email: [leandro@jaya.tech](mailto:leandro@jaya.tech)
+- [ ] Integração com ferramentas de rastreamento de erros
+- [ ] Deixar o fetch mais robusto, adicionando um novo objectID caso alguma promise seja rejeitada, retornando assim um array com 15 itens
+- [ ] Adicionar um botão para limpar buscas
+- [ ] Adicionar traduções com i18n
+- [ ] Adicionar testes unitários para componentes visuais
+- [ ] Adicionar mocks para testes de integração

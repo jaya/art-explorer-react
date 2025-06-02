@@ -1,0 +1,88 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.0.0-beta.5/schema.json",
+  "vcs": {
+    "enabled": false,
+    "clientKind": "git",
+    "useIgnoreFile": false
+  },
+  "files": {
+    "ignoreUnknown": false,
+    "includes": [
+      "src/**/*.{ts,tsx}",
+      "next.config.ts",
+      "postcss.config.mjs",
+      "vitest.config.ts",
+      "vitest.setup.ts",
+      "playwright.config.ts"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 120
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "a11y": {
+        "noRedundantAlt": "off"
+      },
+      "performance": {
+        "noImgElement": "off"
+      },
+      "nursery": {
+        "useSortedClasses": {
+          "fix": "safe",
+          "level": "warn",
+          "options": {
+            "attributes": ["className"],
+            "functions": ["cn", "clsx", "tv"]
+          }
+        }
+      },
+      "suspicious": {
+        "noExplicitAny": "off"
+      }
+    },
+    "domains": {
+      "react": "recommended",
+      "next": "recommended",
+      "test": "recommended"
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "indentStyle": "space",
+      "indentWidth": 2,
+      "quoteStyle": "single",
+      "quoteProperties": "asNeeded",
+      "jsxQuoteStyle": "double",
+      "trailingCommas": "all",
+      "semicolons": "asNeeded",
+      "lineWidth": 120,
+      "arrowParentheses": "always",
+      "attributePosition": "multiline",
+      "bracketSpacing": true,
+      "bracketSameLine": true
+    }
+  },
+  "json": {
+    "formatter": {
+      "indentStyle": "space",
+      "indentWidth": 2,
+      "trailingCommas": "all"
+    }
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on",
+        "useSortedAttributes": "on"
+      }
+    }
+  }
+}
