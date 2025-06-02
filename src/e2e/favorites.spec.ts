@@ -13,7 +13,10 @@ test.describe('Favorites page', () => {
   test('adds artwork to favorites', async ({ page }) => {
     await page.goto('/')
 
-    const firstArtwork = page.getByTestId('artworks-list').getByRole('article').first()
+    const artworksList = page.getByTestId('artworks-list')
+    await expect(artworksList).toBeVisible()
+
+    const firstArtwork = artworksList.getByRole('article').first()
     await expect(firstArtwork).toBeVisible()
 
     const favoriteButton = firstArtwork.getByRole('button', { name: 'Add to favorites' })
@@ -21,7 +24,7 @@ test.describe('Favorites page', () => {
 
     await favoriteButton.click()
 
-    await expect(page.getByText('Artwork added to favorites!')).toBeVisible()
+    await expect(page.getByText('Artwork added to favorites')).toBeVisible()
 
     await page.goto('/favorites')
 
@@ -40,7 +43,7 @@ test.describe('Favorites page', () => {
 
     await addFavoriteButton.click()
 
-    await expect(page.getByText('Artwork added to favorites!')).toBeVisible()
+    await expect(page.getByText('Artwork added to favorites')).toBeVisible()
 
     await page.goto('/favorites')
 

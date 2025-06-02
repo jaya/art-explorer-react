@@ -91,3 +91,4 @@ Preparado para integração com Sentry, Datadog ou Amplitude através de TODOs n
 - [ ] Adicionar um botão para limpar buscas
 - [ ] Adicionar traduções com i18n
 - [ ] Adicionar testes unitários para componentes visuais
+- [ ] Adicionar mocks para testes de integração
