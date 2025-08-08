@@ -95,4 +95,8 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  .navbar {
+    @apply flex flex-row justify-between items-center fixed bg-amber-100 rounded-full p-4 w-full px-10 max-w-[1200px] mx-auto;
+  }
 }
