@@ -1,129 +1,36 @@
-# Art Explorer - Desafio Front-end com React + The Met Museum API
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## 🌟 Objetivo
+## Getting Started
 
-Criar uma aplicação web responsiva utilizando **React**, **TypeScript** e **Node.js** (para o backend), com o objetivo de explorar obras de arte da coleção do Metropolitan Museum of Art (The Met). O sistema deve permitir:
+First, run the development server:
 
-* Buscar obras com imagem
-* Visualizar detalhes das obras
-* Marcar como favorita
-* Listar favoritas
-
----
-
-## 🔍 Funcionalidades Requeridas
-
-### 1. **Listagem de Obras com Imagem**
-
-* Utilizar a API: `GET /public/collection/v1/search?hasImages=true&q=painting`
-* Simular paginação (15 por vez) usando slices do array de `objectIDs`
-
-### 2. **Detalhes de Obra**
-
-* Buscar detalhes de uma obra: `GET /public/collection/v1/objects/{objectID}`
-* Exibir: imagem, título, artista, data, técnica, departamento, link para o site oficial
-
-### 3. **Favoritar Obras**
-
-* Botão para marcar/desmarcar favoritos
-* Persistir localmente (no browser usando `localStorage` ou `IndexedDB`)
-
-### 4. **Listar Favoritas**
-
-* Seção ou página dedicada para exibir as obras favoritadas
-
-### 5. **Interface Responsiva**
-
-* Design responsivo (preferîncialmente com TailwindCSS ou CSS Modules)
-* Scroll infinito ou botão "carregar mais"
-
----
-
-## 🚀 Stack Tecnológica
-
-* **Frontend:** React + TypeScript + Axios + TailwindCSS (ou equivalente)
-* **Backend (opcional):** Node.js + Express (poderá ser usado como proxy de requisições ou para features futuras)
-
----
-
-## 🔗 Endpoints da API do The Met Museum
-
-| Funcionalidade             | Endpoint                                                           |
-| -------------------------- | ------------------------------------------------------------------ |
-| Buscar obras com imagens   | `GET /public/collection/v1/search?hasImages=true&q=painting`       |
-| Detalhes de uma obra       | `GET /public/collection/v1/objects/{objectID}`                     |
-| Buscar por artista/cultura | `GET /public/collection/v1/search?artistOrCulture=true&q=van+gogh` |
-| Listar departamentos       | `GET /public/collection/v1/departments`                            |
-| Buscar por departamento    | `GET /public/collection/v1/search?departmentId=11&q=portrait`      |
-
----
-
-## 📊 Requisitos Desejáveis
-
-* Barra de busca com autocomplete
-* Filtro por departamento ou artista
-* Animações com Framer Motion
-* Dark mode
-* Deploy (ex: Vercel/Netlify para frontend, Render para backend)
-
----
-
-## ⌚ Diagrama de Sequência (Mermaid)
-
-```mermaid
-sequenceDiagram
-    actor User
-    participant UI
-    participant LocalStore
-    participant MetAPI
-
-    User->>UI: Scroll até o fim da lista
-    UI->>MetAPI: GET /search?hasImages=true&q=painting
-    MetAPI-->>UI: Retorna lista de objectIDs
-    loop Para cada objectID (15 por página)
-        UI->>MetAPI: GET /objects/{objectID}
-        MetAPI-->>UI: Detalhes da obra
-    end
-    User->>UI: Marca obra como favorita
-    UI->>LocalStore: Salva objeto nos favoritos
-    User->>UI: Vai para "favoritas"
-    UI->>LocalStore: Recupera favoritos
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
----
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## 📋 Entrega
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-Para padronizar a entrega e facilitar a análise:
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-1. Faça um **fork deste repositório** para sua conta pessoal do GitHub.
-2. Crie uma **branch com seu nome em snake_case** (exemplo: `joao_silva_souza`).
-3. Suba sua solução utilizando **commits organizados e descritivos**.
-4. Após finalizar:
-   - Certifique-se de que o repositório esteja **público**
-   - Envie o link do seu fork para nossa equipe com:
-     - **Título:** `Entrega - joao_silva_souza`
-     - **Descrição:** Nome completo, data da entrega e quaisquer observações que julgar relevantes.
+## Learn More
 
-> ✅ **Dica**: Você pode incluir um arquivo `THOUGHTS.md` com decisões técnicas, ideias descartadas e sugestões de melhoria.
+To learn more about Next.js, take a look at the following resources:
 
----
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-## 📚 Extras
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-* Pode usar bibliotecas como React Query, Zustand, Redux, etc.
-* Não é necessário criar backend se não for preciso, mas é bem-vindo caso deseje mostrar arquitetura completa.
-* Bonus: testes com Jest + React Testing Library
+## Deploy on Vercel
 
----
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-## 🎓 Licença
-
-Dados públicos da API do The Met sob [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)
-
----
-
-## 📢 Contato
-
-* Autor: Leandro Costa
-* Email: [leandro@jaya.tech](mailto:leandro@jaya.tech)
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
