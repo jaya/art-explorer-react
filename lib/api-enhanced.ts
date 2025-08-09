@@ -1,4 +1,5 @@
 import { MetMuseumAPI } from "./api";
+import { DepartmentsResponse, MetArtwork } from "./types";
 
 export type MinimalArtwork = Pick<
   MetArtwork,

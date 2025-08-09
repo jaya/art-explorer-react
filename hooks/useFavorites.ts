@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { FavoritesManager } from "@/lib/favorites";
+import { FavoriteArtwork } from "@/lib/types";
 
 export function useFavorites() {
   const [favorites, setFavorites] = useState<FavoriteArtwork[]>([]);

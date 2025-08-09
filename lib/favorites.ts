@@ -1,3 +1,5 @@
+import { FavoriteArtwork } from "./types";
+
 const FAVORITES_KEY = "art-explorer-favorites";
 
 export class FavoritesManager {

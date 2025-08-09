@@ -1,3 +1,5 @@
+import { SearchResponse, MetArtwork, DepartmentsResponse } from "./types";
+
 export class MetMuseumAPI {
   private static async fetchWithRetry<T>(url: string, retries = 3): Promise<T> {
     for (let i = 0; i < retries; i++) {

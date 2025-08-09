@@ -1,4 +1,4 @@
-interface MetArtwork {
+export interface MetArtwork {
   objectID: number;
   isHighlight: boolean;
   accessionNumber: string;
@@ -58,7 +58,7 @@ interface MetArtwork {
   GalleryNumber: string;
 }
 
-interface Constituent {
+export interface Constituent {
   constituentID: number;
   role: string;
   name: string;
@@ -67,7 +67,7 @@ interface Constituent {
   gender: string;
 }
 
-interface Measurement {
+export interface Measurement {
   elementName: string;
   elementDescription: string;
   elementMeasurements: {
@@ -76,27 +76,27 @@ interface Measurement {
   };
 }
 
-interface Tag {
+export interface Tag {
   term: string;
   AAT_URL: string;
   Wikidata_URL: string;
 }
 
-interface SearchResponse {
+export interface SearchResponse {
   total: number;
   objectIDs: number[];
 }
 
-interface Department {
+export interface Department {
   departmentId: number;
   displayName: string;
 }
 
-interface DepartmentsResponse {
+export interface DepartmentsResponse {
   departments: Department[];
 }
 
-interface FavoriteArtwork {
+export interface FavoriteArtwork {
   objectID: number;
   title: string;
   artistDisplayName: string;
