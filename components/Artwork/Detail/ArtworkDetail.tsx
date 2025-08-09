@@ -99,7 +99,7 @@ export function ArtworkDetail({ objectID }: ArtworkDetailProps) {
             variant={isArtworkFavorite ? "default" : "outline"}
             onClick={handleToggleFavorite}
             className={cn(
-              "gap-2",
+              "gap-2 dark:text-accent-foreground",
               isArtworkFavorite && "bg-red-500 hover:bg-red-600",
             )}
           >
@@ -291,26 +291,24 @@ export function ArtworkDetail({ objectID }: ArtworkDetailProps) {
                   <span>Gallery {artwork.GalleryNumber}</span>
                 </div>
               )}
+
+              {artwork.objectURL && (
+                <CardContent className="pt-6">
+                  <Link
+                    href={artwork.objectURL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 w-full"
+                  >
+                    <Button className="w-full hover:cursor-pointer">
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      View at The Metropolitan Museum of Art
+                    </Button>
+                  </Link>
+                </CardContent>
+              )}
             </CardContent>
           </Card>
-
-          {artwork.objectURL && (
-            <Card>
-              <CardContent className="pt-6">
-                <a
-                  href={artwork.objectURL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 w-full"
-                >
-                  <Button className="w-full">
-                    <ExternalLink className="w-4 h-4 mr-2" />
-                    View at The Metropolitan Museum of Art
-                  </Button>
-                </a>
-              </CardContent>
-            </Card>
-          )}
         </div>
       </div>
     </motion.div>

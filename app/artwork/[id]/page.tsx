@@ -1,4 +1,4 @@
-import { ArtworkDetail } from "@/components/artwork-detail";
+import { ArtworkDetail } from "@/components/Artwork/Detail/ArtworkDetail";
 
 interface ArtworkPageProps {
   params: {

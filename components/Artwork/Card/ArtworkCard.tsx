@@ -25,13 +25,10 @@ export function ArtworkCard({ objectID, index }: ArtworkCardProps) {
   const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
 
-  // Try to get from cache first
   const cachedArtwork = getCachedArtwork(objectID);
 
-  // Only fetch from API if not in cache
   const { data: fetchedArtwork, isLoading, error } = useArtwork(objectID);
 
-  // Use cached data if available, otherwise use fetched data
   const artwork = cachedArtwork || fetchedArtwork;
 
   const handleToggleFavorite = (e: React.MouseEvent) => {
@@ -85,7 +82,6 @@ export function ArtworkCard({ objectID, index }: ArtworkCardProps) {
       <Card className="group overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer h-full">
         <Link href={`/artwork/${artwork.objectID}`} className="block h-full">
           <CardContent className="p-0 h-full flex flex-col">
-            {/* Image Section - Fixed aspect ratio */}
             <div className="relative aspect-square overflow-hidden">
               {imageLoading && (
                 <div className="absolute inset-0 bg-gray-100 flex items-center justify-center">
@@ -119,23 +115,24 @@ export function ArtworkCard({ objectID, index }: ArtworkCardProps) {
                 </div>
               )}
 
-              {/* Favorite button - positioned consistently */}
               <Button
-                variant="ghost"
+                variant="default"
                 size="icon"
                 className={cn(
-                  "absolute top-3 right-3 w-8 h-8 bg-white/90 hover:bg-white shadow-sm transition-all duration-200 z-10",
+                  "absolute top-3 right-3 w-8 h-8 bg-white/90 hover:bg-white shadow-sm   transition-all duration-200 z-10",
                   isArtworkFavorite &&
                     "text-red-500 bg-red-50/90 hover:bg-red-50",
                 )}
                 onClick={handleToggleFavorite}
               >
                 <Heart
-                  className={cn("w-4 h-4", isArtworkFavorite && "fill-current")}
+                  className={cn(
+                    "w-4 h-4 opacity-60",
+                    isArtworkFavorite && "fill-current opacity-100",
+                  )}
                 />
               </Button>
 
-              {/* Department tag - positioned consistently */}
               {artwork.department && (
                 <Badge className="absolute top-3 left-3 bg-black/80 text-white text-xs px-2 py-1 max-w-[calc(100%-100px)] truncate">
                   {artwork.department}
@@ -143,19 +140,16 @@ export function ArtworkCard({ objectID, index }: ArtworkCardProps) {
               )}
             </div>
 
-            {/* Content Section - Fixed height for perfect consistency */}
             <div className="p-4 h-[100px] flex flex-col justify-between">
               <div className="flex-1 flex flex-col justify-center space-y-2">
-                {/* Title - Fixed height container for exactly 2 lines */}
                 <div className="h-[2.5rem] flex items-start">
-                  <h3 className="artwork-card-title font-semibold text-sm leading-5 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                  <h3 className="artwork-card-title font-semibold text-sm leading-5 line-clamp-2 group-hover:text-primary transition-colors">
                     {artwork.title || "Untitled"}
                   </h3>
                 </div>
 
-                {/* Artist - Fixed height with consistent positioning */}
                 <div className="h-5 flex items-center">
-                  <p className="artwork-card-artist text-xs text-gray-600 line-clamp-1 w-full">
+                  <p className="artwork-card-artist text-xs text-secondary-foreground line-clamp-1 w-full">
                     {artwork.artistDisplayName || "Unknown Artist"}
                   </p>
                 </div>
