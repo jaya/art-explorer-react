@@ -96,9 +96,64 @@
   }
   body {
     @apply bg-background text-foreground;
+    overflow-y: scroll;
+  }
+
+  .app-container {
+    @apply min-h-screen bg-background flex flex-col justify-between;
+  }
+
+  .main-container {
+    @apply container mx-auto px-4 py-8;
   }
 
   .navbar {
     @apply flex flex-row justify-between items-center fixed bg-amber-100 rounded-full p-4 w-full px-10 max-w-[1200px] mx-auto;
   }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-muted;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/30 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-muted-foreground/50;
+}
+
+/* Improved text rendering for artwork cards */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+/* Ensure consistent text baseline alignment */
+.artwork-card-title {
+  line-height: 1.25;
+  font-weight: 600;
+}
+
+.artwork-card-artist {
+  line-height: 1.2;
 }

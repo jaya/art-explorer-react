@@ -43,7 +43,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <QueryProvider>
-            <div className="min-h-screen bg-background">
+            <div className="app-container">
               <Navbar />
               <main className="container mx-auto px-4 py-8">{children}</main>
               <Footer />
