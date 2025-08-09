@@ -119,7 +119,7 @@ export function ArtworkCard({ objectID, index }: ArtworkCardProps) {
                 variant="default"
                 size="icon"
                 className={cn(
-                  "absolute top-3 right-3 w-8 h-8 bg-white/90 hover:bg-white shadow-sm   transition-all duration-200 z-10",
+                  "absolute top-3 right-3 w-8 h-8 bg-white/90 hover:bg-white shadow-sm cursor-pointer transition-all duration-200 z-10",
                   isArtworkFavorite &&
                     "text-red-500 bg-red-50/90 hover:bg-red-50",
                 )}
