@@ -36,7 +36,6 @@ export function ImageCursorTrail({
     const relativeY = y - containerRect.top;
     image.style.left = `${relativeX}px`;
     image.style.top = `${relativeY}px`;
-    console.log(refs.current[refs.current?.length - 1]);
 
     if (currentZIndexRef.current > 40) {
       currentZIndexRef.current = 1;
@@ -100,21 +99,19 @@ export function ImageCursorTrail({
       )}
     >
       {items.map((item, index) => (
-        <>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            key={index}
-            className={cn(
-              "opacity:0 data-[status='active']:ease-out-expo absolute -translate-x-[50%] -translate-y-[50%]  scale-0 rounded-3xl object-cover transition-transform duration-300  data-[status='active']:scale-100   data-[status='active']:opacity-100 data-[status='active']:duration-500 ",
-              imgClass,
-            )}
-            data-index={index}
-            data-status="inactive"
-            src={item}
-            alt={`image-${index}`}
-            ref={refs.current[index]}
-          />
-        </>
+        /* eslint-disable-next-line @next/next/no-img-element */
+        <img
+          key={index}
+          className={cn(
+            "opacity:0 data-[status='active']:ease-out-expo absolute -translate-x-[50%] -translate-y-[50%]  scale-0 rounded-3xl object-cover transition-transform duration-300  data-[status='active']:scale-100   data-[status='active']:opacity-100 data-[status='active']:duration-500 ",
+            imgClass,
+          )}
+          data-index={index}
+          data-status="inactive"
+          src={item}
+          alt={`image-${index}`}
+          ref={refs.current[index]}
+        />
       ))}
       {children}
     </section>

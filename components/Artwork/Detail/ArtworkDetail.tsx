@@ -302,7 +302,7 @@ export function ArtworkDetail({ objectID }: ArtworkDetailProps) {
                   >
                     <Button className="w-full hover:cursor-pointer">
                       <ExternalLink className="w-4 h-4 mr-2" />
-                      View at The Metropolitan Museum of Art
+                      Go to Met Museum Website
                     </Button>
                   </Link>
                 </CardContent>

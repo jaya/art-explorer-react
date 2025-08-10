@@ -55,7 +55,7 @@ export default function HomePage() {
   if (!mounted) {
     return (
       <div className="space-y-8">
-        <div className="text-center space-y-4">
+        <div className="text-center space-y-4 flex justify-center">
           <Skeleton className="h-12 w-96 mx-auto" />
           <Skeleton className="h-6 w-[600px] mx-auto" />
         </div>
@@ -73,7 +73,7 @@ export default function HomePage() {
   return (
     <div className="space-y-8">
       <ImagePreloader images={images} priority />
-      <div className="text-center space-y-4">
+      <div className="text-center space-y-4 flex justify-center">
         <ImageCursorTrail
           items={images}
           maxNumberOfImages={5}
