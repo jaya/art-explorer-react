@@ -1,0 +1,26 @@
+#!/bin/sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🚀 Rodando checks pre-push..."
+
+
+echo "🏗️  Fazendo build do projeto..."
+pnpm build
+
+if [ $? -ne 0 ]; then
+  echo "❌ Build falhando!"
+  echo "💡 Conserte os erros de build antes de fazer o push"
+  exit 1
+fi
+
+
+echo "🧪 Rodando suite de testes completa..."
+pnpm test:all
+
+if [ $? -ne 0 ]; then
+  echo "❌ Suite completa de testes falhando!"
+  echo "💡 Conserte os testes quebrados antes de fazer o push"
+  exit 1
+fi
+
+echo "✅ Todos os checks pre-push OK! Pronto pro push 🚀"

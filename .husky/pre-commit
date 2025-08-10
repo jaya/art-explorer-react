@@ -1,1 +1,24 @@
+#!/bin/sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🔍 Rodando checks pre-commit..."
+
+echo "📝 Processando arquivos staged..."
 pnpm exec lint-staged
+
+if [ $? -ne 0 ]; then
+  echo "❌ Checks do Lint-staged falhando!"
+  echo "💡 Conserte erros de formatação, linting ou teste antes de commitar"
+  exit 1
+fi
+
+echo "🧪 Rodando healthcheck rapidinho..."
+pnpm test --silent
+
+if [ $? -ne 0 ]; then
+  echo "❌ Testes básicos falhando!"
+  echo "💡 Conserte testes quebrados antes de commitar"
+  exit 1
+fi
+
+echo "✅ Todos os checks pre-commit OK!"
