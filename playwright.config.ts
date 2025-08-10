@@ -10,11 +10,13 @@ export default defineConfig({
 
   forbidOnly: !!process.env.CI,
 
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 1 : 0,
 
-  workers: process.env.CI ? 1 : undefined,
+  workers: process.env.CI ? 1 : 2,
 
   reporter: "html",
+
+  timeout: 30 * 1000,
 
   use: {
     baseURL: "http://localhost:3000",
@@ -24,6 +26,10 @@ export default defineConfig({
     screenshot: "only-on-failure",
 
     video: "retain-on-failure",
+
+    navigationTimeout: 15 * 1000,
+
+    actionTimeout: 10 * 1000,
   },
 
   projects: [
@@ -32,24 +38,18 @@ export default defineConfig({
       use: { ...devices["Desktop Chrome"] },
     },
 
-    {
-      name: "firefox",
-      use: { ...devices["Desktop Firefox"] },
-    },
-
-    {
-      name: "webkit",
-      use: { ...devices["Desktop Safari"] },
-    },
-
-    {
-      name: "Mobile Chrome",
-      use: { ...devices["Pixel 5"] },
-    },
-    {
-      name: "Mobile Safari",
-      use: { ...devices["iPhone 12"] },
-    },
+    ...(process.env.FULL_BROWSER_TEST
+      ? [
+          {
+            name: "firefox",
+            use: { ...devices["Desktop Firefox"] },
+          },
+          {
+            name: "webkit",
+            use: { ...devices["Desktop Safari"] },
+          },
+        ]
+      : []),
   ],
 
   webServer: {

@@ -14,6 +14,8 @@
     "test:coverage": "jest --coverage",
     "test:ci": "jest --ci --coverage --watchAll=false",
     "test:e2e": "playwright test",
+    "test:e2e:fast": "playwright test --project=chromium",
+    "test:e2e:full": "FULL_BROWSER_TEST=true playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:headed": "playwright test --headed",
     "test:e2e:debug": "playwright test --debug",
