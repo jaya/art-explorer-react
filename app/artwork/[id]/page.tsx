@@ -1,13 +1,14 @@
 import { ArtworkDetail } from "@/components/Artwork/Detail/ArtworkDetail";
 
 interface ArtworkPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-export default function ArtworkPage({ params }: ArtworkPageProps) {
-  const objectID = parseInt(params.id);
+export default async function ArtworkPage({ params }: ArtworkPageProps) {
+  const { id } = await params;
+  const objectID = parseInt(id);
 
   if (isNaN(objectID)) {
     return (

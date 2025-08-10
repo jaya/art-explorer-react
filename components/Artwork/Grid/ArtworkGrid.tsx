@@ -156,11 +156,8 @@ function LoadMoreButton() {
     nextBatchStart + itemsPerPage * 3,
   );
 
-  const {
-    data: nextBatchData,
-    isLoading: nextBatchLoading,
-    refetch: loadNextBatch,
-  } = useBatchArtworks(nextBatchIds, false, itemsPerPage);
+  const { isLoading: nextBatchLoading, refetch: loadNextBatch } =
+    useBatchArtworks(nextBatchIds, false, itemsPerPage);
 
   const handleClick = async () => {
     try {
